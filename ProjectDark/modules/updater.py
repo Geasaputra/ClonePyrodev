@@ -20,7 +20,6 @@ from ProjectDark.helpers.adminHelpers import KANG
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.tools import get_arg
 from ProjectDark.utils.misc import restart
-from ProjectDark.utils.pastebin import PasteBin
 from ProjectDark.utils.tools import bash
 
 from .help import add_command_help

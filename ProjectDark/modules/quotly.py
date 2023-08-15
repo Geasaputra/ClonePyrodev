@@ -86,7 +86,6 @@ async def fake_quote_cmd(client: Client, message: Message):
         await message.edit("Loading...")
 
     url = "https://quotes.fl1yd.su/generate"
-    user_auth_1 = b64decode("Y2llIG1hbyBueW9sb25nIGNpaWUuLi4uLCBjb2xvbmcgYWphIGJhbmcgamFkaWluIHByZW0gdHJ1cyBqdWFsLCBrYWxpIGFqYSBiZXJrYWggaWR1cCBsdS4uLi4=")
     params = {
         "messages": [await render_message(client, q_message)],
         "quote_color": "#162330",
