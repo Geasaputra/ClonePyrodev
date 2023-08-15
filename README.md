@@ -1,14 +1,5 @@
-<p align="center">
-        <img src="https://telegra.ph//file/6222ee8a779a0fd41ab2d.jpg"
-        width="500" alt="DarkPyro-Rev.">
-</a>
-<br>
-<b>DarkPyro-Rev.</b>
-<br>
-<b>Just Kanger Userbot</b>
-<br>
-</p>
-
+<h2>DarkPyro-REV</h2>
+<p>Just Kanger Userbot<p>
 
 <h2>About</h2>
 <p>DarkPyro-REV is a Telegram userbot (in case you didn't know, selfbot/userbot are used to automate user accounts). So how does it work? It works in a very simple way, using the pyrogram library, a python script connects to your account (creating a new session) and catches your commands.
