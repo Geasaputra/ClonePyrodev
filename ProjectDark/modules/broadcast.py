@@ -14,7 +14,7 @@ async def gcast_cmd(client, message):
     if message.reply_to_message or get_arg(message):
         kang = await message.reply("Broadcasting message...")
     else:
-        return await message.edit("Give me a text or reply to chat")
+        return await message.edit("Give me a text or reply to chat!")
     done = 0
     error = 0
     user_id = client.me.id
@@ -34,15 +34,16 @@ async def gcast_cmd(client, message):
                 await asyncio.sleep(0.3)
             except Exception:
                 error += 1
+            await message.delete()
     await kang.edit(
-        f"#Group_Broadcast\n\n  • Success: {done}\n  • Failed: {error}")
+        f"Group Broadcast\nSuccess: {done}\nFailed: {error}")
 
 @Client.on_message(filters.command("gucast", cmd) & filters.me)
 async def gucast(client: Client, message: Message):
     if message.reply_to_message or get_arg(message):
         text = await message.reply_text("Broadcasting message...")
     else:
-        return await message.edit_text("Give me a text or reply to chat")
+        return await message.edit_text("Give me a text or reply to chat!")
     done = 0
     error = 0
     async for dialog in client.get_dialogs():
@@ -62,15 +63,16 @@ async def gucast(client: Client, message: Message):
             except Exception:
                 error += 1
                 await asyncio.sleep(0.3)
+                await message.delete()
     await text.edit_text(
-        f"#User_Broadcast\n\n  • Success: {done}\n  • Failed: {error}")
+        f"UserBroadcast\nSuccess: {done}\nFailed: {error}")
 
 @Client.on_message(filters.command("gcastfwd", cmd) & filters.me)
 async def gcast_fwd(client, message):
     if not message.reply_to_message and not get_arg(message):
-        return await message.edit("Reply to the message or media to be forwarded")
+        return await message.edit("Reply to the message or media to be forward.")
 
-    kang = await message.reply("Broadcasting forwarded chat...")
+    kang = await message.reply("Broadcasting forward chat...")
 
     done = 0
     error = 0
@@ -87,23 +89,24 @@ async def gcast_fwd(client, message):
                 await asyncio.sleep(0.3)
             except Exception:
                 error += 1
+                await message.delete()
 
     await kang.edit(
-        f"#Forward_Broadcast\n\n  • Success: {done}\n  • Failed: {error}")
+        f"Forward Broadcast\nSuccess: {done}\nFailed: {error}")
 
 add_command_help(
     "broadcast",
     [
-        ["gcast <text>",
-        "Broadcast a message to group!",
+        ["gcast <text/reply>",
+        "Broadcast a message to all your group joined.",
         ],
         
-        ["gucast <text>",
-        "Broadcast a message to mutual contact!",
+        ["gucast <text/repl>",
+        "Broadcast a message to peer user.",
         ],
         
-        ["gcastfwd <reply to chat/media>",
-        "Broadcast a forwaded message!",
+        ["gcastfwd <reply to message>",
+        "Broadcast a forwaded message.",
         ],
     ],
 )

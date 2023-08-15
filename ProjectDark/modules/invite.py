@@ -16,23 +16,23 @@ from .help import *
 
 @Client.on_message(filters.me & filters.command("invite", cmd))
 async def inviteee(client: Client, message: Message):
-    mg = await edit_or_reply(message, "__Adding Users!__")
+    mg = await edit_or_reply(message, "Inviting user...")
     user_s_to_add = message.text.split(" ", 1)[1]
     if not user_s_to_add:
-        await mg.edit("__Give Me Users To Add! Check Help Menu For More Info!__")
+        await mg.edit("Give user to add!")
         return
     user_list = user_s_to_add.split(" ")
     try:
         await client.add_chat_members(message.chat.id, user_list, forward_limit=100)
     except BaseException as e:
-        await mg.edit(f"__Unable To Add Users! \nTraceBack : {e}__")
+        await mg.edit(f"Unable to invite user! \n{e}")
         return
-    await mg.edit(f"__Sucessfully Added {len(user_list)} To This Group/Channel!__")
+    await mg.edit(f"{len(user_list)} invited!")
 
 '''
 @Client.on_message(filters.command(["inviteall"], cmd) & filters.me)
 async def inv(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Processing . . .__")
+    Dark = await edit_or_reply(message, "Processing . . .")
     text = message.text.split(" ", 1)
     queryy = text[1]
     chat = await client.get_chat(queryy)
@@ -50,32 +50,32 @@ async def inv(client: Client, message: Message):
             try:
                 await client.add_chat_members(tgchat.id, user.id)
             except Exception as e:
-                mg = await client.send_message(BOTLOG_CHATID, f"**ERROR:** __{e}__")
+                mg = await client.send_message(BOTLOG_CHATID, f"ERROR: {e}")
                 await asyncio.sleep(0.3)
                 await mg.delete()
 '''
 
 @Client.on_message(filters.command("invitelink", cmd) & filters.me)
 async def invite_link(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Processing...__")
+    Dark = await edit_or_reply(message, "Processing...")
     if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
         message.chat.title
         try:
             link = await client.export_chat_invite_link(message.chat.id)
-            await Dark.edit(f"**Link Invite:** {link}")
+            await Dark.edit(f"Link: {link}")
         except Exception:
-            await Dark.edit("Denied permission")
+            await Dark.edit("No permission!")
 
 
 add_command_help(
     "invite",
     [
         ["invitelink",
-        "Get invite link",
+        "Get invite link your group.",
         ],
         
-        ["invite @username",
-        "Invite a user"
+        ["invite user1 user2 ...",
+        "Invite a users."
         ],
     ],
 )

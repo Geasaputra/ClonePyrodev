@@ -19,10 +19,10 @@ auth_url = r["auth_url"]
 
 @Client.on_message(filters.command(["tg", "telegraph"], cmd) & filters.me)
 async def uptotelegraph(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Processing . . .__")
+    Dark = await edit_or_reply(message, "Processing...")
     if not message.reply_to_message:
         await Dark.edit(
-            "**Please Reply To Message, To Get Links from Telegraph.**"
+            "Reply to message!"
         )
         return
     if message.reply_to_message.media:
@@ -33,11 +33,11 @@ async def uptotelegraph(client: Client, message: Message):
         try:
             media_url = upload_file(m_d)
         except exceptions.TelegraphException as exc:
-            await Dark.edit(f"**ERROR:** __{exc}__")
+            await Dark.edit(f"{exc}")
             os.remove(m_d)
             return
         U_done = (
-            f"**Successfully uploaded** [Telegraph](https://telegra.ph/{media_url[0]})"
+            f"[Successfully](https://telegra.ph/{media_url[0]})!"
         )
         await Dark.edit(U_done)
         os.remove(m_d)
@@ -48,18 +48,17 @@ async def uptotelegraph(client: Client, message: Message):
         try:
             response = telegraph.create_page(page_title, html_content=page_text)
         except exceptions.TelegraphException as exc:
-            await Dark.edit(f"**ERROR:** __{exc}__")
+            await Dark.edit(f"{exc}")
             return
-        wow_graph = f"**Successfully uploaded to** [Telegraph](https://telegra.ph/{response['path']})"
+        wow_graph =f"[Successfully](https://telegra.ph/{response['path']})!"
         await Dark.edit(wow_graph)
 
 
 add_command_help(
     "telegraph",
     [
-        [
-            f"telegraph or {cmd}tg",
-            "Reply to Text or Media to upload it to the telegraph.",
+        [f"telegraph or {cmd}tg",
+        "Reply to Text or media to upload it to the telegraph.",
         ],
     ],
 )

@@ -54,11 +54,11 @@ async def tg_lock(
 ):
     if lock:
         if perm not in permissions:
-            return await message.edit_text("Already locked.")
+            return await message.edit_text("Already locked!")
         permissions.remove(perm)
     else:
         if perm in permissions:
-            return await message.edit_text("Already Unlocked.")
+            return await message.edit_text("Already unlocked!")
         permissions.append(perm)
 
     permissions = {perm: True for perm in list(set(permissions))}
@@ -72,7 +72,7 @@ async def tg_lock(
             "To unlock this, you have to unlock 'messages' first."
         )
 
-    await message.edit_text(("Locked." if lock else "Unlocked."))
+    await message.edit_text(("Locked!" if lock else "Unlocked!"))
 
 
 @Client.on_message(filters.command(["lock", "unlock"], cmd) & filters.me)
@@ -99,7 +99,7 @@ async def locks_func(client: Client, message: Message):
         )
     elif parameter == "all" and state == "lock":
         await client.set_chat_permissions(chat_id, ChatPermissions())
-        await message.edit_text(f"Locked Everything in {message.chat.title}")
+        await message.edit_text(f"Locked all in {message.chat.title}!")
 
     elif parameter == "all" and state == "unlock":
         await client.set_chat_permissions(
@@ -115,7 +115,7 @@ async def locks_func(client: Client, message: Message):
                 can_pin_messages=False,
             ),
         )
-        await message.edit(f"Unlocked Everything in {message.chat.title}")
+        await message.edit(f"Unlocked all in {message.chat.title}!")
 
 
 @Client.on_message(filters.command("locks", cmd) & filters.me)
@@ -123,11 +123,11 @@ async def locktypes(client: Client, message: Message):
     permissions = await current_chat_permissions(client, message.chat.id)
 
     if not permissions:
-        return await message.edit("No Permissions.")
+        return await message.edit("No permission!")
 
     perms = ""
     for i in permissions:
-        perms += f" • __**{i}**__\n"
+        perms += f"{i}\n"
 
     await message.edit_text(perms)
 
@@ -135,12 +135,12 @@ async def locktypes(client: Client, message: Message):
 add_command_help(
     "locks",
     [
-        ["lock <all or lock type>",
+        ["lock <all or type>",
         "Lock permissions on the group."
         ],
         
         ["unlock <all or unlock type>",
-        "Unlock permissions in group\n\nSupported Locks / Unlocks:` `msg` | `media` | `stickers` | `polls` | `info`  | `invite` | `webprev` |`pin` | `all`.",
+        "Unlock permissions in group. Types: msg, media, stickers, polls, info, invite, webprev, pin, all.",
         ],
     ],
 )

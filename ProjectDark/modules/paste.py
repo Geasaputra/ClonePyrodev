@@ -20,11 +20,11 @@ pattern = re.compile(r"^text/|json$|yaml$|xml$|toml$|x-sh$|x-shellscript$")
 @Client.on_message(filters.command("paste", cmd) & filters.me)
 async def paste_func(client: Client, message: Message):
     if not message.reply_to_message:
-        return await edit_or_reply(message, f"Reply To A Message With {cmd}paste")
+        return await edit_or_reply(message, f"Reply to message.")
     r = message.reply_to_message
     if not r.text and not r.document:
         return await edit_or_reply(message, "Only text and documents are supported.")
-    m = await edit_or_reply(message, "__Pasting...__")
+    m = await edit_or_reply(message, "Pasting...")
     if r.text:
         content = str(r.text)
     elif r.document:
@@ -48,16 +48,18 @@ async def paste_func(client: Client, message: Message):
             await message.reply_photo(
                 photo=link,
                 quote=False,
-                caption=f"**Paste Link:** [Here]({link})",
+                caption=f"Result: [Link]({link})",
             )
         await m.delete()
     except Exception:
-        await m.edit(f"[Here]({link}) your paste")
+        await m.edit(f"Result: [Link]({link})")
 
 
 add_command_help(
     "paste",
     [
-        ["paste <reply>", "Untuk Menyimpan text ke ke layanan pastebin"],
+        ["paste <reply to text/txt>",
+        "Upload text to pastebin."
+        ],
     ],
 )

@@ -28,14 +28,14 @@ modules = CMD_HELP
 
 @Client.on_message(filters.command(["alive", "on"], cmd) & filters.me)
 async def alive(client: Client, message: Message):
-    msg = await edit_or_reply(message, "👾")
-    await asyncio.sleep(2)
+    msg = await edit_or_reply(message, "...")
+    await asyncio.sleep(1)
     uptime = await get_readable_time((time.time() - StartTime))
     av = (
-        f"**DarkPyro-Rev v{BOT_VER}**\n"
-        f"__Started since {uptime} ago__\n\n"
-        f"<code>{len(modules)}</code> Modules has Loaded\n\n"
-        f"<b>Python</b> <code>v{python_version()}</code> | <b>Pyrogram</b> <code>v{pyroVer}</code>"
+        f"DarkPyro-REV v{BOT_VER}\n"
+        f"Started since {uptime} ago.\n\n"
+        f"{len(modules)} modules has loaded.\n\n"
+        f"Python {python_version()} | Pyrogram {pyroVer}"
     )
     try:
         await asyncio.gather(
@@ -52,9 +52,8 @@ async def alive(client: Client, message: Message):
 add_command_help(
     "alive",
     [
-        [
-            "alive",
-            "Just for fun.",
+        ["alive",
+        "Just for fun.",
         ],
     ],
 )

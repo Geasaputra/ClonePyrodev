@@ -18,12 +18,12 @@ from .help import add_command_help
 @Client.on_message(filters.command(["sg", "sa", "sangmata"], cmd) & filters.me)
 async def sg(client: Client, message: Message):
     args = await extract_user(message)
-    lol = await edit_or_reply(message, "__Stealing your data__")
+    lol = await edit_or_reply(message, "Processing...")
     if args:
         try:
             user = await client.get_users(args)
         except Exception:
-            return await lol.edit(f"__Please specify a valid user!__")
+            return await lol.edit(f"Specify a valid user!")
     bot = "SangMata_BOT"
     try:
         await client.send_message(bot, f"{user.id}")
@@ -34,13 +34,13 @@ async def sg(client: Client, message: Message):
 
     async for stalk in client.search_messages(bot, query="available", limit=1):
         if not stalk:
-            await message.edit_text("__Not yet detected!__")
+            await message.edit_text("No history!")
             return
         elif stalk:
             await message.edit(stalk.text)
             await stalk.delete()
 
-    async for stalk in client.search_messages(bot, query="History", limit=1):
+    async for stalk in client.search_messages(bot, query=["names", "usernames"], limit=5):
         if not stalk:
             return
         elif stalk:
@@ -51,9 +51,8 @@ async def sg(client: Client, message: Message):
 add_command_help(
     "sangmata",
     [
-        [
-            f"{cmd}sg <reply/userid/username>",
-            "Check history name/username of users.",
+        [f"{cmd}sg <reply/userid/username>",
+        "Check history name/username of users.",
         ],
     ],
 )

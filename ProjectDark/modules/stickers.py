@@ -29,7 +29,7 @@ from .help import add_command_help
 async def kang(client: Client, message: Message):
     user = client.me
     replied = message.reply_to_message
-    Dark = await edit_or_reply(message, "__Abracadabra, your stickers are mine now...__")
+    Dark = await edit_or_reply(message, "Processing...")
     media_ = None
     emoji_ = None
     is_anim = False
@@ -59,7 +59,7 @@ async def kang(client: Client, message: Message):
             ff_vid = True
         elif replied.sticker:
             if not replied.sticker.file_name:
-                await Dark.edit("**Sticker unnamed!**")
+                await Dark.edit("Sticker unnamed!")
                 return
             emoji_ = replied.sticker.emoji
             is_anim = replied.sticker.is_animated
@@ -71,11 +71,11 @@ async def kang(client: Client, message: Message):
                 resize = True
                 ff_vid = True
         else:
-            await Dark.edit("**File has not support!**")
+            await Dark.edit("File has not support!")
             return
         media_ = await client.download_media(replied, file_name="ProjectDark/resources/")
     else:
-        await Dark.edit("**Reply to Photo/GIF/Sticker!**")
+        await Dark.edit("Reply to Photo/GIF/Sticker!")
         return
     if media_:
         args = get_arg(message)
@@ -97,9 +97,9 @@ async def kang(client: Client, message: Message):
 
         u_name = user.username
         u_name = "@" + u_name if u_name else user.first_name or user.id
-        packname = f"Sticker_u{user.id}_v{pack}"
-        custom_packnick = f"{u_name} Sticker Pack"
-        packnick = f"{custom_packnick} Vol.{pack}"
+        packname = f"Sticker_{user.id}_{pack}"
+        custom_packnick = f"{u_name}'s Pack"
+        packnick = f"{custom_packnick} Vol. {pack}"
         cmd = "/newpack"
         if resize:
             media_ = await resize_media(media_, is_video, ff_vid)
@@ -125,8 +125,8 @@ async def kang(client: Client, message: Message):
             limit = 50 if (is_video or is_anim) else 120
             if exist.set.count >= limit:
                 pack += 1
-                packname = f"a{user.id}_darkpyro_{pack}"
-                packnick = f"{custom_packnick} Vol.{pack}"
+                packname = f"Sticker_{user.id}_{pack}"
+                packnick = f"{custom_packnick} Vol. {pack}"
                 if is_anim:
                     packname += f"_anim{pack}"
                     packnick += f" (Animated){pack}"
@@ -145,7 +145,7 @@ async def kang(client: Client, message: Message):
                 await client.unblock_user("stickers")
                 await client.send_message("stickers", "/addsticker")
             except Exception as e:
-                return await Dark.edit(f"**ERROR:** __{e}__")
+                return await Dark.edit(f"{e}")
             await asyncio.sleep(2)
             await client.send_message("stickers", packname)
             await asyncio.sleep(2)
@@ -187,7 +187,7 @@ async def kang(client: Client, message: Message):
                     await asyncio.sleep(2)
                     await client.send_message("Stickers", packname)
                     await asyncio.sleep(2)
-                    await Dark.edit(f"**Sticker [Kanged](https://t.me/addstickers/{packname})!**"
+                    await Dark.edit(f"[Successfully](https://t.me/addstickers/{packname})!"
                     )
                     return
             await client.send_document("stickers", media_)
@@ -235,7 +235,7 @@ async def kang(client: Client, message: Message):
             await client.send_message("Stickers", packname)
             await asyncio.sleep(2)
         await Dark.edit(
-            f"**Sticker [Kanged](https://t.me/addstickers/{packname})!**"
+            f"[Successfully](https://t.me/addstickers/{packname})!"
             )
         if os.path.exists(str(media_)):
             os.remove(media_)
@@ -247,15 +247,15 @@ async def get_response(message, client):
 
 @Client.on_message(filters.command(["packinfo", "stickerinfo"], cmd) & filters.me)
 async def packinfo(client: Client, message: Message):
-    rep = await edit_or_reply(message, "__Processing...__")
+    rep = await edit_or_reply(message, "Processing...")
     if not message.reply_to_message:
-        await rep.edit("Please Reply To Sticker...")
+        await rep.edit("Please reply to sticker!")
         return
     if not message.reply_to_message.sticker:
-        await rep.edit("Please Reply To A Sticker...")
+        await rep.edit("Please reply to sticker!")
         return
     if not message.reply_to_message.sticker.set_name:
-        await rep.edit("__Seems Like A Stray Sticker!__")
+        await rep.edit("Seems like a stray sticker!")
         return
     stickerset = await client.send(
         GetStickerSet(
@@ -269,14 +269,15 @@ async def packinfo(client: Client, message: Message):
     for stucker in stickerset.packs:
         if stucker.emoticon not in emojis:
             emojis.append(stucker.emoticon)
-    output = f"""**Sticker Pack Title**: {stickerset.set.title}
-**Sticker Pack Short Name**: {stickerset.set.short_name}
-**Stickers Count**: {stickerset.set.count}
-**Archived**: {stickerset.set.archived}
-**Official**: {stickerset.set.official}
-**Masks**: {stickerset.set.masks}
-**Animated**: {stickerset.set.animated}
-**Emojis In Pack**: {' '.join(emojis)}
+    output = f"""
+Title: {stickerset.set.title}
+Short Name: {stickerset.set.short_name}
+Count: {stickerset.set.count}
+Archived: {stickerset.set.archived}
+Official: {stickerset.set.official}
+Masks: {stickerset.set.masks}
+Animated: {stickerset.set.animated}
+Emojis: {' '.join(emojis)}
 """
     await rep.edit(output)
 
@@ -285,14 +286,14 @@ async def packinfo(client: Client, message: Message):
 async def cb_sticker(client: Client, message: Message):
     query = get_text(message)
     if not query:
-        return await edit_or_reply(message, "**Enter the name of the Sticker Pack!**")
-    xx = await edit_or_reply(message, "__Searching sticker packs...__")
+        return await edit_or_reply(message, "Enter the name!")
+    xx = await edit_or_reply(message, "Searching...")
     text = requests.get(f"https://combot.org/telegram/stickers?q={query}").text
     soup = bs(text, "lxml")
     results = soup.find_all("div", {"class": "sticker-pack__header"})
     if not results:
-        return await xx.edit("**Cannot Find Sticker Pack**")
-    reply = f"**Keyword Sticker Pack:**\n {query}\n\n**Results:**\n"
+        return await xx.edit("Error!")
+    reply = f"Keyword: {query}\nResults:\n"
     for pack in results:
         if pack.button:
             packtitle = (pack.find("div", "sticker-pack__title")).get_text()
@@ -305,8 +306,8 @@ async def cb_sticker(client: Client, message: Message):
 async def tinying(client: Client, message: Message):
     reply = message.reply_to_message
     if not (reply and (reply.media)):
-        return await edit_or_reply(message, "**Please Reply To Sticker!**")
-    Dark = await edit_or_reply(message, "__Shrinking your sticker. . .__")
+        return await edit_or_reply(message, "Reply to sticker!")
+    Dark = await edit_or_reply(message, "Shrinking...")
     ik = await client.download_media(reply)
     im1 = Image.open("ProjectDark/resources/blank.png")
     if ik.endswith(".tgs"):
@@ -381,17 +382,17 @@ async def tinying(client: Client, message: Message):
 @Client.on_message(filters.command(["mmf", "memify"], cmd) & filters.me)
 async def memify(client: Client, message: Message):
     if not message.reply_to_message_id:
-        await edit_or_reply(message, "**Reply to photo or sticker!**")
+        await edit_or_reply(message, "Reply to photo or sticker!")
         return
     reply_message = message.reply_to_message
     if not reply_message.media:
-        await edit_or_reply(message, "**Please Reply to photo or sticker!**")
+        await edit_or_reply(message, "Reply to photo or sticker!")
         return
     file = await client.download_media(reply_message)
-    Dark = await edit_or_reply(message, "__Memifying, wait plox. . .__")
+    Dark = await edit_or_reply(message, "Memifying...")
     text = get_arg(message)
     if len(text) < 1:
-        return await msg.edit(f"Please Type __{cmd}mmf text__")
+        return await msg.edit(f"Type `{cmd}mmf up;down`")
     meme = await add_text_img(file, text)
     await asyncio.gather(
         Dark.delete(),
@@ -407,7 +408,7 @@ async def memify(client: Client, message: Message):
 @Client.on_message(filters.command(["stoi", "getsticker", "get"], cmd) & filters.me)
 async def stick2png(client: Client, message: Message):
     try:
-        await message.edit("__Converting to image. . .__")
+        await message.edit("Converting...")
 
         path = await message.reply_to_message.download()
         with open(path, "rb") as f:
@@ -427,40 +428,31 @@ async def stick2png(client: Client, message: Message):
         )
     except Exception as e:
         return await client.send_message(
-            message.chat.id, f"**INFO:** __{e}__", reply_to_message_id=ReplyCheck(message)
+            message.chat.id, f"{e}", reply_to_message_id=ReplyCheck(message)
         )
 
 
 add_command_help(
     "sticker",
     [
-        [
-            f"`kang` or `{cmd}tikel`",
-            f"Reply `.kang` to sticker add to your pack.",
+        [f"kang <reply to sticker>",
+        "Add sticker to your pack.",
         ],
-        ["stoi", "Converting stickers to image."],
-        ["stickers <sticker name>", "Find Sticker Pack."],
-    ],
-)
-
-
-add_command_help(
-    "memify",
-    [
-        [
-            "mmf Up ; Down",
-            "To add text and convert to sticker.",
+        
+        ["stoi <reply to sticker>",
+        "Converting stickers to image."
         ],
-    ],
-)
-
-
-add_command_help(
-    "tiny",
-    [
-        [
-            "tiny <reply to photo/sticker>",
-            "Minimize a photo/sticker.",
+        
+        ["stickers <query>",
+        "Find Sticker Pack."
+        ],
+        
+        ["mmf <up text;down text>",
+        "Add text and convert to sticker.",
+        ],
+        
+        ["tiny <reply to photo/sticker>",
+        "Minimize a photo/sticker.",
         ],
     ],
 )

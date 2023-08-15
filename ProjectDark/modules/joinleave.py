@@ -13,28 +13,28 @@ from .help import add_command_help
 @Client.on_message(filters.command("join", cmd) & filters.me)
 async def join(client: Client, message: Message):
     Dark = message.command[1] if len(message.command) > 1 else message.chat.id
-    xxnx = await edit_or_reply(message, "__Joining to chat...__")
+    xxnx = await edit_or_reply(message, "Joining to chat...")
     try:
-        await xxnx.edit(f"**Successfully joined to Chat ID** __{Dark}__")
+        await xxnx.edit(f"Successfully joined!\nChat ID: `{Dark}`")
         await client.join_chat(Dark)
     except Exception as ex:
-        await xxnx.edit(f"**ERROR:** \n\n{str(ex)}")
+        await xxnx.edit(f"{str(ex)}")
 
 
 @Client.on_message(filters.command(["leave", "kickme"], cmd) & filters.me)
 async def leave(client: Client, message: Message):
     Dark = message.command[1] if len(message.command) > 1 else message.chat.id
-    xxnx = await edit_or_reply(message, "__Good bye dumb ass...__")
+    xxnx = await edit_or_reply(message, "Good bye!")
     try:
-        await xxnx.edit_text(f"{client.me.first_name} has left this group, bye!!")
+        await xxnx.edit_text(f"{client.me.first_name} has left.")
         await client.leave_chat(Dark)
     except Exception as ex:
-        await xxnx.edit_text(f"**ERROR:** \n\n{str(ex)}")
+        await xxnx.edit_text(f"{str(ex)}")
 
 
 @Client.on_message(filters.command(["leaveallgc"], cmd) & filters.me)
 async def kickmeall(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Leaving all group chat...__")
+    Dark = await edit_or_reply(message, "Leaving all groups...")
     er = 0
     done = 0
     async for dialog in client.get_dialogs():
@@ -46,13 +46,13 @@ async def kickmeall(client: Client, message: Message):
             except BaseException:
                 er += 1
     await Dark.edit(
-        f"**Successfully leave from {done} Group, Failed leave from {er} Group**"
+        f"Successfully leave all groups!\nDone: {done}\nFailed: {er}"
     )
 
 
 @Client.on_message(filters.command(["leaveallch"], cmd) & filters.me)
 async def kickmeallch(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Leaving from all channels...__")
+    Dark = await edit_or_reply(message, "Leaving from all channels...")
     er = 0
     done = 0
     async for dialog in client.get_dialogs():
@@ -64,7 +64,7 @@ async def kickmeallch(client: Client, message: Message):
             except BaseException:
                 er += 1
     await Dark.edit(
-        f"**Successfully leave from {done} Channel, Failed leave from {er} Channel**"
+        f"Successfully leave from all channels!\nDone: {done}\nFailed: {er}"
     )
 
 
@@ -72,23 +72,23 @@ add_command_help(
     "joinleave",
     [
         ["kickme",
-        "Leave the group with a message has left this group, bye!!.",
+        "Leave from currently group.",
         ],
         
         ["leaveallgc",
-        "Leave all telegram groups you have joined."
+        "Leave from all groups you have joined."
         ],
         
         ["leaveallch",
-        "Leave all telegram channels you have joined."
+        "Leave all channels you have joined."
         ],
         
-        ["join <UsernameGC>",
-        "To joined group chat with the username."
+        ["join <username>",
+        "Join group chat with the username."
         ],
         
         ["leave <UsernameGC>",
-        "To leaving group chat with the username."
+        "Leav group chat with the username."
         ],
     ],
 )

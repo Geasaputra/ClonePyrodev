@@ -3,6 +3,7 @@
 
 
 from pyrogram import Client, enums, filters
+from pyrogram.raw import functions
 from pyrogram.types import Message
 from sqlalchemy.exc import IntegrityError
 
@@ -14,9 +15,7 @@ from ProjectDark.helpers.tools import get_arg
 
 from .help import add_command_help
 
-DEF_UNAPPROVED_MSG = (
-"__This message is sent automatically by the session to prevent unknown users from spamming. Your message will be replied to immediately if the account owner is online and as long as it don't spam__"
-)
+DEF_UNAPPROVED_MSG = ("This message is sent automatically by the session to prevent unknown users from spamming. Your message will be replied to immediately if the account owner is online. And as long as it, don't spam or your message will be auto-purged.")
 
 @Client.on_message(
     ~filters.me & filters.private & ~filters.bot & filters.incoming, group=69
@@ -30,6 +29,8 @@ async def incomingpm(client: Client, message: Message):
 
     if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return
+    if message.from_user.is_self: 
+        message.continue_propagation()
     if await auto_accept(client, message) or message.from_user.is_self:
         message.continue_propagation()
     if message.chat.id != 777000:
@@ -66,19 +67,23 @@ async def incomingpm(client: Client, message: Message):
                     TEMP_SETTINGS["PM_COUNT"][message.chat.id] + 1
                 )
             if TEMP_SETTINGS["PM_COUNT"][message.chat.id] > (int(PM_LIMIT) - 1):
-                await message.reply("You has been blocked!")
                 try:
                     del TEMP_SETTINGS["PM_COUNT"][message.chat.id]
                     del TEMP_SETTINGS["PM_LAST_MSG"][message.chat.id]
                 except BaseException:
                     pass
 
-                await client.block_user(message.chat.id)
+# Part of DragonUserbot - 2022
+                user_info = await client.resolve_peer(message.chat.id)
+                await client.send(functions.messages.ReportSpam(peer=user_info))
+                await client.send(
+                    functions.messages.DeleteHistory(peer=user_info, max_id=0, revoke=True)
+                    )
 
     message.continue_propagation()
 
 
-async def auto_accept(client, message):
+async def auto_accept(client: Client, message: Message):
     try:
         from ProjectDark.helpers.SQL.pm_permit_sql import approve, is_approved
     except BaseException:
@@ -88,8 +93,8 @@ async def auto_accept(client, message):
         if is_approved(message.chat.id):
             return True
 
-        async for msg in client.get_chat_history(message.chat.id, limit=1):
-            if msg.from_user.id == client.me.id:
+        async for message in client.get_chat_history(message.chat.id, limit=1):
+            if message.from_user.id == client.me.id:
                 try:
                     del TEMP_SETTINGS["PM_COUNT"][message.chat.id]
                     del TEMP_SETTINGS["PM_LAST_MSG"][message.chat.id]
@@ -102,9 +107,9 @@ async def auto_accept(client, message):
                         message.chat.id,
                         from_user="me",
                         limit=10,
-                        query=UNAPPROVED_MSG,
-                    ):
-                        await message.delete()
+                        query=DEF_UNAPPROVED_MSG
+                        ):
+                            await message.delete()
                     return True
                 except BaseException:
                     pass
@@ -113,7 +118,7 @@ async def auto_accept(client, message):
 
 
 @Client.on_message(
-    filters.command(["ok", "setuju", "approve"], cmd) & filters.me & filters.private
+    filters.command(["ok", "approve"], cmd) & filters.me & filters.private
 )
 async def approvepm(client: Client, message: Message):
     try:
@@ -141,16 +146,16 @@ async def approvepm(client: Client, message: Message):
 
     try:
         approve(uid)
-        await message.edit(f"[{name0}](tg://user?id={uid}) Approved!")
+        await message.edit(f"[{name0}](tg://user?id={uid}) approved!")
     except IntegrityError:
         await message.edit(
-            f"[{name0}](tg://user?id={uid}) already approved."
+            f"[{name0}](tg://user?id={uid}) already approved!"
         )
         return
 
 
 @Client.on_message(
-    filters.command(["tolak", "nopm", "disapprove"], cmd) & filters.me & filters.private
+    filters.command(["no", "nopm", "disapprove"], cmd) & filters.me & filters.private
 )
 async def disapprovepm(client: Client, message: Message):
     try:
@@ -187,12 +192,12 @@ async def disapprovepm(client: Client, message: Message):
 async def setpm_limit(client: Client, cust_msg: Message):
     if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await cust_msg.edit(
-            f"**You Must Set Var** `PM_AUTO_BAN` **To** `True`\n\n**If you want to activate PMPERMIT, please type:** __{cmd}setvar PM_AUTO_BAN True__"
+            f"Set PM_AUTO_BAN = True to activating this module."
         )
     try:
         from ProjectDark.helpers.SQL.globals import addgvar
     except AttributeError:
-        await cust_msg.edit("**Running on Non-SQL mode!**")
+        await cust_msg.edit("Running on Non-SQL mode!")
         return
     input_str = (
         cust_msg.text.split(None, 1)[1]
@@ -203,12 +208,12 @@ async def setpm_limit(client: Client, cust_msg: Message):
         else None
     )
     if not input_str:
-        return await cust_msg.edit("**Please enter a number for PM_LIMIT.**")
-    Dark = await cust_msg.edit("__Processing...__")
+        return await cust_msg.edit("Please enter a number for PM_LIMIT.")
+    Dark = await cust_msg.edit("Processing...")
     if input_str and not input_str.isnumeric():
-        return await Dark.edit("**Please enter a number for PM_LIMIT.**")
+        return await Dark.edit("Please enter a number for PM_LIMIT.")
     addgvar("PM_LIMIT", input_str)
-    await Dark.edit(f"**Set PM limit to** __{input_str}__")
+    await Dark.edit(f"PM_LIMIT set to {input_str}")
 
 
 @Client.on_message(filters.command(["pmpermit", "pmguard"], cmd) & filters.me)
@@ -224,60 +229,60 @@ async def onoff_pmpermit(client: Client, message: Message):
         PMPERMIT = True
     if PMPERMIT:
         if h_type:
-            await edit_or_reply(message, "**PMPERMIT Successfully activated**")
+            await edit_or_reply(message, "PMPERMIT successfully activated!!")
         else:
             addgvar("PMPERMIT", h_type)
-            await edit_or_reply(message, "**PMPERMIT Successfully deactivated **")
+            await edit_or_reply(message, "PMPERMIT successfully deactivated!!")
     elif h_type:
         addgvar("PMPERMIT", h_type)
-        await edit_or_reply(message, "**PMPERMIT Successfully activated**")
+        await edit_or_reply(message, "PMPERMIT successfully activated!")
     else:
-        await edit_or_reply(message, "**PMPERMIT Successfully deactivated**")
+        await edit_or_reply(message, "PMPERMIT successfully deactivated!")
 
 
 @Client.on_message(filters.command("setpmpermit", cmd) & filters.me)
 async def setpmpermit(client: Client, cust_msg: Message):
-    """Set your own Unapproved message"""
+    """Set your own unapproved message!"""
     if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await cust_msg.edit(
-            "**You Must Set Var** `PM_AUTO_BAN` **To** `True`\n\n**If you want to activate PMPERMIT, please type:** `.setvar PM_AUTO_BAN True__"
+            "Set PM_AUTO_BAN = True to activating this module."
         )
     try:
         import ProjectDark.helpers.SQL.globals as sql
     except AttributeError:
-        await cust_msg.edit("**Running on Non-SQL mode!**")
+        await cust_msg.edit("Running on Non-SQL mode!")
         return
-    Dark = await cust_msg.edit("__Processing...__")
+    Dark = await cust_msg.edit("Processing...")
     custom_message = sql.gvarstatus("unapproved_msg")
     message = cust_msg.reply_to_message
     if custom_message is not None:
         sql.delgvar("unapproved_msg")
     if not message:
-        return await Dark.edit("**Please Reply To Message**")
+        return await Dark.edit("Please reply to message!")
     msg = message.text
     sql.addgvar("unapproved_msg", msg)
-    await Dark.edit("**Message Saved Successfully To Room Chat**")
+    await Dark.edit("Successfully saved!")
 
 
 @Client.on_message(filters.command("getpmpermit", cmd) & filters.me)
 async def get_pmermit(client: Client, cust_msg: Message):
     if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await cust_msg.edit(
-            "**You Must Set Var** `PM_AUTO_BAN` **To** `True`\n\n**If you want to activate PMPERMIT, please type:** `.setvar PM_AUTO_BAN True__"
+            "Set PM_AUTO_BAN = True to activating this module."
         )
     try:
         import ProjectDark.helpers.SQL.globals as sql
     except AttributeError:
-        await cust_msg.edit("**Running on Non-SQL mode!**")
+        await cust_msg.edit("Running on Non-SQL mode!")
         return
-    Dark = await cust_msg.edit("__Processing...__")
+    Dark = await cust_msg.edit("Processing...")
     custom_message = sql.gvarstatus("unapproved_msg")
     if custom_message is not None:
-        await Dark.edit("**Your PMPERMIT message now:**" f"\n\n{custom_message}")
+        await Dark.edit("Your PMPERMIT message now:" f"\n\n{custom_message}")
     else:
         await Dark.edit(
-            "**You Have Not Set PMPERMIT Costume Messages,**\n"
-            f"**Still Using Default PM Messages:**\n\n{DEF_UNAPPROVED_MSG}"
+            "You Have Not Set PMPERMIT Costume Messages,\n"
+            f"Still Using Default PM Messages:\n\n{DEF_UNAPPROVED_MSG}"
         )
 
 
@@ -285,36 +290,36 @@ async def get_pmermit(client: Client, cust_msg: Message):
 async def reset_pmpermit(client: Client, cust_msg: Message):
     if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await cust_msg.edit(
-            f"**You Must Set Var** `PM_AUTO_BAN` **To** `True`\n\n**If you want to activate PMPERMIT, please type:** __{cmd}setvar PM_AUTO_BAN True__"
+            f"Set PM_AUTO_BAN = True to activating this module."
         )
     try:
         import ProjectDark.helpers.SQL.globals as sql
     except AttributeError:
-        await cust_msg.edit("**Running on Non-SQL mode!**")
+        await cust_msg.edit("Running on Non-SQL mode!")
         return
-    Dark = await cust_msg.edit("__Processing...__")
+    Dark = await cust_msg.edit("Processing...")
     custom_message = sql.gvarstatus("unapproved_msg")
 
     if custom_message is None:
-        await Dark.edit("**Your PMPERMIT message is back to Default**")
+        await Dark.edit("Your PMPERMIT message is default!")
     else:
         sql.delgvar("unapproved_msg")
-        await Dark.edit("**Successfully Changed PMPERMIT Custom Message to Default**")
+        await Dark.edit("Successfully changed!")
 
 
 add_command_help(
     "pmpermit",
     [
-        [f"ok or {cmd}approve",
-        "Receive someone's message by replying to the message or tagging and also to do it in pm",
+        [f"ok",
+        "Receive someone's message by replying to the message or tagging and also to do it in pm.",
         ],
         
-        [f"tolak or {cmd}nopm",
-        "Reject someone's message by replying to the message or tagging and also to do it in pm",
+        [f"no",
+        "Reject someone's message by replying to the message or tag and also to do it in pm.",
         ],
         
         ["pmlimit <number>",
-        "To customize messages, limit auto block messages",
+        "To customize messages, limit auto-purged messages.",
         ],
         
         ["setpmpermit <reply to chat>",
@@ -326,7 +331,7 @@ add_command_help(
         ],
         
         ["resetpmpermit",
-        "To Reset PMPERMIT Messages to DEFAULT",
+        "Set to default.",
         ],
         
         ["pmpermit on/off",

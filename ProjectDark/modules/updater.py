@@ -43,7 +43,7 @@ async def gen_chlog(repo, diff):
     d_form = "%d/%m/%y"
     for c in repo.iter_commits(diff):
         ch_log += (
-            f"• [{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
+            f"[{c.committed_datetime.strftime(d_form)}] {c.summary} <{c.author}>\n"
         )
     return ch_log
 
@@ -66,21 +66,21 @@ async def updateme_requirements():
 )
 @Client.on_message(filters.command("update", cmd) & filters.me)
 async def upstream(client: Client, message: Message):
-    status = await edit_or_reply(message, "__Updating...__")
+    status = await edit_or_reply(message, "Updating...")
     conf = get_arg(message)
     off_repo = UPSTREAM_REPO_URL
     try:
         txt = (
-            "**Update Error! "
-            + "\n\n**LOGTRACE:**\n"
+            "Error!"
+            + "\nLogtrace: "
         )
         repo = Repo()
     except NoSuchPathError as error:
-        await status.edit(f"{txt}\n**Directory** __{error}__")
+        await status.edit(f"{txt}\n{error}")
         repo.__del__()
         return
     except GitCommandError as error:
-        await status.edit(f"{txt}\n__{error}__")
+        await status.edit(f"{txt}\n{error}")
         repo.__del__()
         return
     except InvalidGitRepositoryError:
@@ -96,12 +96,6 @@ async def upstream(client: Client, message: Message):
         repo.heads[BRANCH].set_tracking_branch(origin.refs[BRANCH])
         repo.heads[BRANCH].checkout(True)
     ac_br = repo.active_branch.name
-    if ac_br != BRANCH:
-        await status.edit(
-            f"**[UPDATER]:** `Looks like you are using your own custom branch ({ac_br}). in that case, Updater is unable to identify which branch is to be merged. please checkout to main branch__"
-        )
-        repo.__del__()
-        return
     try:
         repo.create_remote("upstream", off_repo)
     except BaseException:
@@ -111,9 +105,9 @@ async def upstream(client: Client, message: Message):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "deploy" not in conf:
         if changelog:
-            changelog_str = f"**Found the latest commit [{ac_br}]!\n\nChangelog:**\n`{changelog}`"
+            changelog_str = f"Found the latest commit [{ac_br}]!\n\nChangelog:\n{changelog}"
             if len(changelog_str) > 4096:
-                await status.edit("**Oversize, send as file...**")
+                await status.edit("Oversize, sending file...")
                 file = open("output.txt", "w+")
                 file.write(changelog_str)
                 file.close()
@@ -126,12 +120,12 @@ async def upstream(client: Client, message: Message):
                 remove("output.txt")
             else:
                 return await status.edit(
-                    f"{changelog_str}\nType `{cmd}update deploy` for restart and update userbot**",
+                    f"{changelog_str}\n`{cmd}update deploy` for restart and update userbot",
                     disable_web_page_preview=True,
                 )
         else:
             await status.edit(
-                f"\n`Your BOT is`  **up-to-date**  `with branch`  **[{ac_br}]**\n",
+                f"\nUp to date with branch [{ac_br}]\n",
                 disable_web_page_preview=True,
             )
             repo.__del__()
@@ -142,7 +136,7 @@ async def upstream(client: Client, message: Message):
         repo.git.reset("--hard", "FETCH_HEAD")
     await updateme_requirements()
     await status.edit(
-        "__Update successfully!__",
+        "Update successfully!",
     )
     args = [sys.executable, "-m", "ProjectDark"]
     execle(sys.executable, *args, environ)
@@ -152,7 +146,12 @@ async def upstream(client: Client, message: Message):
 add_command_help(
     "update",
     [
-        ["update", "Check update."],
-        ["update deploy", "Update and re-deploy."],
+        ["update",
+        "Check update."
+        ],
+        
+        ["update deploy",
+        "Update and re-deploy."
+        ],
     ],
 )

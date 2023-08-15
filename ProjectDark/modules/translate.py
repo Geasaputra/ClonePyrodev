@@ -35,7 +35,7 @@ async def translate(client: Client, message: Message):
         except ValueError as err:
             await edit_or_reply(
                 message,
-                f"**ERROR:** __{str(err)}__",
+                f"{str(err)}",
                 parse_mode=enums.ParseMode.MARKDOWN,
             )
             return
@@ -55,13 +55,13 @@ async def translate(client: Client, message: Message):
         except ValueError as err:
             await edit_or_reply(
                 message,
-                "**ERROR:** __{}__".format(str(err)),
+                "{}".format(str(err)),
                 parse_mode=enums.ParseMode.MARKDOWN,
             )
             return
     await edit_or_reply(
         message,
-        f"**Translated to:** __{target}__\n__{tekstr.text}__\n\n**Detected Language:** __{(await trl.detect(text))}__",
+        f"Detected {(await trl.detect(text))} | Translate to {target}\n{tekstr.text}",
         parse_mode=enums.ParseMode.MARKDOWN,
     )
 
@@ -69,9 +69,8 @@ async def translate(client: Client, message: Message):
 add_command_help(
     "translate",
     [
-        [
-            "tr <language code> <text/reply>",
-            "Translates text to the set language. (Default is indonesian)",
+        ["tr <language code> <text/reply>",
+        "Translates text to the set language. (Default is Indonesian)",
         ],
     ],
 )

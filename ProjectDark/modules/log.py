@@ -1,5 +1,5 @@
 # Part of PyroMan - 2022
-# Kang by DarkPyro -2023
+# Kang by DarkPyro - 2023
 
 import asyncio
 
@@ -40,14 +40,14 @@ async def monito_p_m_s(client: Client, message: Message):
             if LOG_CHATS_.NEWPM:
                 await LOG_CHATS_.NEWPM.edit(
                     LOG_CHATS_.NEWPM.text.replace(
-                        "**#NEW_MESSAGE**",
-                        f" • __{LOG_CHATS_.COUNT}__ **Message**",
+                        "#NEW_MESSAGE",
+                        f"{LOG_CHATS_.COUNT} messages.",
                     )
                 )
                 LOG_CHATS_.COUNT = 0
             LOG_CHATS_.NEWPM = await client.send_message(
                 BOTLOG_CHATID,
-                f"<b>#FORWARDED #NEW_MESSAGE</b>\n<b> • From:</b> {message.from_user.mention}\n<b> • User ID:</b> <code>{message.from_user.id}</code>",
+                f"#FORWARD #NEW_MESSAGE\nFrom: {message.from_user.mention}\nID: <code>{message.from_user.id}</code>",
                 parse_mode=enums.ParseMode.HTML,
             )
         try:
@@ -66,9 +66,10 @@ async def log_tagged_messages(client: Client, message: Message):
         return
     if (no_log_pms_sql.is_approved(message.chat.id)) or (BOTLOG_CHATID == -100):
         return
-    result = f"<b>#TAGS #MESSAGE</b>\n<b> • From: </b>{message.from_user.mention}"
-    result += f"\n<b> • Group: </b>{message.chat.title}"
-    result += f"\n • <b><a href = '{message.link}'>Message</a>:</b>\n<code>{message.text}</code>"
+    result = f"#TAGS #MESSAGE\nFrom: {message.from_user.mention}"
+    result += f"\nGroup: {message.chat.title}"
+    result += f"\n<a href = '{message.link}'>Message:</a>"
+    result += f"\n<code>{message.text}</code>"
     await asyncio.sleep(0.5)
     await client.send_message(
         BOTLOG_CHATID,
@@ -83,7 +84,7 @@ async def set_log_p_m(client: Client, message: Message):
     if BOTLOG_CHATID != -100:
         if no_log_pms_sql.is_approved(message.chat.id):
             no_log_pms_sql.disapprove(message.chat.id)
-            await message.edit("**LOG from this group deactivated!**")
+            await message.edit("Group Logs from current chat activated!")
 
 
 @Client.on_message(filters.command("nolog", cmd) & filters.me)
@@ -91,14 +92,14 @@ async def set_no_log_p_m(client: Client, message: Message):
     if BOTLOG_CHATID != -100:
         if not no_log_pms_sql.is_approved(message.chat.id):
             no_log_pms_sql.approve(message.chat.id)
-            await message.edit("**LOG from this group deactivated!**")
+            await message.edit("Group Logs from current chat deactivated!")
 
 
 @Client.on_message(filters.command(["pmlog", "pmlogger"], cmd) & filters.me)
 async def set_pmlog(client: Client, message: Message):
     if BOTLOG_CHATID == -100:
         return await message.edit(
-            "**Set BOTLOG_CHATID VAR**"
+            "Set BOTLOG_CHATID!"
         )
     input_str = get_arg(message)
     if input_str == "off":
@@ -111,22 +112,22 @@ async def set_pmlog(client: Client, message: Message):
         PMLOG = True
     if PMLOG:
         if h_type:
-            await edit_or_reply(message, "**PM LOG Activated!**")
+            await edit_or_reply(message, "PM Logs activated!")
         else:
             addgvar("PMLOG", h_type)
-            await edit_or_reply(message, "**PM LOG Deactivated!**")
+            await edit_or_reply(message, "PM Logs deactivated!")
     elif h_type:
         addgvar("PMLOG", h_type)
-        await edit_or_reply(message, "**PM LOG Activated!**")
+        await edit_or_reply(message, "PM Logs activated!")
     else:
-        await edit_or_reply(message, "**PM LOG Deactivated!**")
+        await edit_or_reply(message, "PM Logs deactivated!")
 
 
 @Client.on_message(filters.command(["gruplog", "grouplog", "gclog"], cmd) & filters.me)
 async def set_gruplog(client: Client, message: Message):
     if BOTLOG_CHATID == -100:
         return await message.edit(
-            "**Set BOTLOG_CHATID VAR**"
+            "Set BOTLOG_CHATID!"
         )
     input_str = get_arg(message)
     if input_str == "off":
@@ -139,35 +140,34 @@ async def set_gruplog(client: Client, message: Message):
         GRUPLOG = True
     if GRUPLOG:
         if h_type:
-            await edit_or_reply(message, "**Group Log Activated!**")
+            await edit_or_reply(message, "Group Logs activated!")
         else:
             addgvar("GRUPLOG", h_type)
-            await edit_or_reply(message, "**Group Log Deactivated!**")
+            await edit_or_reply(message, "Group Logs deactivated!")
     elif h_type:
         addgvar("GRUPLOG", h_type)
-        await edit_or_reply(message, "**Group Log Activated!**")
+        await edit_or_reply(message, "Group Logs activated!")
     else:
-        await edit_or_reply(message, "**Group Log Deactivated!**")
+        await edit_or_reply(message, "Group Logs deactivated!")
 
 
 add_command_help(
     "log",
     [
-        [
-            "log",
-            "Activated Log for current group.",
+        ["log",
+        "Activated logs from current group.",
         ],
-        [
-            "nolog",
-            "Deactivated Log for current group.",
+        
+        ["nolog",
+        "Deactivated logs from current group.",
         ],
-        [
-            "pmlog on/off",
-            "Set PM_LOG",
+        
+        ["pmlog <on/off>",
+        "Set PM Logs.",
         ],
-        [
-            "gclog on/off",
-            "Set Log mention from group.",
+        
+        ["gruplog <on/off>",
+        "Set Logs mention from group.",
         ],
     ],
 )

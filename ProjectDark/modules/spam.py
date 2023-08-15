@@ -31,7 +31,7 @@ async def delayspam(client: Client, message: Message):
     delayspam = await extract_args(message)
     arr = delayspam.split()
     if len(arr) < 3 or not arr[0].isdigit() or not arr[1].isdigit():
-        await message.edit("__Something seems missing/wrong.__")
+        await message.edit("Something went wrong!")
         return
     delay = int(arr[0])
     count = int(arr[1])
@@ -51,7 +51,7 @@ async def delayspam(client: Client, message: Message):
             break
 
     await client.send_message(
-        BOTLOG_CHATID, "__#DELAYSPAM**\nDelaySpam was executed successfully"
+        BOTLOG_CHATID, "#DELAYSPAM\nDelay spam was executed successfully!"
     )
 
 
@@ -83,12 +83,12 @@ async def sspam(client: Client, message: Message):
 async def spam_stick(client: Client, message: Message):
     if not message.reply_to_message:
         await edit_or_reply(
-            message, "__reply to a sticker with amount you want to spam__"
+            message, "Reply to a sticker with amount you want to spam!"
         )
         return
     if not message.reply_to_message.sticker:
         await edit_or_reply(
-            message, "__reply to a sticker with amount you want to spam__"
+            message, "Reply to a sticker with amount you want to spam!"
         )
         return
     else:
@@ -113,10 +113,16 @@ async def spam_stick(client: Client, message: Message):
 add_command_help(
     "spam",
     [
-        ["spam <amounts> <texts>", "Spam text."],
-        [
-            "delayspam <seconds> <amounts> <text>",
-            "For delay spam",
+        ["spam <amounts> <texts>",
+        "Spam text."
+        ],
+        
+        ["delayspam <seconds> <amounts> <text>",
+        "For delay spam",
+        ],
+        
+        ["sspam <reply to sticker> <amounts>",
+        "Spam sticker."
         ],
     ],
 )

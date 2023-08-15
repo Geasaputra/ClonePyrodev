@@ -32,7 +32,7 @@ async def set_chat_photo(client: Client, message: Message):
     can_change_admin = zuzu.can_change_info
     can_change_member = message.chat.permissions.can_change_info
     if not (can_change_admin or can_change_member):
-        await message.edit_text("__You don't have enough permission!__")
+        await message.edit_text("Don't have enough permission!")
     if message.reply_to_message:
         if message.reply_to_message.photo:
             await client.set_chat_photo(
@@ -40,7 +40,7 @@ async def set_chat_photo(client: Client, message: Message):
             )
             return
     else:
-        await message.edit_text("__Reply to a photo to set it!__")
+        await message.edit_text("Reply to a photo to set it!")
 
 
 # bahasa ubah mager parah pake banget
@@ -93,16 +93,16 @@ async def set_chat_tittle(client: Client, message: Message):
 @Client.on_message(filters.group & filters.command("ban", cmd) & filters.me)
 async def member_ban(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message, sender_chat=True)
-    Dark = await edit_or_reply(message, "__Processing...__")
+    Dark = await edit_or_reply(message, "Processing...")
     bot = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
     if not bot.can_restrict_members:
-        return await Dark.edit("__Not have enough permissions!__")
+        return await Dark.edit("Not have enough permissions!")
     if not user_id:
-        return await Dark.edit("__Can't find that user!__")
+        return await Dark.edit("Can't find that user!")
     if user_id == client.me.id:
-        return await Dark.edit("__Can't ban your self!__")
+        return await Dark.edit("Can't ban your self!")
     if user_id in (await list_admins(client, message.chat.id)):
-        return await Dark.edit("__Can't ban Admins!__")
+        return await Dark.edit("Can't ban Admins!")
     try:
         mention = (await client.get_users(user_id)).mention
     except IndexError:
@@ -112,13 +112,13 @@ async def member_ban(client: Client, message: Message):
             else "Anon"
         )
     msg = (
-        f"**Banned User:** {mention}\n"
-        f"__Banned by {message.from_user.mention if message.from_user else 'Anonymous'}__\n"
+        f"{mention} banned!\n"
+        f"Banned by {message.from_user.mention if message.from_user else 'Anonymous'}\n"
     )
     if message.command[0][0] == "d":
         await message.reply_to_message.delete()
     if reason:
-        msg += f"**Reason:** {reason}"
+        msg += f"Reason: {reason}"
     await message.chat.ban_member(user_id)
     await Dark.edit(msg)
 
@@ -126,12 +126,12 @@ async def member_ban(client: Client, message: Message):
 @Client.on_message(filters.group & filters.command("unban", cmd) & filters.me)
 async def member_unban(client: Client, message: Message):
     reply = message.reply_to_message
-    Dark = await edit_or_reply(message, "__Processing...__")
+    Dark = await edit_or_reply(message, "Processing...")
     bot = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
     if not bot.can_restrict_members:
-        return await Dark.edit("__Not have enough permissions!__")
+        return await Dark.edit("Not have enough permissions!")
     if reply and reply.sender_chat and reply.sender_chat != message.chat.id:
-        return await Dark.edit("__Can't unban channel!__")
+        return await Dark.edit("Can't unban channel!")
 
     if len(message.command) == 2:
         user = message.text.split(None, 1)[1]
@@ -139,55 +139,69 @@ async def member_unban(client: Client, message: Message):
         user = message.reply_to_message.from_user.id
     else:
         return await Dark.edit(
-            "__Provide a username or reply to a user's message to unban.__"
+            "Provide a username or reply to a user's message to unban."
         )
     await message.chat.unban_member(user)
     umention = (await client.get_users(user)).mention
-    await Dark.edit(f"Unbanned! {umention}")
+    await Dark.edit(f"{umention} unbanned!")
 
 
 @Client.on_message(filters.command(["pin", "unpin"], cmd) & filters.me)
 async def pin_message(client: Client, message):
     if not message.reply_to_message:
-        return await edit_or_reply(message, "__Reply to a message to pin/unpin it!__")
-    Dark = await edit_or_reply(message, "__Processing...__")
+        return await edit_or_reply(message, "Reply to a message to pin/unpin it!")
+    Dark = await edit_or_reply(message, "Processing...")
     bot = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
     if not bot.can_pin_messages:
-        return await Dark.edit("__Not have enough permissions!__")
+        return await Dark.edit("Not have enough permissions!")
     r = message.reply_to_message
     if message.command[0][0] == "u":
         await r.unpin()
         return await Dark.edit(
-            f"**[Message]({r.link}) Unpinned!**",
+            f"[Message]({r.link}) unpinned!",
             disable_web_page_preview=True,
         )
     await r.pin(disable_notification=True)
     await Dark.edit(
-        f"**[Message]({r.link}) Pinned!**",
+        f"[Message]({r.link}) pinned!",
         disable_web_page_preview=True,
     )
+
+
+@Client.on_message(filters.command("unpinall", cmd) & filters.me)
+async def unpinall(client: Client, message: Message):
+    Dark = await edit_or_reply(message, "Processing...")
+    privileges = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
+    if not privileges.can_pin_messages:
+        return await Dark.edit("Not have enough permissions!")
+    else:
+        chat_id  = message.chat.id
+        await client.unpin_all_chat_messages(chat_id)
+        return await Dark.edit("All messages unpinned!")
+        
+
 
 
 @Client.on_message(filters.command("mute", cmd) & filters.me)
 async def mute(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message)
-    Dark = await edit_or_reply(message, "__Processing...__")
+    Dark = await edit_or_reply(message, "Processing...")
     bot = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
     if not bot.can_restrict_members:
-        return await Dark.edit("__Not have enough permissions!__")
+        return await Dark.edit("Not have enough permissions!")
     if not user_id:
-        return await Dark.edit("__Can't find that user!__")
+        return await Dark.edit("Can't find that user!")
     if user_id == client.me.id:
-        return await Dark.edit("__Can't mute your self!__")
+        return await Dark.edit("Can't mute your self!")
     if user_id in (await list_admins(client, message.chat.id)):
-        return await Dark.edit("__Can't mute Admins!__")
+        return await Dark.edit("Can't mute admin!")
     mention = (await client.get_users(user_id)).mention
     msg = (
-        f"**Muted User:** {mention}\n"
-        f"__Muted by {message.from_user.mention if message.from_user else 'Anon'}__\n"
+        f"{mention} muted!\n"
+        f"Muted by {message.from_user.mention if message.from_user else 'Anon'}\n"
     )
     if reason:
-        msg += f"**Reason:** {reason}"
+        msg += f"Reason: {reason}"
     await message.chat.restrict_member(user_id, permissions=ChatPermissions())
     await Dark.edit(msg)
 
@@ -195,46 +209,46 @@ async def mute(client: Client, message: Message):
 @Client.on_message(filters.group & filters.command("unmute", cmd) & filters.me)
 async def unmute(client: Client, message: Message):
     user_id = await extract_user(message)
-    Dark = await edit_or_reply(message, "__Processing...__")
+    Dark = await edit_or_reply(message, "Processing...")
     bot = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
     if not bot.can_restrict_members:
-        return await Dark.edit("__Not have enough permissions!__")
+        return await Dark.edit("Not have enough permissions!")
     if not user_id:
-        return await Dark.edit("__Can't find that user!__")
+        return await Dark.edit("Can't find that user!")
     await message.chat.restrict_member(user_id, permissions=unmute_permissions)
     umention = (await client.get_users(user_id)).mention
-    await Dark.edit(f"Unmuted! {umention}")
+    await Dark.edit(f"{umention} unmuted!")
 
 
 @Client.on_message(filters.command(["kick", "dkick"], cmd) & filters.me)
 async def kick_user(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message)
-    Dark = await edit_or_reply(message, "__Processing...__")
+    Dark = await edit_or_reply(message, "Processing...")
     bot = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
     if not bot.can_restrict_members:
-        return await Dark.edit("__Not have enough permissions!__")
+        return await Dark.edit("Not have enough permissions!")
     if not user_id:
-        return await Dark.edit("__Can't find that user!__")
+        return await Dark.edit("Can't find that user!")
     if user_id == client.me.id:
-        return await Dark.edit("__Can't kick your self!__")
+        return await Dark.edit("Can't kick your self!")
     if user_id in (await list_admins(client, message.chat.id)):
-        return await Dark.edit("__Can't kick Admins!__")
+        return await Dark.edit("Can't kick Admins!")
     mention = (await client.get_users(user_id)).mention
     msg = f"""
-**Kicked User:** {mention}
-__Kicked by {message.from_user.mention if message.from_user else 'Anon'}__
+{mention} kicked!
+Kicked by {message.from_user.mention if message.from_user else 'Anon'}
 """
     if message.command[0][0] == "d":
         await message.reply_to_message.delete()
     if reason:
-        msg += f"\n**Reason:** __{reason}__"
+        msg += f"\nReason: {reason}"
     try:
         await message.chat.ban_member(user_id)
         await Dark.edit(msg)
         await asyncio.sleep(1)
         await message.chat.unban_member(user_id)
     except ChatAdminRequired:
-        return await Dark.edit("__You are not Admin!__")
+        return await Dark.edit("You are not admin!")
 
 
 @Client.on_message(
@@ -243,12 +257,12 @@ __Kicked by {message.from_user.mention if message.from_user else 'Anon'}__
 async def promotte(client: Client, message: Message):
     user_id = await extract_user(message)
     umention = (await client.get_users(user_id)).mention
-    Dark = await edit_or_reply(message, "__Processing...__")
+    Dark = await edit_or_reply(message, "Processing...")
     if not user_id:
-        return await Dark.edit("__Can't find that user!__")
+        return await Dark.edit("Can't find that user!")
     bot = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
     if not bot.can_promote_members:
-        return await Dark.edit("__Not have enough permissions!__")
+        return await Dark.edit("Not have enough permissions!")
     if message.command[0][0] == "f":
         await message.chat.promote_member(
             user_id,
@@ -263,7 +277,7 @@ async def promotte(client: Client, message: Message):
                 can_promote_members=True,
             ),
         )
-        return await Dark.edit(f"Full Promoted! {umention}")
+        return await Dark.edit(f"{umention} fully promoted!")
 
     await message.chat.promote_member(
         user_id,
@@ -278,17 +292,17 @@ async def promotte(client: Client, message: Message):
             can_promote_members=False,
         ),
     )
-    await Dark.edit(f"Promoted! {umention}")
+    await Dark.edit(f"{umention} promoted!")
 
 
 @Client.on_message(filters.group & filters.command("demote", cmd) & filters.me)
 async def demote(client: Client, message: Message):
     user_id = await extract_user(message)
-    Dark = await edit_or_reply(message, "__Processing...__")
+    Dark = await edit_or_reply(message, "Processing...")
     if not user_id:
-        return await Dark.edit("__Can't find that user!__")
+        return await Dark.edit("Can't find that user!")
     if user_id == client.me.id:
-        return await Dark.edit("__Can't demote your self!__")
+        return await Dark.edit("Can't demote your self!")
     await message.chat.promote_member(
         user_id,
         privileges=ChatPrivileges(
@@ -303,40 +317,57 @@ async def demote(client: Client, message: Message):
         ),
     )
     umention = (await client.get_users(user_id)).mention
-    await Dark.edit(f"Demoted! {umention}")
+    await Dark.edit(f"{umention} demoted!")
 
 
 add_command_help(
     "admins",
     [
-        ["ban <reply/username/userid> <reason>", "Ban a user from your group"],
-        [
-            "unban <reply/username/userid> <reason>", "Unbanned a user from your group.",
+        ["ban <reply/username/userid> <reason>",
+        "Ban a user from your group"
         ],
-        ["kick <reply/username/userid>", ""],
-        [
-            "promote or fullpromote", "Promoted a user from your group.",
+        
+        ["unban <reply/username/userid> <reason>", "Unban a user from your group.",
         ],
-        ["demote", "Demoted a user from your group."],
-        [
-            "mute <reply/username/userid>",
-            "Muted a user from your group",
+        
+        ["kick <reply/username/userid>",
+        "Kick a user from your group."
         ],
-        [
-            "unmute <reply/username/userid>",
-            "Unmuted a user from your group.",
+        
+        ["promote or fullpromote",
+        "Promote a user from your group.",
         ],
-        [
-            "pin <reply>", "Pinned a message.",
+        
+        ["demote",
+        "Demote a user from your group."
         ],
-        [
-            "unpin <reply>", "Unpinned a message.",
+        
+        ["mute <reply/username/userid>",
+        "Mute a user from your group",
         ],
-        [
-            "setgpic <reply ke foto>", "Set a profile picture for your group.",
+        
+        ["unmute <reply/username/userid>",
+        "Unmute a user from your group.",
         ],
-        [
-            "stg <text or reply to text>", "Set a new tittle for your group.",
+        
+        ["pin <reply to message>",
+        "Pinned a message.",
+        ],
+        
+        ["unpin <reply to message>",
+        "Unpin a message.",
+        ],
+        
+        ["unpinall",
+        "Unpin all messages.",
+        ],
+        
+        ["setgpic <reply to photo>",
+        "Set a profile picture for your group.",
+        ],
+        
+        ["stg <text/reply to text>",
+        "Set a new tittle for your group.",
         ],
     ],
 )

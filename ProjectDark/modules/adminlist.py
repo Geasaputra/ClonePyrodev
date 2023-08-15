@@ -31,62 +31,63 @@ async def adminlist(client: Client, message: Message):
         message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS
     ):
         try:
-            nama = a.user.first_name + " " + a.user.last_name
+            name = a.user.first_name + " " + a.user.last_name
         except:
-            nama = a.user.first_name
-        if nama is None:
-            nama = "Delete Account"
+            name = a.user.first_name
+        if name is None:
+            name = "No Name"
         if a.status == enums.ChatMemberStatus.ADMINISTRATOR:
             if a.user.is_bot:
-                badmin.append(mention_markdown(a.user.id, nama))
+                badmin.append(mention_markdown(a.user.id, name))
             else:
-                admin.append(mention_markdown(a.user.id, nama))
+                admin.append(mention_markdown(a.user.id, name))
         elif a.status == enums.ChatMemberStatus.OWNER:
-            creator.append(mention_markdown(a.user.id, nama))
+            creator.append(mention_markdown(a.user.id, name))
     admin.sort()
     badmin.sort()
     totaladmins = len(creator) + len(admin) + len(badmin)
-    teks = "**Admins in {}**\n".format(grup.title)
-    teks += "「 The Creator 」\n"
+    teks = "Admins in {}\n".format(grup.title)
+    teks += "Creator: "
     for x in creator:
-        teks += "» {}\n".format(x)
+        teks += "{}\n".format(x)
         if len(teks) >= 4096:
             await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
-    teks += "「 {} Total Administrator 」\n".format(len(admin))
+    teks += "\n{} total admins\n".format(len(admin))
     for x in admin:
-        teks += "» {}\n".format(x)
+        teks += "{}\n".format(x)
         if len(teks) >= 4096:
             await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
-    teks += "「 {} Bot Administrator 」\n".format(len(badmin))
+    teks += "\n{} bot admins\n".format(len(badmin))
     for x in badmin:
-        teks += "» {}\n".format(x)
+        teks += "{}\n".format(x)
         if len(teks) >= 4096:
             await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
             teks = ""
             toolong = True
-    teks += "「 Total {} Admins 」".format(totaladmins)
+    teks += "\nTotal: {} admins".format(totaladmins)
     if toolong:
         await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
     else:
         await message.edit(teks)
 
-
+'''
+# Doesn't work
 @Client.on_message(filters.command(["kickdel", "zombies"], cmd) & filters.me)
 async def kickdel_cmd(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "<b>Kicking deleted accounts...</b>")
+    Dark = await edit_or_reply(message, "Kicking deleted accounts...")
     # noinspection PyTypeChecker
     values = [
         await message.chat.ban_member(user.user.id, int(time()) + 31)
         for member in await message.chat.get_members()
         if member.user.is_deleted
     ]
-    await Dark.edit(f"<b>Successfully kicked {len(values)} deleted account(s)</b>")
+    await Dark.edit(f"Successfully kicked {len(values)} deleted accounts.")
 
-
+#Doesn't work
 @Client.on_message(
     filters.me & filters.command(["reportadmin", "reportadmins", "report"], cmd)
 )
@@ -134,31 +135,7 @@ async def report_admin(client: Client, message: Message):
         await client.send_message(
             message.chat.id, teks, parse_mode=enums.ParseMode.HTML
         )
-
-
-@Client.on_message(filters.me & filters.command(["everyone", "tagall"], cmd))
-async def tag_all_users(client: Client, message: Message):
-    await message.delete()
-    if len(message.text.split()) >= 2:
-        text = message.text.split(None, 1)[1]
-    else:
-        text = "Beeb beeb 👾"
-    kek = client.get_chat_members(message.chat.id)
-    async for a in kek:
-        if not a.user.is_bot:
-            text += mention_html(a.user.id, "\u200b")
-    if message.reply_to_message:
-        await client.send_message(
-            message.chat.id,
-            text,
-            reply_to_message_id=message.reply_to_message.id,
-            parse_mode=enums.ParseMode.HTML,
-        )
-    else:
-        await client.send_message(
-            message.chat.id, text, parse_mode=enums.ParseMode.HTML
-        )
-
+'''
 
 @Client.on_message(filters.me & filters.command(["botlist", "bots"], cmd))
 async def get_list_bots(client: Client, message: Message):
@@ -175,18 +152,17 @@ async def get_list_bots(client: Client, message: Message):
     bots = []
     async for a in getbots:
         try:
-            nama = a.user.first_name + " " + a.user.last_name
+            name = a.user.first_name + " " + a.user.last_name
         except:
-            nama = a.user.first_name
-        if nama is None:
-            nama = "☠️ Deleted account"
+            name = a.user.first_name
+        if name is None:
+            name = "No Name"
         if a.user.is_bot:
-            bots.append(mention_markdown(a.user.id, nama))
-    teks = "**All bots in group {}**\n".format(grup.title)
-    teks += "「 Bots 」\n"
+            bots.append(mention_markdown(a.user.id, name))
+    teks = "All bots in group {}\n".format(grup.title)
     for x in bots:
-        teks += "» {}\n".format(x)
-    teks += "「 Total {} Bots 」".format(len(bots))
+        teks += "{}\n".format(x)
+    teks += "\nTotal: {} bots".format(len(bots))
     if replyid:
         await client.send_message(message.chat.id, teks, reply_to_message_id=replyid)
     else:
@@ -196,15 +172,12 @@ async def get_list_bots(client: Client, message: Message):
 add_command_help(
     "tag",
     [
-        ["admins", "Get chats Admins list."],
-        ["kickdel", "To Kick deleted Accounts."],
-        [
-            "everyone `or` {cmd}tagall",
-            "to mention Everyone ",
+        ["admins",
+        "Get admins list in current chats."
         ],
-        [
-            "botlist",
-            "To get Chats Bots list",
+        
+        ["botlist",
+        "Get bots list in current chat.",
         ],
     ],
 )

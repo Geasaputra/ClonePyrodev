@@ -1,4 +1,5 @@
 # Part of PyroMan - 2022
+# Part of PyroMan - 2022
 # Kang by DarkPyro - 2023
 
 from asyncio import sleep
@@ -9,7 +10,6 @@ from pyrogram.types import Message
 
 from config import CMD_HANDLER as cmd
 from ProjectDark.helpers.PyroHelpers import ReplyCheck
-
 from .help import add_command_help
 
 commands = {
@@ -61,7 +61,7 @@ async def fakeactions_handler(client: Client, message: Message):
     except Exception as e:
         return await client.send_message(
             message.chat.id,
-            f"**ERROR:** __{e}__",
+            f"{e}",
             reply_to_message_id=ReplyCheck(message),
         )
 
@@ -69,43 +69,43 @@ async def fakeactions_handler(client: Client, message: Message):
 add_command_help(
     "fakeaction",
     [
-        ["ftyping [seconds]",
+        ["ftyping <seconds>",
         "Fake typing..."
         ],
         
-        ["fgame [seconds]",
+        ["fgame <seconds>",
         "Fake playing..."
         ],
         
-        ["faudio [seconds]",
+        ["faudio <seconds>",
         "Fake recording audio...",
         ],
         
-        ["fvideo [seconds]",
+        ["fvideo <seconds>",
         "Fake recording video...",
         ],
         
-        ["fround [seconds]",
+        ["fround <seconds>",
         "Same as fvideo...",
         ],
         
-        ["fphoto [seconds]",
+        ["fphoto <seconds>",
         "Fake sending photo...",
         ],
         
-        ["fsticker [seconds]",
+        ["fsticker <seconds>",
         "Fake choose sticker...",
         ],
         
-        ["fcontact [seconds]",
+        ["fcontact <seconds>",
         "Fake sharing contact...",
         ],
         
-        ["flocation [seconds]",
+        ["flocation <seconds>",
         "Fake sharing location....",
         ],
         
-        ["fdocument [seconds]",
+        ["fdocument <seconds>",
         "Fake sending document...",
         ],
         
@@ -114,7 +114,7 @@ add_command_help(
         ],
         
         ["fstop",
-        "Stoped Fake Action"
+        "Stoped fake action."
         ],
         
     ],

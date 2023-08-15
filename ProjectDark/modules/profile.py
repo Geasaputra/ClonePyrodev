@@ -21,7 +21,7 @@ profile_photo = "ProjectDark/modules/cache/pfp.jpg"
 @Client.on_message(filters.command(["block"], cmd) & filters.me)
 async def block_user_func(client: Client, message: Message):
     user_id = await extract_user(message)
-    Dark = await edit_or_reply(message, "__Processing . . .__")
+    Dark = await edit_or_reply(message, "Processing...")
     if not user_id:
         return await message.edit(
             "Give Username/ID!"
@@ -30,13 +30,13 @@ async def block_user_func(client: Client, message: Message):
         return await Dark.edit("?")
     await client.block_user(user_id)
     umention = (await client.get_users(user_id)).mention
-    await message.edit(f"**Blocked!** {umention}")
+    await message.edit(f"{umention} blocked!")
 
 
 @Client.on_message(filters.command(["unblock"], cmd) & filters.me)
 async def unblock_user_func(client: Client, message: Message):
     user_id = await extract_user(message)
-    Dark = await edit_or_reply(message, "__Processing . . .__")
+    Dark = await edit_or_reply(message, "Processing...")
     if not user_id:
         return await message.edit(
             "Give Username/ID!"
@@ -45,12 +45,12 @@ async def unblock_user_func(client: Client, message: Message):
         return await Dark.edit("?")
     await client.unblock_user(user_id)
     umention = (await client.get_users(user_id)).mention
-    await message.edit(f"**Unblocked!** {umention}")
+    await message.edit(f"{umention} unblocked!")
 
 
 @Client.on_message(filters.command(["setname"], cmd) & filters.me)
 async def setname(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Processing . . .__")
+    Dark = await edit_or_reply(message, "Processing...")
     if len(message.command) == 1:
         return await Dark.edit(
             "Give me text!"
@@ -59,9 +59,9 @@ async def setname(client: Client, message: Message):
         name = message.text.split(None, 1)[1]
         try:
             await client.update_profile(first_name=name)
-            await Dark.edit(f"**Name has changed to** __{name}__")
+            await Dark.edit(f"Successfully changed to {name}.")
         except Exception as e:
-            await Dark.edit(f"**ERROR:** __{e}__")
+            await Dark.edit(f"{e}")
     else:
         return await Dark.edit(
             "Give me text!"
@@ -70,16 +70,16 @@ async def setname(client: Client, message: Message):
 
 @Client.on_message(filters.command(["setbio"], cmd) & filters.me)
 async def set_bio(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Processing . . .__")
+    Dark = await edit_or_reply(message, "Processing...")
     if len(message.command) == 1:
         return await Dark.edit("Give me text!")
     elif len(message.command) > 1:
         bio = message.text.split(None, 1)[1]
         try:
             await client.update_profile(bio=bio)
-            await Dark.edit(f"**BIO has changed to** __{bio}__")
+            await Dark.edit(f"Successfully changed to {bio}.")
         except Exception as e:
-            await Dark.edit(f"**ERROR:** __{e}__")
+            await Dark.edit(f"{e}")
     else:
         return await Dark.edit("Give me text!")
 
@@ -99,10 +99,10 @@ async def set_pfp(client: Client, message: Message):
         await client.set_profile_photo(profile_photo)
         if os.path.exists(profile_photo):
             os.remove(profile_photo)
-        await message.edit("**Profile photo has changed**")
+        await message.edit("Successfully!")
     else:
         await message.edit(
-            "reply to photo!"
+            "Reply to photo!"
         )
         await sleep(3)
         await message.delete()
@@ -130,14 +130,28 @@ async def view_pfp(client: Client, message: Message):
 add_command_help(
     "profile",
     [
-        ["block", "Block user"],
-        ["unblock", "Unblock user"],
-        ["setname", "Set new name"],
-        ["setbio", "Set new BIO"],
-        [
-            "setpfp",
-            "reply to photo to set new profile picture",
+        ["block",
+        "Block user."
         ],
-        ["vpfp", "See profile photo a user"],
+        
+        ["unblock",
+        "Unblock user."
+        ],
+        
+        ["setname",
+        "Set new name"
+        ],
+        
+        ["setbio",
+        "Set new Bio."
+        ],
+        
+        ["setpfp",
+        "Set new profile picture.",
+        ],
+        
+        ["vpfp",
+        "See profile photo a user."
+        ],
     ],
 )

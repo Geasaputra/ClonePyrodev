@@ -19,10 +19,10 @@ from .help import add_command_help
 @Client.on_message(filters.command(["whois", "info"], cmd) & filters.me)
 async def who_is(client: Client, message: Message):
     user_id = await extract_user(message)
-    Dark = await edit_or_reply(message, "__Stealing user data from durov . . .__")
+    Dark = await edit_or_reply(message, "Processing...")
     if not user_id:
         return await Dark.edit(
-            "**Provide userid/username/reply to get that user's info.**"
+            "Invalid!"
         )
     try:
         user = await client.get_users(user_id)
@@ -42,23 +42,20 @@ async def who_is(client: Client, message: Message):
             status = "-"
         dc_id = f"{user.dc_id}" if user.dc_id else "-"
         common = await client.get_common_chats(user.id)
-        out_str = f"""<b>USER INFORMATION:</b>
+        out_str = f"""
+<a href='tg://user?id={user.id}'><b>User Information</b></a>
 
-<b>User ID:</b> <code>{user.id}</code>
-<b>First Name:</b> {first_name}
-<b>Last Name:</b> {last_name}
-<b>Username:</b> {username}
-<b>DC ID:</b> <code>{dc_id}</code>
-<b>Is Bot:</b> <code>{user.is_bot}</code>
-<b>Is Scam:</b> <code>{user.is_scam}</code>
-<b>Restricted:</b> <code>{user.is_restricted}</code>
-<b>Verified:</b> <code>{user.is_verified}</code>
-<b>Premium:</b> <code>{user.is_premium}</code>
-<b>User Bio:</b> {bio}
+User ID: <code>{user.id}</code>
+First Name: {first_name}
+Last Name: {last_name}
+Last Seen: {status}
+Username: {username}
+Bio:
+{bio}
 
-<b>Same groups seen:</b> {len(common)}
-<b>Last Seen:</b> <code>{status}</code>
-<b>User permanent link:</b> <a href='tg://user?id={user.id}'>{fullname}</a>
+Data Center: {dc_id}
+Verified: {user.is_verified}
+Premium: {user.is_premium}
 """
         photo_id = user.photo.big_file_id if user.photo else None
         if photo_id:
@@ -76,12 +73,12 @@ async def who_is(client: Client, message: Message):
         else:
             await Dark.edit(out_str, disable_web_page_preview=True)
     except Exception as e:
-        return await Dark.edit(f"**INFO:** __{e}__")
+        return await Dark.edit(f"{e}")
 
 
 @Client.on_message(filters.command(["chatinfo", "cinfo", "ginfo"], cmd) & filters.me)
 async def chatinfo_handler(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Collecting chat info, wait plox...__")
+    Dark = await edit_or_reply(message, "Processing...")
     try:
         if len(message.command) > 1:
             chat_u = message.command[1]
@@ -89,7 +86,7 @@ async def chatinfo_handler(client: Client, message: Message):
         else:
             if message.chat.type == ChatType.PRIVATE:
                 return await message.edit(
-                    f"Use this command within a group or use __{cmd}chatinfo [group username or id]__"
+                    f"`{cmd}chatinfo` <group username/id>"
                 )
             else:
                 chatid = message.chat.id
@@ -103,22 +100,20 @@ async def chatinfo_handler(client: Client, message: Message):
         username = f"@{chat.username}" if chat.username else "-"
         description = f"{chat.description}" if chat.description else "-"
         dc_id = f"{chat.dc_id}" if chat.dc_id else "-"
-        out_str = f"""<b>CHAT INFORMATION:</b>
+        out_str = f"""
+<b>{chat.title}</b> ({type})
+Total {chat.members_count} members
 
-<b>Chat ID:</b> <code>{chat.id}</code>
-<b>Title:</b> {chat.title}
-<b>Username:</b> {username}
-<b>Type:</b> <code>{type}</code>
-<b>DC ID:</b> <code>{dc_id}</code>
-<b>Is Scam:</b> <code>{chat.is_scam}</code>
-<b>Is Fake:</b> <code>{chat.is_fake}</code>
-<b>Verified:</b> <code>{chat.is_verified}</code>
-<b>Restricted:</b> <code>{chat.is_restricted}</code>
-<b>Protected:</b> <code>{chat.has_protected_content}</code>
+Username: {username}
+ID: <code>{chat.id}</code>
+DC: {dc_id}
 
-<b>Total members:</b> <code>{chat.members_count}</code>
-<b>Description:</b>
-<code>{description}</code>
+Verified: {chat.is_verified}
+Restricted: {chat.is_restricted}
+Protected: {chat.has_protected_content}
+
+Description:
+{description}
 """
         photo_id = chat.photo.big_file_id if chat.photo else None
         if photo_id:
@@ -136,19 +131,18 @@ async def chatinfo_handler(client: Client, message: Message):
         else:
             await Dark.edit(out_str, disable_web_page_preview=True)
     except Exception as e:
-        return await Dark.edit(f"**INFO:** __{e}__")
+        return await Dark.edit(f"{e}")
 
 
 add_command_help(
     "info",
     [
-        [
-            "info <username/userid/reply>",
-            "dapatkan info pengguna telegram dengan deskripsi lengkap.",
+        ["info <username/userid/reply>",
+        "Get telegram user info with full description.",
         ],
-        [
-            "chatinfo <username/chatid/reply>",
-            "dapatkan info group dengan deskripsi lengkap.",
+        
+        ["chatinfo <username/chatid>",
+        "Get group info with full description.",
         ],
     ],
 )

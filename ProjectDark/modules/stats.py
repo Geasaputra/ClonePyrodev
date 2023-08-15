@@ -14,7 +14,7 @@ from .help import *
 
 @Client.on_message(filters.command(["stats", "status"], cmd) & filters.me)
 async def stats(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Collecting stats...__")
+    Dark = await edit_or_reply(message, "Processing...")
     start = datetime.now()
     u = 0
     g = 0
@@ -43,14 +43,15 @@ async def stats(client: Client, message: Message):
 
     end = datetime.now()
     ms = (end - start).seconds
-    await Dark.edit_text(
-        """__Your Stats Obtained in {} seconds`
-`You have {} Private Messages.`
-`You are in {} Groups.`
-`You are in {} Super Groups.`
-`You Are in {} Channels.`
-`You Are Admin in {} Chats.`
-`Bots = {}__""".format(
+    await Dark.edit_text("""
+Your stats obtained in {} seconds
+You have {} Private Messages
+You are in {} Groups
+You are in {} Super Groups
+You Are in {} Channels
+You Are Admin in {} Chats
+Bots: {}
+""".format(
             ms, u, g, sg, c, a_chat, b
         )
     )
@@ -59,6 +60,8 @@ async def stats(client: Client, message: Message):
 add_command_help(
     "stats",
     [
-        ["stats", "To Check Your Account Status, how Joined Chats."],
+        ["stats",
+        "To check your account stats group/channel are joined."
+        ],
     ],
 )

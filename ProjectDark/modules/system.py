@@ -16,17 +16,21 @@ from .help import add_command_help
 @Client.on_message(filters.command("restart", cmd) & filters.me)
 async def restart_bot(_, message: Message):
     try:
-        msg = await edit_or_reply(message, "__Restarting bot...__")
-        LOGGER(__name__).info("BOT SERVER RESTARTED !!")
+        msg = await edit_or_reply(message, "Restarting...")
+        LOGGER(__name__).info("Restarted!")
     except BaseException as err:
         LOGGER(__name__).info(f"{err}")
         return
-    await msg.edit_text("Bot has restarted !\n\n")
+    await msg.edit_text("Restarted!")
+    args = [sys.executable, "-m", "ProjectDark"]
+    execle(sys.executable, *args, environ)
 
 
 add_command_help(
     "system",
     [
-        ["restart", "To restart userbot."],
+        ["restart",
+        "Restart userbot."
+        ],
     ],
 )

@@ -33,20 +33,20 @@ async def get_group_call(
             ).full_chat
         if full_chat is not None:
             return full_chat.call
-    await message.edit(f"**No group call Found** {err_msg}")
+    await message.edit(f"{err_msg}")
     return False
 
 
 @Client.on_message(filters.command(["startvc"], cmd) & filters.me)
 async def opengc(client: Client, message: Message):
     flags = " ".join(message.command[1:])
-    Dark = await edit_or_reply(message, "__Turn on video chat. . .__")
+    Dark = await edit_or_reply(message, "Turning on video chat...")
     vctitle = get_arg(message)
     if flags == enums.ChatType.CHANNEL:
         chat_id = message.chat.title
     else:
         chat_id = message.chat.id
-    args = f"**Started Group Call\n• **Chat ID:** `{chat_id}`"
+    args = f"Started!\nID: `{chat_id}`"
     try:
         if not vctitle:
             await client.invoke(
@@ -56,7 +56,7 @@ async def opengc(client: Client, message: Message):
                 )
             )
         else:
-            args += f"\n**Title:** __{vctitle}__"
+            args += f"\nTitle: {vctitle}"
             await client.invoke(
                 CreateGroupCall(
                     peer=(await client.resolve_peer(chat_id)),
@@ -66,37 +66,37 @@ async def opengc(client: Client, message: Message):
             )
         await Dark.edit(args)
     except Exception as e:
-        await Dark.edit(f"**INFO:** __{e}__")
+        await Dark.edit(f"{e}")
 
 
 @Client.on_message(filters.command(["stopvc"], cmd) & filters.me)
 async def end_vc_(client: Client, message: Message):
-    """End group call"""
+    """Ended!"""
     chat_id = message.chat.id
     if not (
         group_call := (
-            await get_group_call(client, message, err_msg=", group call already ended")
+            await get_group_call(client, message, err_msg=", group call already ended!")
         )
     ):
         return
     await client.send(DiscardGroupCall(call=group_call))
-    await edit_or_reply(message, f"Ended group call in **Chat ID:** `{chat_id}`")
+    await edit_or_reply(message, f"Ended!\nID: `{chat_id}`")
 
 
 @Client.on_message(filters.command("joinvc", cmd) & filters.me)
 async def joinvc(client: Client, message: Message):
     chat_id = message.command[1] if len(message.command) > 1 else message.chat.id
     if message.from_user.id != client.me.id:
-        Dark = await message.reply("__Joining video chat...__")
+        Dark = await message.reply("Joining...")
     else:
-        Dark = await message.edit("__Joining video chat...__")
+        Dark = await message.edit("Joining...")
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
         await client.group_call.start(chat_id)
     except Exception as e:
-        return await Dark.edit(f"**ERROR:** __{e}__")
-    await Dark.edit(f"**Successfully Join To Video chat**\n**Chat ID:** `{chat_id}`")
+        return await Dark.edit(f"{e}")
+    await Dark.edit(f"Joined!\nID: `{chat_id}`")
     await sleep(5)
     await client.group_call.set_is_mute(True)
 
@@ -105,33 +105,38 @@ async def joinvc(client: Client, message: Message):
 async def leavevc(client: Client, message: Message):
     chat_id = message.command[1] if len(message.command) > 1 else message.chat.id
     if message.from_user.id != client.me.id:
-        Dark = await message.reply("__leaving video chat...__")
+        Dark = await message.reply("Leaving...")
     else:
-        Dark = await message.edit("__Leaving video chat....__")
+        Dark = await message.edit("Leaving...")
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
         await client.group_call.stop()
     except Exception as e:
-        return await edit_or_reply(message, f"**ERROR:** __{e}__")
-    msg = "**Successfully Left from Video Chat**"
+        return await edit_or_reply(message, f"{e}")
+    msg = "Left!"
     if chat_id:
-        msg += f"\n**Chat ID:** `{chat_id}`"
+        msg += f"\nID: `{chat_id}`"
     await Dark.edit(msg)
 
 
 add_command_help(
     "vctools",
     [
-        ["startvc", "To turn on the video chat."],
-        ["stopvc", "To turn off the video chat."],
-        [
-            f"joinvc or {cmd}joinvc <chatid/username gc>",
-            "To joined on video chat.",
+        ["startvc",
+        "Turn on video chat."
         ],
-        [
-            f"leavevc or {cmd}leavevc <chatid/username gc>",
-            "To leaving from video chat.",
+        
+        ["stopvc",
+        "Turn off video chat."
+        ],
+        
+        [f"joinvc or {cmd}joinvc <chatid/username gc>",
+        "Join video chat.",
+        ],
+        
+        [f"leavevc or {cmd}leavevc <chatid/username gc>",
+        "Leave from video chat.",
         ],
     ],
 )

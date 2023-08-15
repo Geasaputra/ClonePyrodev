@@ -28,12 +28,12 @@ async def del_msg(client: Client, message: Message):
 
 @Client.on_message(filters.command("purge", cmd) & filters.me)
 async def purge(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Starting To Purge Messages!__")
+    Dark = await edit_or_reply(message, "Starting to purge messages!")
     msg = message.reply_to_message
     if msg:
         itermsg = list(range(msg.id, message.id))
     else:
-        await Dark.edit("__Reply To Message To Purge!__")
+        await Dark.edit("Reply to message to purge!")
         return
     count = 0
 
@@ -46,11 +46,11 @@ async def purge(client: Client, message: Message):
         except FloodWait as e:
             await asyncio.sleep(e.x)
         except Exception as e:
-            await Dark.edit(f"**ERROR:** __{e}__")
+            await Dark.edit(f"{e}")
             return
 
     done = await Dark.edit(
-        f"**Fast Purge Completed!**\n__{str(count)}__ **message deleted**"
+        f"{str(count)} messages are purged!"
     )
     await asyncio.sleep(2)
     await done.delete()
@@ -66,10 +66,10 @@ async def purge_me(client, message):
         else message.text.split(None, 1)[1].strip()
     )
     if not n.isnumeric():
-        return await message.reply("**Invalid Argument!**")
+        return await message.reply("Invalid!")
     n = int(n)
     if n < 1:
-        return await message.reply("need count >=1-999")
+        return await message.reply("Need count >=1-999")
     chat_id = message.chat.id
     message_ids = [
         m.id
@@ -80,7 +80,7 @@ async def purge_me(client, message):
         )
     ]
     if not message_ids:
-        return await eor(message, text="__No messages are found!__")
+        return await eor(message, text="No messages are found!")
     to_delete = [message_ids[i : i + 999] for i in range(0, len(message_ids), 999)]
     for hundred_messages_or_less in to_delete:
         await client.delete_messages(
@@ -88,23 +88,23 @@ async def purge_me(client, message):
             message_ids=hundred_messages_or_less,
             revoke=True,
         )
-        ling = await message.reply(f"__{n} messages are deleted!__")
-        await asyncio.sleep(2)
-        await ling.delete()
+        dark = await message.reply(f"{n} your messages are purged!")
+        await asyncio.sleep(1)
+        await dark.delete()
 
 
 add_command_help(
     "purge",
     [
         ["del",
-        "reply to message you want to del"
+        "Reply to message you want to delete."
         ],
         
         ["purge",
-        "clean message from you replied"
+        "Clean message from you replied messages."
         ],
         
-        ["purgeme <count>",
-        "prune only your messages"],
+        ["purgeme <amounts>",
+        "Prune only your messages."],
     ],
 )

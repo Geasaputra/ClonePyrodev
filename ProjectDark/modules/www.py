@@ -20,22 +20,22 @@ from .help import add_command_help
 
 @Client.on_message(filters.command(["speed", "speedtest"], cmd) & filters.me)
 async def speed_test(client: Client, message: Message):
-    new_msg = await edit_or_reply(message, "__Running speed test . . .__")
+    new_msg = await edit_or_reply(message, "Starting...")
     spd = speedtest.Speedtest()
 
     new_msg = await message.edit(
-        f"__{new_msg.text}__\n" "__Getting best server based on ping . . .__"
+        f"{new_msg.text}\nGetting best server..."
     )
     spd.get_best_server()
 
-    new_msg = await message.edit(f"__{new_msg.text}__\n" "__Testing download speed . . .__")
+    new_msg = await message.edit(f"{new_msg.text}\nTesting download speed...")
     spd.download()
 
-    new_msg = await message.edit(f"__{new_msg.text}__\n" "__Testing upload speed . . .__")
+    new_msg = await message.edit(f"{new_msg.text}\nTesting upload speed...")
     spd.upload()
 
     new_msg = await new_msg.edit(
-        f"__{new_msg.text}__\n" "__Getting results and preparing formatting . . .__"
+        f"{new_msg.text}\nProcessing..."
     )
     results = spd.results.dict()
 
@@ -66,23 +66,25 @@ async def reackon(client: Client, message: Message):
 async def pingme(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    msg = await edit_or_reply(message, "__Latency...__")
-    await msg.edit("__Latency Checking...__")
+    msg = await edit_or_reply(message, "Processing...")
+    await msg.edit("Latency Checking...")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     await msg.edit(
-        f"**Latency:** `%sms`\n"
-        f"Started since __{uptime}__ ago" % (duration)
+        f"Latency Result: %sms\n"
+        f"Started since {uptime} ago" % (duration)
     )
 
 
 add_command_help(
     "speedtest",
     [
-        ["dc", "Untuk melihat DC Telegram anda."],
-        [
-            f"speedtest `atau` {cmd}speed",
-            "Untuk megetes Kecepatan Server anda.",
+        ["dc",
+        "Get DC info."
+        ],
+        
+        [f"speedtest",
+        "Speedtest server.",
         ],
     ],
 )
@@ -91,6 +93,8 @@ add_command_help(
 add_command_help(
     "ping",
     [
-        ["ping", "Untuk Menunjukkan Ping Bot Anda."],
+        ["ping",
+        "Latency checking."
+        ],
     ],
 )

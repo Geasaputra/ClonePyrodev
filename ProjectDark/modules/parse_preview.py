@@ -18,8 +18,8 @@ async def parse(client: Client, message: Message):
     r = message.reply_to_message
     has_wpp = False
     if not r:
-        return await edit_or_reply(message, "Reply to a message with a webpage")
-    m_ = await edit_or_reply(message, "__Parsing...__")
+        return await edit_or_reply(message, "Reply to a message with a webpage.")
+    m_ = await edit_or_reply(message, "Parsing...")
     if not r.web_page:
         text = r.text or r.caption
         if text:
@@ -37,12 +37,12 @@ async def parse(client: Client, message: Message):
         )
     wpp = r.web_page
     body = {
-        "Title": [wpp.title or "Null"],
-        "Description": [(wpp.description[:50] + "...") if wpp.description else "Null"],
-        "URL": [wpp.display_url or "Null"],
-        "Author": [wpp.author or "Null"],
-        "Site Name": [wpp.site_name or "Null"],
-        "Type": wpp.type or "Null",
+        "Title": [wpp.title or "null"],
+        "Description": [(wpp.description[:50] + "...") if wpp.description else "null"],
+        "URL": [wpp.display_url or "null"],
+        "Author": [wpp.author or "null"],
+        "Site Name": [wpp.site_name or "null"],
+        "Type": wpp.type or "null",
     }
     text = section("Preview", body)
     t = wpp.type
@@ -74,9 +74,8 @@ async def parse(client: Client, message: Message):
 add_command_help(
     "parse",
     [
-        [
-            "parse",
-            "Parse a web_page(link) preview",
-        ]
+        ["parse",
+        "Parse a preview link.",
+        ],
     ],
 )

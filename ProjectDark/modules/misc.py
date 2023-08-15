@@ -28,7 +28,7 @@ async def spamban(client: Client, m: Message):
             start_param="start",
         )
     )
-    wait_msg = await edit_or_reply(m, "__Checking your account. . .__")
+    wait_msg = await edit_or_reply(m, "Checking your account...")
     await asyncio.sleep(1)
     spambot_msg = response.updates[1].message.id + 1
     status = await client.get_messages(chat_id="SpamBot", message_ids=spambot_msg)
@@ -37,7 +37,7 @@ async def spamban(client: Client, m: Message):
 
 @Client.on_message(filters.command(["webshot", "ss"], cmd) & filters.me)
 async def webshot(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Taking screenshot...__")
+    Dark = await edit_or_reply(message, "Taking screenshot...")
     try:
         user_link = message.command[1]
         try:
@@ -45,7 +45,7 @@ async def webshot(client: Client, message: Message):
             await client.send_photo(
                 message.chat.id,
                 full_link,
-                caption=f"**Screenshot of the page ⟶** {user_link}",
+                caption=f"Screenshot: {user_link}",
             )
         except Exception as dontload:
             await message.edit(f"Error! {dontload}\nTrying again create screenshot...")
@@ -53,22 +53,22 @@ async def webshot(client: Client, message: Message):
             await client.send_photo(
                 message.chat.id,
                 full_link,
-                caption=f"**Screenshot of the page ⟶** {user_link}",
+                caption=f"Screenshot: {user_link}",
             )
         await Dark.delete()
     except Exception as error:
         await Dark.delete()
         await client.send_message(
-            message.chat.id, f"**Something went wrong\nLog:{error}...**"
-        )
+            message.chat.id, f"{error}"
+            )
 
 
 @Client.on_message(filters.command("type", cmd) & filters.me)
 async def types(client: Client, message: Message):
-    orig_text = message.text.split(prefix + "type ", maxsplit=1)[1]
+    orig_text = message.text.split(cmd + "type ", maxsplit=1)[1]
     text = orig_text
     tbp = ""
-    typing_symbol = "▒"
+    typing_symbol = "..."
     while tbp != orig_text:
         await message.edit(str(tbp + typing_symbol))
         await asyncio.sleep(0.10)
@@ -80,7 +80,7 @@ async def types(client: Client, message: Message):
 
 @Client.on_message(filters.command(["directmessage", "dm"], cmd) & filters.me)
 async def deem(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "Usage:\n .dm @username Umm")
+    Dark = await edit_or_reply(message, "Sending...")
     quantity = 1
     inp = message.text.split(None, 2)[1]
     user = await client.get_chat(inp)
@@ -90,7 +90,7 @@ async def deem(client: Client, message: Message):
     if message.reply_to_message:
         reply_to_id = message.reply_to_message.id
         for _ in range(quantity):
-            await Dark.edit("Message Sended Successfully")
+            await Dark.edit("Successfully sent!")
             await client.send_message(
                 user.id, spam_text, reply_to_message_id=reply_to_id
             )
@@ -99,50 +99,37 @@ async def deem(client: Client, message: Message):
 
     for _ in range(quantity):
         await client.send_message(user.id, spam_text)
-        await Dark.edit("Message Sended Successfully")
+        await Dark.edit("Successfully sent!")
         await asyncio.sleep(0.15)
 
 
-@Client.on_message(filters.command("duck", cmd) & filters.me)
-async def duckgo(client: Client, message: Message):
-    input_str = " ".join(message.command[1:])
-    Dark = await edit_or_reply(message, "__Processing...__")
-    sample_url = "https://duckduckgo.com/?q={}".format(input_str.replace(" ", "+"))
-    if sample_url:
-        link = sample_url.rstrip()
-        await Dark.edit_text(
-            "Let me 🦆 DuckDuckGo that for you:\n🔎 [{}]({})".format(input_str, link)
-        )
-    else:
-        await Dark.edit_text("something is wrong. please try again later.")
-
-
+'''
 @Client.on_message(filters.command("open", cmd) & filters.me)
 async def open_file(client: Client, m: Message):
-    xd = await edit_or_reply(m, "__Reading File!__")
+    xd = await edit_or_reply(m, "Reading...")
     f = await client.download_media(m.reply_to_message)
     if f:
         _error = open(f, "r")
         _error_ = _error.read()
         _error.close()
         if len(_error_) >= 4096:
-            await xd.edit("__Pasting to Spacebin!__")
+            await xd.edit("Read successfully!")
             ext = "py"
             x = await s_paste(_error_, ext)
             s_link = x["url"]
             s_raw = x["raw"]
-            pasted = f"**Pasted to Spacebin**\n**Link:** [Spacebin]({s_link})\n**Raw Link:** [Raw]({s_raw})"
+            pasted = f"[Spacebin]({s_link}) | [Raw]({s_raw})"
             return await xd.edit(pasted, disable_web_page_preview=True)
         else:
-            await xd.edit(f"**Output:**\n__{_error_}__")
+            await xd.edit(f"{_error_}")
     else:
-        await edit_or_reply(m, "Reply to File to open it!")
+        await edit_or_reply(m, "Reply to file!")
         os.remove(f)
-
+'''
 
 @Client.on_message(filters.command(["tt", "tiktok", "ig", "sosmed"], cmd) & filters.me)
 async def sosmed(client: Client, message: Message):
-    Dark = await message.edit("__Downloading, wait plox. . .__")
+    Dark = await message.edit("Downloading...")
     link = get_arg(message)
     bot = "thisvidbot"
     if link:
@@ -163,7 +150,7 @@ async def sosmed(client: Client, message: Message):
             client.send_video(
                 message.chat.id,
                 sosmed.video.file_id,
-                caption=f"**Upload by:** {client.me.mention}",
+                caption=f"Uploaded by {client.me.mention}",
                 reply_to_message_id=ReplyCheck(message),
             ),
         )
@@ -173,15 +160,16 @@ async def sosmed(client: Client, message: Message):
 add_command_help(
     "misc",
     [
-        ["limit", "Check Limit telegram from @SpamBot."],
-        [
-            "dm <username> <text>",
-            "To send chat using userbot.",
+        ["limit",
+        "Check Limit telegram from @SpamBot."
         ],
-        ["duck", "To get the Link from DuckDuckGo."],
-        [
-            "open",
-            "To view the contents of the file as text which is sent as a telegram message.",
+        
+        ["dm @username <text>",
+        "Send chat using userbot.",
+        ],
+
+        ["type",
+        "Typing text by text.",
         ],
     ],
 )
@@ -190,9 +178,8 @@ add_command_help(
 add_command_help(
     "webshot",
     [
-        [
-            f"webshot <link> `or` {cmd}ss <link>",
-            "To take screenshot of a web page.",
+        [f"webshot <link>",
+        "To take screenshot of a web page.",
         ],
     ],
 )
@@ -201,9 +188,8 @@ add_command_help(
 add_command_help(
     "sosmed",
     [
-        [
-            f"sosmed <link>",
-            "To Download Media From Facebook / Tiktok / Instagram / Twitter / YouTube.",
+        [f"sosmed <link>",
+        "Download media from Facebook/Tiktok/Instagram/Twitter/YouTube.",
         ],
     ],
 )

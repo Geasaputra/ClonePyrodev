@@ -14,13 +14,13 @@ from .help import *
 async def trump_tweet(client: Client, message: Message):
     text = get_text(message)
     if not text:
-        await message.edit(f"**Trump :** ``What Should I Tweet For You ?`__")
+        await message.edit(f"Trump: What should I tweet for you?")
         return
     url = f"https://nekobot.xyz/api/imagegen?type=trumptweet&text={text}"
     r = requests.get(url=url).json()
     tweet = r["message"]
-    starkxd = f"**Trump Has Tweeted** {text}"
-    await message.edit(f"**Trump:** Wait I Am Tweeting Your Text")
+    starkxd = f"Trump has tweeted {text}"
+    await message.edit(f"Trump: Wait I'm tweeting your text.")
     await client.send_photo(message.chat.id, tweet, caption=starkxd)
     await message.delete()
 
@@ -33,10 +33,10 @@ async def custom_tweet(client: Client, message: Message):
         if ":" in text:
             stark = input_str.split(":", 1)
         else:
-            await message.edit("**Usage Syntax :** `username:tweet-text__")
+            await message.edit("Syntax: username:tweet-text")
             return
     if len(stark) != 2:
-        await message.edit("**Usage Syntax :** `username:tweet-text__")
+        await message.edit("Syntax: username:tweet-text")
         return
 
     starky = stark[0]
@@ -44,8 +44,8 @@ async def custom_tweet(client: Client, message: Message):
     url = f"https://nekobot.xyz/api/imagegen?type=tweet&username={starky}&text={ipman}"
     r = requests.get(url=url).json()
     tweet = r["message"]
-    starkxd = f"**{starky} Has Tweeted** `__{ipman}____"
-    await message.edit(f"**{starky}** : Wait I Am Tweeting Your Texts")
+    starkxd = f"{starky} has tweeted {ipman}"
+    await message.edit(f"{starky}: Wait I'm tweeting your text.")
     await client.send_photo(message.chat.id, tweet, caption=starkxd)
     await message.delete()
 
@@ -53,7 +53,12 @@ async def custom_tweet(client: Client, message: Message):
 add_command_help(
     "memes",
     [
-        ["trump", "make a Quote by Trump."],
-        ["ctweet", "Twitte by Ur values."],
+        ["trump",
+        "Make a quote by Trump."
+        ],
+        
+        ["ctweet",
+        "Twitter by your values."
+        ],
     ],
 )

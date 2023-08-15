@@ -27,7 +27,7 @@ except AttributeError as e:
 
 
 DB_AVAILABLE = False
-BOTINLINE_AVAIABLE = False
+BOTINLINE_AVAILABLE = False
 
 
 def mulaisql() -> scoped_session:

@@ -24,8 +24,8 @@ async def afk(client: Client, message: Message):
     if len(message.text.split()) >= 2:
         set_afk(True, message.text.split(None, 1)[1])
         await message.edit("""
-{} __isn't available right now!__
-**Reason:** <code>{}</code>
+{} isn't available right now.
+Reason: {}
 """
             .format(
                 mention_markdown(message.from_user.id, message.from_user.first_name),
@@ -35,7 +35,7 @@ async def afk(client: Client, message: Message):
     else:
         set_afk(True, "")
         await message.edit(
-            "{} __to the hell!__".format(
+            "{} away from keyboard.".format(
                 mention_markdown(message.from_user.id, message.from_user.first_name)
             )
         )
@@ -60,13 +60,13 @@ async def afk_mentioned(client: Client, message: Message):
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
         if get["reason"]:
             await message.reply(
-                "{} __isn't available right now.__\n**Reason:** <code>{}</code>".format(
+                "{} isn't available right now.\nReason: {}".format(
                     client.me.mention, get["reason"]
                 )
             )
         else:
             await message.reply(
-                f"<b>Sory...</b> {client.me.first_name} <b>isn't available right now.</b>"
+                f"Sory... {client.me.first_name} isn't available right now."
             )
 
         _, message_type = get_message_type(message)
@@ -91,7 +91,7 @@ async def afk_mentioned(client: Client, message: Message):
         try:
             await client.send_message(
                 BOTLOG_CHATID,
-                "<b>#MENTION\nFrom:</b> {}\n<b>Grup: </b><code>{}</code>\n<b>Message: </b> <code>{}</code>".format(
+                "#MENTION\nFrom:{}\nGrup: {}\nMessage: {}".format(
                     message.from_user.mention,
                     message.chat.title,
                     text[:3500],
@@ -111,7 +111,7 @@ async def no_longer_afk(client: Client, message: Message):
             await client.send_message(BOTLOG_CHATID, "Welcome back Sir!")
         except BaseException:
             pass
-        text = "[<b>{} Mention<b>] \n\n".format(len(MENTIONED))
+        text = "[{} Mention] \n\n".format(len(MENTIONED))
         for x in MENTIONED:
             msg_text = x["text"]
             if len(msg_text) >= 11:
@@ -133,8 +133,8 @@ async def no_longer_afk(client: Client, message: Message):
 add_command_help(
     "afk",
     [
-        [
-            "afk <reason>", "Away From Keyboard!",
+        ["afk <reason>",
+        "Away from keyboard!",
         ],
     ],
 )

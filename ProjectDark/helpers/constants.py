@@ -3,23 +3,19 @@
 
 
 class First:
-    ALIVE = "__Still Working On Fire!__"
+    ALIVE = "Userbot Up & Running!"
     REPO = """
-**DarkPyro-REV Userbot!**
-Userbot Version: `{}`
-
-[Lord](t.me/durov) | [Source](www.github.com)
-[Discussion](t.me/DarkPyroREV) | [Channel](t.me/fuckdvck)
+DarkPyro-REV Userbot
+Version: {}
+[Source](https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV) | [Discussion](https://t.me/DarkPyroREV)
 """
 
     CREATOR = """
-Are you kidding me?
+No Creator, Just Kanger!
 """
     MSG_ON = """
-**DarkPyro-REV Started!**
-**Version:** `{}`
-
-Just type `{}alive` and send!
+DarkPyro-REV Started!
+Version: {}
 """
 
 
@@ -84,11 +80,11 @@ class Weebify:
 
 class WWW:
     SpeedTest = (
-        "Speedtest started at __{start}__\n\n"
+        "Speedtest started\nat {start}\n\n"
         "Ping: {ping}ms\n"
         "Download: {download}\n"
         "Upload: {upload}\n"
-        "ISP: `{isp}`"
+        "ISP: {isp}"
     )
     
     NearestDC = """

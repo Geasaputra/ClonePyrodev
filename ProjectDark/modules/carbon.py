@@ -37,15 +37,15 @@ async def carbon_func(client: Client, message: Message):
         text = message.reply_to_message.text or message.reply_to_message.caption
     if not text:
         return await message.delete()
-    Dark = await edit_or_reply(message, "__Preparing Carbon . . .__")
+    Dark = await edit_or_reply(message, "Processing...")
     carbon = await make_carbon(text)
-    await Dark.edit("__Uploading...__")
+    await Dark.edit("Uploading...")
     await asyncio.gather(
         Dark.delete(),
         client.send_photo(
             message.chat.id,
             carbon,
-            caption=f"__Carbonised by {client.me.mention}__",
+            caption=f"Carbonised by {client.me.mention}",
             reply_to_message_id=ReplyCheck(message),
         ),
     )
@@ -55,6 +55,8 @@ async def carbon_func(client: Client, message: Message):
 add_command_help(
     "carbon",
     [
-        ["carbon <reply>", "Carbonated text."],
+        ["carbon <text/reply to text>",
+        "Carbonised text."
+        ],
     ],
 )

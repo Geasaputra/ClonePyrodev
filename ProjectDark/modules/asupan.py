@@ -11,9 +11,9 @@ from ProjectDark.helpers.PyroHelpers import ReplyCheck
 from .help import add_command_help
 
 
-@Client.on_message(filters.command(["asupan", "ptl"], cmd) & filters.me)
+@Client.on_message(filters.command(["asupan", "susu"], cmd) & filters.me)
 async def asupan_cmd(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "__Please wait...__")
+    Dark = await edit_or_reply(message, "Please wait...")
     await gather(
         Dark.delete(),
         client.send_video(
@@ -21,8 +21,7 @@ async def asupan_cmd(client: Client, message: Message):
             choice(
                 [
                     asupan.video.file_id
-                    async for asupan in client.search_messages(
-                        "asupandarkpyro", filter=enums.MessagesFilter.VIDEO
+                    async for asupan in client.search_messages("asupandarkpyro", filter=enums.MessagesFilter.VIDEO
                     )
                 ]
             ),
@@ -34,8 +33,8 @@ async def asupan_cmd(client: Client, message: Message):
 add_command_help(
     "asupan",
     [
-        [f"asupan atau {cmd}ptl",
-        "For cenggur, what cenggur? NGACENG NGANGGUR.",
+        [f"asupan or {cmd}susu",
+        "Eye wash.",
         ]
     ],
 )

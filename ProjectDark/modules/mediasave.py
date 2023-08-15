@@ -11,7 +11,7 @@ from ProjectDark.helpers.tools import get_arg
 from .help import add_command_help
 
 
-@Client.on_message(filters.command("lah", "") & filters.me)
+@Client.on_message(filters.command(["wow", "wah"], "") & filters.me)
 async def scrape(client, message):
     rep = message.reply_to_message
     cap = rep.caption or None
@@ -34,8 +34,8 @@ async def scrape(client, message):
 add_command_help(
   "mediasave",
   [
-    ["lah w/o cmd",
-    "to save the photo with timer"
+    ["wah or wow w/o cmd",
+    "Save photo with timer to saved message."
     ],
   ],
 )

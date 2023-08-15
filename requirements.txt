@@ -1,10 +1,11 @@
 APScheduler==3.7.0
-Pillow
+Pillow==9.5.0
 aiohttp
 asyncio
 bs4
+emoji==1.6.0
 gitpython
-googlesearch-python== 1.0.1
+google
 gpytranslate
 gtts
 lottie
