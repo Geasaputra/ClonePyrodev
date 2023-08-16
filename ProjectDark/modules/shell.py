@@ -38,21 +38,21 @@ async def shell(client: Client, message: Message):
     else:
         stop_time = perf_counter()
         if len(stdout) > 4096:
-                await message.edit("Oversize, sending file...")
-                file = open("output.txt", "w+")
-                file.write(stdout)
-                file.close()
-                await client.send_document(
-                    message.chat.id,
-                    "output.txt",
-                    reply_to_message_id=message.id,
-                )
-                os.remove("output.txt")
+            await message.edit(
+                "Oversize, sending file...")
+            file = open("output.txt", "w+")
+            file.write(stdout)
+            file.close()
+            await client.send_document(
+                message.chat.id,
+                "output.txt",
+                reply_to_message_id=message.id,)
+            os.remove("output.txt")
         else:
             text += f"<code>{stdout}</code>"
         if stderr:
-            text += f"<code>{stderr}</code>\n"
-        text += f"Completed in {round(stop_time - start_time, 5)}s"
+            text += f"<code>{stderr}</code>"
+        text += f"\n\nCompleted in {round(stop_time - start_time, 5)}s"
     await message.edit(text)
     cmd_obj.kill()
     
@@ -61,7 +61,7 @@ add_command_help(
     "shell",
     [
         [f"sh or {cmd}shell",
-        "Run bash."
+        "Run bash.",
         ],
     ],
 )
