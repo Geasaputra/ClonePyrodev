@@ -9,7 +9,8 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from config import CMD_HANDLER as cmd
-#from ProjectDark.helper.basic import format_exc
+
+from .help import add_command_help
 
 
 async def _exec(client: Client, message: Message):
@@ -70,3 +71,23 @@ async def _logs(client: Client, message: Message):
     )
     
     await message.delete()
+    
+
+
+add_command_help(
+    "python",
+    [
+        [f"ex or {cmd}exec <python code>",
+        "Execute python code.",
+        ],
+    ],
+)
+
+add_command_help(
+    "logs",
+    [
+        ["logs",
+        "Get logs userbot.",
+        ],
+    ],
+)
