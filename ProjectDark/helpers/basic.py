@@ -1,6 +1,7 @@
 # Part of PyroMan - 2022
 # Kang by DarkPyro - 2023
 
+from pyrogram import Client, errors, types
 from pyrogram.types import Message
 
 
@@ -56,3 +57,4 @@ async def edit_or_reply(message: Message, *args, **kwargs) -> Message:
 
 
 eor = edit_or_reply
+
