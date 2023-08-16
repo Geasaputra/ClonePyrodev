@@ -41,7 +41,7 @@ href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74c
 
 <h2>Deploy on VPS</h2>
 <h4>1. Install docker-compose & git</h4>
-<pre><code>sudo su && apt -y install git docker-compose-plugin</code></pre>
+<pre><code>sudo su && apt -y install git docker-compose</code></pre>
 
 <h4>2. Clone Repository</h4>
 <pre><code>git clone https://github.com/2R-Dark-Kanger-Pro/deploy</code></pre>
@@ -54,10 +54,10 @@ href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74c
 <p>Save it Ctrl S + Ctrl X</p>
 
 <h4>5. docker compose up</h4>
-<pre><code>docker compose up --build -d</code></pre>
+<pre><code>docker-compose up --build -d</code></pre>
 
 <h4>6. Get logs compose</h4>
-<pre><code>docker compose logs -f</code></pre>
+<pre><code>docker-compose logs -f</code></pre>
 
 
 <h2>Group Discussion</h2>
