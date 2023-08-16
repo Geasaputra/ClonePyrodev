@@ -25,7 +25,7 @@ from ProjectDark.utils.tools import add_text_img, bash
 from .help import add_command_help
 
 
-@Client.on_message(filters.command(["tikel", "kang"], cmd) & filters.me)
+@Client.on_message(filters.command("kang", cmd) & filters.me)
 async def kang(client: Client, message: Message):
     user = client.me
     replied = message.reply_to_message
@@ -245,7 +245,7 @@ async def get_response(message, client):
     return [x async for x in client.get_chat_history("Stickers", limit=1)][0].text
 
 
-@Client.on_message(filters.command(["packinfo", "stickerinfo"], cmd) & filters.me)
+@Client.on_message(filters.command("packinfo", cmd) & filters.me)
 async def packinfo(client: Client, message: Message):
     rep = await edit_or_reply(message, "Processing...")
     if not message.reply_to_message:
@@ -282,7 +282,7 @@ Emojis: {' '.join(emojis)}
     await rep.edit(output)
 
 
-@Client.on_message(filters.command("stickers", cmd) & filters.me)
+@Client.on_message(filters.command("ssticker", cmd) & filters.me)
 async def cb_sticker(client: Client, message: Message):
     query = get_text(message)
     if not query:
@@ -379,7 +379,7 @@ async def tinying(client: Client, message: Message):
     os.remove(ik)
 
 
-@Client.on_message(filters.command(["mmf", "memify"], cmd) & filters.me)
+@Client.on_message(filters.command("mmf", cmd) & filters.me)
 async def memify(client: Client, message: Message):
     if not message.reply_to_message_id:
         await edit_or_reply(message, "Reply to photo or sticker!")
@@ -405,7 +405,7 @@ async def memify(client: Client, message: Message):
     os.remove(meme)
 
 
-@Client.on_message(filters.command(["stoi", "getsticker", "get"], cmd) & filters.me)
+@Client.on_message(filters.command("stoi", cmd) & filters.me)
 async def stick2png(client: Client, message: Message):
     try:
         await message.edit("Converting...")
@@ -443,8 +443,12 @@ add_command_help(
         "Converting stickers to image."
         ],
         
-        ["stickers <query>",
+        ["ssticker <query>",
         "Find Sticker Pack."
+        ],
+        
+        ["packinfo <reply to sticker>",
+        "Sticker pack info."
         ],
         
         ["mmf <up text;down text>",

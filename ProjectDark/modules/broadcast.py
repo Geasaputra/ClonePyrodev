@@ -12,7 +12,7 @@ from .help import add_command_help
 @Client.on_message(filters.command("gcast", cmd) & filters.me)
 async def gcast_cmd(client, message):
     if message.reply_to_message or get_arg(message):
-        kang = await message.reply("Broadcasting message...")
+        kang = await message.reply("Broadcasting to groups...")
     else:
         return await message.edit("Give me a text or reply to chat!")
     done = 0
@@ -36,12 +36,12 @@ async def gcast_cmd(client, message):
                 error += 1
             await message.delete()
     await kang.edit(
-        f"Group Broadcast\nSuccess: {done}\nFailed: {error}")
+        f"Broadcast to Groups\nSuccess: {done} | Failed: {error}")
 
-@Client.on_message(filters.command("gucast", cmd) & filters.me)
+@Client.on_message(filters.command("ucast", cmd) & filters.me)
 async def gucast(client: Client, message: Message):
     if message.reply_to_message or get_arg(message):
-        text = await message.reply_text("Broadcasting message...")
+        text = await message.reply_text("Broadcasting to users...")
     else:
         return await message.edit_text("Give me a text or reply to chat!")
     done = 0
@@ -65,12 +65,12 @@ async def gucast(client: Client, message: Message):
                 await asyncio.sleep(0.3)
                 await message.delete()
     await text.edit_text(
-        f"UserBroadcast\nSuccess: {done}\nFailed: {error}")
+        f"Broadcat to Users\nSuccess: {done} | Failed: {error}")
 
-@Client.on_message(filters.command("gcastfwd", cmd) & filters.me)
+@Client.on_message(filters.command("fcast", cmd) & filters.me)
 async def gcast_fwd(client, message):
     if not message.reply_to_message and not get_arg(message):
-        return await message.edit("Reply to the message or media to be forward.")
+        return await message.edit("Reply to the message or media to be forward!")
 
     kang = await message.reply("Broadcasting forward chat...")
 
@@ -92,7 +92,7 @@ async def gcast_fwd(client, message):
                 await message.delete()
 
     await kang.edit(
-        f"Forward Broadcast\nSuccess: {done}\nFailed: {error}")
+        f"Broadcast Forwaded Message\nSuccess: {done} | Failed: {error}")
 
 add_command_help(
     "broadcast",
@@ -101,11 +101,11 @@ add_command_help(
         "Broadcast a message to all your group joined.",
         ],
         
-        ["gucast <text/repl>",
+        ["ucast <text/reply>",
         "Broadcast a message to peer user.",
         ],
         
-        ["gcastfwd <reply to message>",
+        ["fcast <reply to message>",
         "Broadcast a forwaded message.",
         ],
     ],

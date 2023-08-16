@@ -28,7 +28,7 @@ async def creator(client: Client, message: Message):
     await edit_or_reply(message, First.CREATOR)
 
 
-@Client.on_message(filters.command(["uptime", "up"], cmd) & filters.me)
+@Client.on_message(filters.command("uptime", cmd) & filters.me)
 async def uptime(client: Client, message: Message):
     now = datetime.now()
     current_uptime = now - START_TIME
@@ -146,7 +146,7 @@ add_command_help(
         "Send id of what you replied to."
         ],
         
-        [f"`up` or `{cmd}uptime`",
+        ["uptime",
         "Check bot's current uptime."
         ],
     ],

@@ -12,7 +12,7 @@ from ProjectDark.helpers.basic import edit_or_reply
 from .help import *
 
 
-@Client.on_message(filters.command(["stats", "status"], cmd) & filters.me)
+@Client.on_message(filters.command("stats", cmd) & filters.me)
 async def stats(client: Client, message: Message):
     Dark = await edit_or_reply(message, "Processing...")
     start = datetime.now()

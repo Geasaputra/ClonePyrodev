@@ -140,7 +140,7 @@ add_command_help(
         ],
         
         ["unlock <all or unlock type>",
-        "Unlock permissions in group. Types: msg, media, stickers, polls, info, invite, webprev, pin, all.",
+        "Unlock permissions in group. Types: stickers, gifs, media, games, inline, url, polls, info, invite, pin, all.",
         ],
     ],
 )

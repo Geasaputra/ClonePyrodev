@@ -13,23 +13,23 @@ from .help import add_command_help
 @Client.on_message(filters.command("join", cmd) & filters.me)
 async def join(client: Client, message: Message):
     Dark = message.command[1] if len(message.command) > 1 else message.chat.id
-    xxnx = await edit_or_reply(message, "Joining to chat...")
+    _msg = await edit_or_reply(message, "Joining...")
     try:
-        await xxnx.edit(f"Successfully joined!\nChat ID: `{Dark}`")
+        await _msg.edit(f"Joined to `{Dark}`!")
         await client.join_chat(Dark)
     except Exception as ex:
-        await xxnx.edit(f"{str(ex)}")
+        await _msg.edit(f"{str(ex)}")
 
 
-@Client.on_message(filters.command(["leave", "kickme"], cmd) & filters.me)
+@Client.on_message(filters.command("kickme", cmd) & filters.me)
 async def leave(client: Client, message: Message):
     Dark = message.command[1] if len(message.command) > 1 else message.chat.id
-    xxnx = await edit_or_reply(message, "Good bye!")
+    _msg = await edit_or_reply(message, "Good bye!")
     try:
-        await xxnx.edit_text(f"{client.me.first_name} has left.")
+        await _msg.edit_text(f"{client.me.first_name} has left!")
         await client.leave_chat(Dark)
     except Exception as ex:
-        await xxnx.edit_text(f"{str(ex)}")
+        await _msg.edit_text(f"{str(ex)}")
 
 
 @Client.on_message(filters.command(["leaveallgc"], cmd) & filters.me)
@@ -87,8 +87,8 @@ add_command_help(
         "Join group chat with the username."
         ],
         
-        ["leave <UsernameGC>",
-        "Leav group chat with the username."
+        ["leave <username>",
+        "Leave from group chat with the username."
         ],
     ],
 )

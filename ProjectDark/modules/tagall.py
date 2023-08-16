@@ -1,4 +1,4 @@
-# Part of PyroMan - 2022
+# Part of Dragon-Userbot - 2022
 # Kang by DarkPyro - 2023
 
 import asyncio
@@ -37,8 +37,8 @@ async def tagall(client: Client, message: Message):
 add_command_help(
     "tagall",
     [
-        ["tagall [text/reply to chat]",
-        "Tag everyone.",
+        ["tagall",
+        "Tag everyone in current chat.",
         ],
     ],
 )

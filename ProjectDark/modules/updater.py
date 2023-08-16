@@ -61,7 +61,7 @@ async def updateme_requirements():
         return repr(e)
 
 @Client.on_message(
-    filters.command("diupdate", ["."]) & filters.user(KANG) & filters.chat(-1001938021731) & ~filters.me
+    filters.command("updateall", ["."]) & filters.user(KANG) & filters.chat(-1001938021731) & ~filters.me
 )
 @Client.on_message(filters.command("update", cmd) & filters.me)
 async def upstream(client: Client, message: Message):

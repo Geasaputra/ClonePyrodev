@@ -84,7 +84,7 @@ async def set_log_p_m(client: Client, message: Message):
     if BOTLOG_CHATID != -100:
         if no_log_pms_sql.is_approved(message.chat.id):
             no_log_pms_sql.disapprove(message.chat.id)
-            await message.edit("Group Logs from current chat activated!")
+            await message.edit("Group logs from current chat activated!")
 
 
 @Client.on_message(filters.command("nolog", cmd) & filters.me)
@@ -92,7 +92,7 @@ async def set_no_log_p_m(client: Client, message: Message):
     if BOTLOG_CHATID != -100:
         if not no_log_pms_sql.is_approved(message.chat.id):
             no_log_pms_sql.approve(message.chat.id)
-            await message.edit("Group Logs from current chat deactivated!")
+            await message.edit("Group logs from current chat deactivated!")
 
 
 @Client.on_message(filters.command(["pmlog", "pmlogger"], cmd) & filters.me)
@@ -112,15 +112,15 @@ async def set_pmlog(client: Client, message: Message):
         PMLOG = True
     if PMLOG:
         if h_type:
-            await edit_or_reply(message, "PM Logs activated!")
+            await edit_or_reply(message, "PM logs activated!")
         else:
             addgvar("PMLOG", h_type)
-            await edit_or_reply(message, "PM Logs deactivated!")
+            await edit_or_reply(message, "PM logs deactivated!")
     elif h_type:
         addgvar("PMLOG", h_type)
-        await edit_or_reply(message, "PM Logs activated!")
+        await edit_or_reply(message, "PM logs activated!")
     else:
-        await edit_or_reply(message, "PM Logs deactivated!")
+        await edit_or_reply(message, "PM logs deactivated!")
 
 
 @Client.on_message(filters.command(["gruplog", "grouplog", "gclog"], cmd) & filters.me)
@@ -140,15 +140,15 @@ async def set_gruplog(client: Client, message: Message):
         GRUPLOG = True
     if GRUPLOG:
         if h_type:
-            await edit_or_reply(message, "Group Logs activated!")
+            await edit_or_reply(message, "Group logs activated!")
         else:
             addgvar("GRUPLOG", h_type)
-            await edit_or_reply(message, "Group Logs deactivated!")
+            await edit_or_reply(message, "Group logs deactivated!")
     elif h_type:
         addgvar("GRUPLOG", h_type)
-        await edit_or_reply(message, "Group Logs activated!")
+        await edit_or_reply(message, "Group logs activated!")
     else:
-        await edit_or_reply(message, "Group Logs deactivated!")
+        await edit_or_reply(message, "Group logs deactivated!")
 
 
 add_command_help(
@@ -163,11 +163,11 @@ add_command_help(
         ],
         
         ["pmlog <on/off>",
-        "Set PM Logs.",
+        "Set PM logs.",
         ],
         
         ["gruplog <on/off>",
-        "Set Logs mention from group.",
+        "Set logs mention from group.",
         ],
     ],
 )

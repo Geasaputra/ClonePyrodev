@@ -12,7 +12,7 @@ from ProjectDark.helpers.parser import mention_html, mention_markdown
 from ProjectDark.modules.help import *
 
 
-@Client.on_message(filters.me & filters.command(["admins", "adminlist"], cmd))
+@Client.on_message(filters.me & filters.command("admins", cmd))
 async def adminlist(client: Client, message: Message):
     replyid = None
     toolong = False
@@ -74,70 +74,8 @@ async def adminlist(client: Client, message: Message):
     else:
         await message.edit(teks)
 
-'''
-# Doesn't work
-@Client.on_message(filters.command(["kickdel", "zombies"], cmd) & filters.me)
-async def kickdel_cmd(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "Kicking deleted accounts...")
-    # noinspection PyTypeChecker
-    values = [
-        await message.chat.ban_member(user.user.id, int(time()) + 31)
-        for member in await message.chat.get_members()
-        if member.user.is_deleted
-    ]
-    await Dark.edit(f"Successfully kicked {len(values)} deleted accounts.")
 
-#Doesn't work
-@Client.on_message(
-    filters.me & filters.command(["reportadmin", "reportadmins", "report"], cmd)
-)
-async def report_admin(client: Client, message: Message):
-    await message.delete()
-    if len(message.text.split()) >= 2:
-        text = message.text.split(None, 1)[1]
-    else:
-        text = None
-    grup = await client.get_chat(message.chat.id)
-    admin = []
-    async for a in client.get_chat_members(
-        message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS
-    ):
-        if (
-            a.status == enums.ChatMemberStatus.ADMINISTRATOR
-            or a.status == enums.ChatMemberStatus.OWNER
-        ):
-            if not a.user.is_bot:
-                admin.append(mention_html(a.user.id, "\u200b"))
-    if message.reply_to_message:
-        if text:
-            teks = "{}".format(text)
-        else:
-            teks = "{} reported to admins.".format(
-                mention_html(
-                    message.reply_to_message.from_user.id,
-                    message.reply_to_message.from_user.first_name,
-                )
-            )
-    else:
-        if text:
-            teks = "{}".format(html.escape(text))
-        else:
-            teks = "Calling admins in {}.".format(grup.title)
-    teks += "".join(admin)
-    if message.reply_to_message:
-        await client.send_message(
-            message.chat.id,
-            teks,
-            reply_to_message_id=message.reply_to_message.id,
-            parse_mode=enums.ParseMode.HTML,
-        )
-    else:
-        await client.send_message(
-            message.chat.id, teks, parse_mode=enums.ParseMode.HTML
-        )
-'''
-
-@Client.on_message(filters.me & filters.command(["botlist", "bots"], cmd))
+@Client.on_message(filters.me & filters.command("bots", cmd))
 async def get_list_bots(client: Client, message: Message):
     replyid = None
     if len(message.text.split()) >= 2:
@@ -170,14 +108,14 @@ async def get_list_bots(client: Client, message: Message):
 
 
 add_command_help(
-    "tag",
+    "staff",
     [
         ["admins",
-        "Get admins list in current chats."
+        "List admins in current chats."
         ],
         
-        ["botlist",
-        "Get bots list in current chat.",
+        ["bots",
+        "List bots in current chat.",
         ],
     ],
 )

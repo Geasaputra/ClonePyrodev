@@ -35,7 +35,7 @@ add_command_help(
   "mediasave",
   [
     ["wah or wow w/o cmd",
-    "Save photo with timer to saved message."
+    "Save photo with timer to your saved message."
     ],
   ],
 )

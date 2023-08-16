@@ -33,7 +33,7 @@ async def module_help(client: Client, message: Message):
             for cmd, function in commands.items():
                 this_command += f"""
 `{CMD_HANDLER}{cmd}`
-Function: {function}
+    {function}
 """
             await edit_or_reply(message, this_command, parse_mode=enums.ParseMode.MARKDOWN)
         else:

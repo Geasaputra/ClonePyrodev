@@ -16,7 +16,7 @@ from .help import add_command_help
 lang = "id"  # Default Language for voice
 
 
-@Client.on_message(filters.me & filters.command(["voice", "tts"], cmd))
+@Client.on_message(filters.me & filters.command("tts", cmd))
 async def voice(client: Client, message):
     global lang
     cmd = message.command
@@ -69,7 +69,7 @@ async def voicelang(client: Client, message: Message):
 add_command_help(
     "voice",
     [
-        [f"voice or {cmd}tts <text/reply>",
+        ["tts <text/reply>",
         "Convert text to voice by Google."
         ],
         

@@ -11,8 +11,8 @@ from ProjectDark.helpers.PyroHelpers import ReplyCheck
 from .help import add_command_help
 
 
-@Client.on_message(filters.command(["asupan", "susu"], cmd) & filters.me)
-async def asupan_cmd(client: Client, message: Message):
+@Client.on_message(filters.command("ew", cmd) & filters.me)
+async def eye_wash(client: Client, message: Message):
     Dark = await edit_or_reply(message, "Please wait...")
     await gather(
         Dark.delete(),
@@ -20,8 +20,8 @@ async def asupan_cmd(client: Client, message: Message):
             message.chat.id,
             choice(
                 [
-                    asupan.video.file_id
-                    async for asupan in client.search_messages("asupandarkpyro", filter=enums.MessagesFilter.VIDEO
+                    eye.video.file_id
+                    async for eye in client.search_messages("asupandarkpyro", filter=enums.MessagesFilter.VIDEO
                     )
                 ]
             ),
@@ -31,9 +31,9 @@ async def asupan_cmd(client: Client, message: Message):
 
 
 add_command_help(
-    "asupan",
+    "eye_wash",
     [
-        [f"asupan or {cmd}susu",
+        ["ew",
         "Eye wash.",
         ]
     ],

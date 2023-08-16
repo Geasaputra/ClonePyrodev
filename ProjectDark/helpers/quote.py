@@ -178,54 +178,54 @@ def get_reply_text(reply: types.Message) -> str:
         if reply.photo
         else get_reply_poll_text(reply.poll)
         if reply.poll
-        else "📍 Location"
+        else "Location"
         if reply.location or reply.venue
-        else "👤 Contact"
+        else "Contact"
         if reply.contact
-        else "🖼 GIF"
+        else "GIF"
         if reply.animation
-        else "🎧 Music" + get_audio_text(reply.audio)
+        else "Music" + get_audio_text(reply.audio)
         if reply.audio
-        else "📹 Video"
+        else "Video"
         if reply.video
-        else "📹 Videomessage"
+        else "Videomessage"
         if reply.video_note
-        else "🎵 Voice"
+        else "Voice"
         if reply.voice
         else (reply.sticker.emoji + " " if reply.sticker.emoji else "") + "Sticker"
         if reply.sticker
-        else "💾 File " + reply.document.file_name
+        else "File " + reply.document.file_name
         if reply.document
-        else "🎮 Game"
+        else "Game"
         if reply.game
-        else "🎮 set new record"
+        else "Set new record"
         if reply.game_high_score
         else f"{reply.dice.emoji} - {reply.dice.value}"
         if reply.dice
         else (
-            "👤 joined the group"
+            "Joined the group"
             if reply.new_chat_members[0].id == reply.from_user.id
-            else "👤 invited %s to the group"
+            else "Invited %s to the group"
             % (get_full_name(reply.new_chat_members[0]))
         )
         if reply.new_chat_members
         else (
-            "👤 left the group"
+            "Left the group"
             if reply.left_chat_member.id == reply.from_user.id
-            else "👤 removed %s" % (get_full_name(reply.left_chat_member))
+            else "Removed %s" % (get_full_name(reply.left_chat_member))
         )
         if reply.left_chat_member
-        else f"✏ changed group name to {reply.new_chat_title}"
+        else f"Changed group name to {reply.new_chat_title}"
         if reply.new_chat_title
-        else "🖼 changed group photo"
+        else "Changed group photo"
         if reply.new_chat_photo
-        else "🖼 removed group photo"
+        else "Removed group photo"
         if reply.delete_chat_photo
-        else "📍 pinned message"
+        else "Pinned message"
         if reply.pinned_message
-        else "👥 created the group"
+        else "Created the group"
         if reply.group_chat_created or reply.supergroup_chat_created
-        else "👥 created the channel"
+        else "Created the channel"
         if reply.channel_chat_created
         else reply.text or "unsupported message"
     )

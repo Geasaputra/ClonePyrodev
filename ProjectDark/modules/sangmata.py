@@ -15,7 +15,7 @@ from ProjectDark.utils import extract_user
 from .help import add_command_help
 
 
-@Client.on_message(filters.command(["sg", "sa", "sangmata"], cmd) & filters.me)
+@Client.on_message(filters.command("sg", cmd) & filters.me)
 async def sg(client: Client, message: Message):
     args = await extract_user(message)
     lol = await edit_or_reply(message, "Processing...")
@@ -51,7 +51,7 @@ async def sg(client: Client, message: Message):
 add_command_help(
     "sangmata",
     [
-        [f"{cmd}sg <reply/userid/username>",
+        ["sg <reply/userid/username>",
         "Check history name/username of users.",
         ],
     ],

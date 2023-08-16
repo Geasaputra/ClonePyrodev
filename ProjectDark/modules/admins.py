@@ -25,7 +25,7 @@ unmute_permissions = ChatPermissions(
 
 
 @Client.on_message(
-    filters.group & filters.command(["setchatphoto", "setgpic"], cmd) & filters.me
+    filters.group & filters.command("gpic", cmd) & filters.me
 )
 async def set_chat_photo(client: Client, message: Message):
     zuzu = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
@@ -44,7 +44,7 @@ async def set_chat_photo(client: Client, message: Message):
 
 
 # bahasa ubah mager parah pake banget
-@Client.on_message(filters.command("stg", cmd) & filters.me)
+@Client.on_message(filters.command("gname", cmd) & filters.me)
 async def set_chat_tittle(client: Client, message: Message):
     if message.chat.type == enums.ChatType.GROUP or message.chat.type == enums.ChatType.SUPERGROUP or message.chat.type == enums.ChatType.CHANNEL:
         if len(message.command) == 1:
@@ -252,7 +252,7 @@ Kicked by {message.from_user.mention if message.from_user else 'Anon'}
 
 
 @Client.on_message(
-    filters.group & filters.command(["promote", "fullpromote"], cmd) & filters.me
+    filters.group & filters.command(["promote", "fpromote"], cmd) & filters.me
 )
 async def promotte(client: Client, message: Message):
     user_id = await extract_user(message)
@@ -334,8 +334,16 @@ add_command_help(
         "Kick a user from your group."
         ],
         
-        ["promote or fullpromote",
+        ["dkick <reply/username/userid>",
+        "Kick a user from your group and delete message."
+        ],
+        
+        ["promote",
         "Promote a user from your group.",
+        ],
+        
+        ["fpromote",
+        "Fully promote a user from your group.",
         ],
         
         ["demote",
@@ -362,11 +370,11 @@ add_command_help(
         "Unpin all messages.",
         ],
         
-        ["setgpic <reply to photo>",
+        ["gpic <reply to photo>",
         "Set a profile picture for your group.",
         ],
         
-        ["stg <text/reply to text>",
+        ["gname <text/reply to text>",
         "Set a new tittle for your group.",
         ],
     ],

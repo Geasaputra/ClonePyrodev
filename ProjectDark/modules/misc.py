@@ -28,16 +28,16 @@ async def spamban(client: Client, m: Message):
             start_param="start",
         )
     )
-    wait_msg = await edit_or_reply(m, "Checking your account...")
+    wait_msg = await edit_or_reply(m, "Checking...")
     await asyncio.sleep(1)
     spambot_msg = response.updates[1].message.id + 1
     status = await client.get_messages(chat_id="SpamBot", message_ids=spambot_msg)
     await wait_msg.edit_text(f"~ {status.text}")
 
 
-@Client.on_message(filters.command(["webshot", "ss"], cmd) & filters.me)
+@Client.on_message(filters.command("webshot", cmd) & filters.me)
 async def webshot(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "Taking screenshot...")
+    Dark = await edit_or_reply(message, "Taking...")
     try:
         user_link = message.command[1]
         try:
@@ -78,7 +78,7 @@ async def types(client: Client, message: Message):
         await asyncio.sleep(0.10)
 
 
-@Client.on_message(filters.command(["directmessage", "dm"], cmd) & filters.me)
+@Client.on_message(filters.command("dm", cmd) & filters.me)
 async def deem(client: Client, message: Message):
     Dark = await edit_or_reply(message, "Sending...")
     quantity = 1
@@ -103,31 +103,7 @@ async def deem(client: Client, message: Message):
         await asyncio.sleep(0.15)
 
 
-'''
-@Client.on_message(filters.command("open", cmd) & filters.me)
-async def open_file(client: Client, m: Message):
-    xd = await edit_or_reply(m, "Reading...")
-    f = await client.download_media(m.reply_to_message)
-    if f:
-        _error = open(f, "r")
-        _error_ = _error.read()
-        _error.close()
-        if len(_error_) >= 4096:
-            await xd.edit("Read successfully!")
-            ext = "py"
-            x = await s_paste(_error_, ext)
-            s_link = x["url"]
-            s_raw = x["raw"]
-            pasted = f"[Spacebin]({s_link}) | [Raw]({s_raw})"
-            return await xd.edit(pasted, disable_web_page_preview=True)
-        else:
-            await xd.edit(f"{_error_}")
-    else:
-        await edit_or_reply(m, "Reply to file!")
-        os.remove(f)
-'''
-
-@Client.on_message(filters.command(["tt", "tiktok", "ig", "sosmed"], cmd) & filters.me)
+@Client.on_message(filters.command("mdl", cmd) & filters.me)
 async def sosmed(client: Client, message: Message):
     Dark = await message.edit("Downloading...")
     link = get_arg(message)
@@ -186,9 +162,9 @@ add_command_help(
 
 
 add_command_help(
-    "sosmed",
+    "media social",
     [
-        [f"sosmed <link>",
+        [f"mdl <link>",
         "Download media from Facebook/Tiktok/Instagram/Twitter/YouTube.",
         ],
     ],

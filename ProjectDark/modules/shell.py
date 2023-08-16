@@ -13,7 +13,7 @@ from config import CMD_HANDLER as cmd
 from .help import add_command_help
 
 
-@Client.on_message(filters.me & filters.command(["shell", "sh"], cmd))
+@Client.on_message(filters.me & filters.command("sh", cmd))
 async def shell(client: Client, message: Message):
     if len(message.command) < 2:
         return await message.edit("Specify the command in message text!")
@@ -60,7 +60,7 @@ async def shell(client: Client, message: Message):
 add_command_help(
     "shell",
     [
-        [f"sh or {cmd}shell",
+        [f"sh",
         "Run bash.",
         ],
     ],

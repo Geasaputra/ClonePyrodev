@@ -11,7 +11,7 @@ from ProjectDark.helpers.basic import edit_or_reply
 from .help import add_command_help
 
 
-@Client.on_message(filters.me & filters.command(["tr", "trt", "translate"], cmd))
+@Client.on_message(filters.me & filters.command("tr", cmd))
 async def translate(client: Client, message: Message):
     trl = Translator()
     if message.reply_to_message and (

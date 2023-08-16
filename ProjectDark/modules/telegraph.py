@@ -17,7 +17,7 @@ r = telegraph.create_account(short_name="DarkPyro-Userbot")
 auth_url = r["auth_url"]
 
 
-@Client.on_message(filters.command(["tg", "telegraph"], cmd) & filters.me)
+@Client.on_message(filters.command("tgraph", cmd) & filters.me)
 async def uptotelegraph(client: Client, message: Message):
     Dark = await edit_or_reply(message, "Processing...")
     if not message.reply_to_message:
@@ -57,7 +57,7 @@ async def uptotelegraph(client: Client, message: Message):
 add_command_help(
     "telegraph",
     [
-        [f"telegraph or {cmd}tg",
+        ["tgraph",
         "Reply to Text or media to upload it to the telegraph.",
         ],
     ],

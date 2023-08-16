@@ -57,19 +57,7 @@ def get_message_type(msg):
     elif msg.animation:
         content = msg.animation.file_id
         message_type = Types.ANIMATION
-
-    # TODO
-    # elif msg.contact:
-    # 	content = msg.contact.phone_number
-    # 	# text = None
-    # 	message_type = Types.CONTACT
-
-    # TODO
-    # elif msg.animated_sticker:
-    # 	content = msg.animation.file_id
-    # 	text = None
-    # 	message_type = Types.ANIMATED_STICKER
-
+        
     else:
         return None, None
 

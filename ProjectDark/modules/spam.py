@@ -26,7 +26,7 @@ def spam_allowed():
     return SPAM_COUNT[0] < 50
 
 
-@Client.on_message(filters.me & filters.command(["dspam", "delayspam"], cmd))
+@Client.on_message(filters.me & filters.command("dspam", cmd))
 async def delayspam(client: Client, message: Message):
     delayspam = await extract_args(message)
     arr = delayspam.split()
@@ -60,7 +60,7 @@ async def sspam(client: Client, message: Message):
     amount = int(message.command[1])
     text = " ".join(message.command[2:])
 
-    cooldown = {"spam": 0.15, "statspam": 0.1, "slowspam": 0.9, "fastspam": 0}
+    cooldown = {"spam": 0.5, "statspam": 0.5, "slowspam": 1, "fastspam": 0.25}
 
     await message.delete()
 
@@ -78,7 +78,7 @@ async def sspam(client: Client, message: Message):
 
 
 @Client.on_message(
-    filters.me & filters.command(["sspam", "stkspam", "spamstk", "stickerspam"], cmd)
+    filters.me & filters.command("sspam", cmd)
 )
 async def spam_stick(client: Client, message: Message):
     if not message.reply_to_message:
@@ -117,7 +117,7 @@ add_command_help(
         "Spam text."
         ],
         
-        ["delayspam <seconds> <amounts> <text>",
+        ["dspam <seconds> <amounts> <text>",
         "For delay spam",
         ],
         

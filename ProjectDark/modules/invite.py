@@ -29,31 +29,6 @@ async def inviteee(client: Client, message: Message):
         return
     await mg.edit(f"{len(user_list)} invited!")
 
-'''
-@Client.on_message(filters.command(["inviteall"], cmd) & filters.me)
-async def inv(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "Processing . . .")
-    text = message.text.split(" ", 1)
-    queryy = text[1]
-    chat = await client.get_chat(queryy)
-    tgchat = message.chat
-    await Dark.edit_text(f"inviting users from {chat.username}")
-    async for member in client.get_chat_members(chat.id):
-        user = member.user
-        zxb = [
-            UserStatus.ONLINE,
-            UserStatus.OFFLINE,
-            UserStatus.RECENTLY,
-            UserStatus.LAST_WEEK,
-        ]
-        if user.status in zxb:
-            try:
-                await client.add_chat_members(tgchat.id, user.id)
-            except Exception as e:
-                mg = await client.send_message(BOTLOG_CHATID, f"ERROR: {e}")
-                await asyncio.sleep(0.3)
-                await mg.delete()
-'''
 
 @Client.on_message(filters.command("invitelink", cmd) & filters.me)
 async def invite_link(client: Client, message: Message):
@@ -75,7 +50,7 @@ add_command_help(
         ],
         
         ["invite user1 user2 ...",
-        "Invite a users."
+        "Invite a user or some users."
         ],
     ],
 )

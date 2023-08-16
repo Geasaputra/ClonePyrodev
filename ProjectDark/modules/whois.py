@@ -16,7 +16,7 @@ from ProjectDark.utils import extract_user
 from .help import add_command_help
 
 
-@Client.on_message(filters.command(["whois", "info"], cmd) & filters.me)
+@Client.on_message(filters.command("info", cmd) & filters.me)
 async def who_is(client: Client, message: Message):
     user_id = await extract_user(message)
     Dark = await edit_or_reply(message, "Processing...")
@@ -76,7 +76,7 @@ Premium: {user.is_premium}
         return await Dark.edit(f"{e}")
 
 
-@Client.on_message(filters.command(["chatinfo", "cinfo", "ginfo"], cmd) & filters.me)
+@Client.on_message(filters.command("cinfo", cmd) & filters.me)
 async def chatinfo_handler(client: Client, message: Message):
     Dark = await edit_or_reply(message, "Processing...")
     try:
@@ -141,7 +141,7 @@ add_command_help(
         "Get telegram user info with full description.",
         ],
         
-        ["chatinfo <username/chatid>",
+        ["cinfo <username/chatid>",
         "Get group info with full description.",
         ],
     ],

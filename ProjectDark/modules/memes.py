@@ -25,7 +25,7 @@ async def trump_tweet(client: Client, message: Message):
     await message.delete()
 
 
-@Client.on_message(filters.command("ctweet", cmd) & filters.me)
+@Client.on_message(filters.command("tweet", cmd) & filters.me)
 async def custom_tweet(client: Client, message: Message):
     text = get_text(message)
     input_str = get_text(message)
@@ -57,7 +57,7 @@ add_command_help(
         "Make a quote by Trump."
         ],
         
-        ["ctweet",
+        ["tweet",
         "Twitter by your values."
         ],
     ],
