@@ -26,7 +26,7 @@ from .help import add_command_help
 modules = CMD_HELP
 
 
-@Client.on_message(filters.command(["alive", "on"], cmd) & filters.me)
+@Client.on_message(filters.command("alive", cmd) & filters.me)
 async def alive(client: Client, message: Message):
     msg = await edit_or_reply(message, "...")
     await asyncio.sleep(1)
@@ -47,6 +47,7 @@ async def alive(client: Client, message: Message):
         )
     except BaseException:
         await msg.edit(av, disable_web_page_preview=True)
+
 
 
 add_command_help(

@@ -278,12 +278,9 @@ async def get_pmermit(client: Client, cust_msg: Message):
     Dark = await cust_msg.edit("Processing...")
     custom_message = sql.gvarstatus("unapproved_msg")
     if custom_message is not None:
-        await Dark.edit("Your PMPERMIT message now:" f"\n\n{custom_message}")
+        await Dark.edit("PMPERMIT Message:" f"\n\n{custom_message}")
     else:
-        await Dark.edit(
-            "You Have Not Set PMPERMIT Costume Messages,\n"
-            f"Still Using Default PM Messages:\n\n{DEF_UNAPPROVED_MSG}"
-        )
+        await Dark.edit(f"PMPERMIT Message:" f"\n\n{DEF_UNAPPROVED_MSG}")
 
 
 @Client.on_message(filters.command("resetpmpermit", cmd) & filters.me)

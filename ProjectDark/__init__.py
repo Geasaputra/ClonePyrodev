@@ -5,6 +5,7 @@ import asyncio
 import logging
 import sys
 import time
+
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from typing import Any, Dict
@@ -22,6 +23,8 @@ from config import (
     DB_URL,
     STRING_SESSION,
     SUDO_USERS,
+    BOT_VER,
+    BRANCH,
 )
 
 LOG_FILE_NAME = "logs.txt"
@@ -35,9 +38,9 @@ logging.basicConfig(
     ],
 )
 logging.getLogger("asyncio").setLevel(logging.CRITICAL)
-logging.getLogger("pytgcalls").setLevel(logging.WARNING)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
-logging.getLogger("pyrogram.client").setLevel(logging.WARNING)
+#logging.getLogger("pytgcalls").setLevel(logging.WARNING)
+#logging.getLogger("pyrogram").setLevel(logging.WARNING)
+#logging.getLogger("pyrogram.client").setLevel(logging.WARNING)
 logging.getLogger("pyrogram.session.auth").setLevel(logging.CRITICAL)
 logging.getLogger("pyrogram.session.session").setLevel(logging.CRITICAL)
 
@@ -88,8 +91,8 @@ bot = Client(
         name="bot",
         api_id=API_ID,
         api_hash=API_HASH,
+        device_model="DarkPyro-REV" + " " + "v" + BOT_VER,
         session_string=STRING_SESSION,
-        plugins=dict(root="ProjectDark/modules"),
-    )
+        plugins=dict(root="ProjectDark/modules"))
 
 setattr(bot, "group_call", GroupCallFactory(bot).get_group_call())

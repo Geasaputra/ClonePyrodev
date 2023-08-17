@@ -22,7 +22,6 @@ from ProjectDark.helpers.tools import get_arg
 from ProjectDark.utils.misc import restart
 from ProjectDark.utils.tools import bash
 
-from .help import add_command_help
 
 if GIT_TOKEN:
     GIT_USERNAME = REPO_URL.split("com/")[1].split("/")[0]
@@ -141,16 +140,3 @@ async def upstream(client: Client, message: Message):
     execle(sys.executable, *args, environ)
     return
 
-
-add_command_help(
-    "update",
-    [
-        ["update",
-        "Check update."
-        ],
-        
-        ["update deploy",
-        "Update and re-deploy."
-        ],
-    ],
-)

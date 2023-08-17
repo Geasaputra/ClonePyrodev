@@ -32,8 +32,9 @@ async def main():
             LOGGER("ProjectDark").info(
                 f"Logged in as {bot.me.first_name} | [ {bot.me.id} ]"
             )
-        except Exception as a:
-            LOGGER("main").warning(a)
+        except Exception:
+            pass
+            #LOGGER("main").warning(a)
     LOGGER("ProjectDark").info(f"Darkpyro-UserBot v{BOT_VER} [Activated!]")
     await idle()
     await aiosession.close()

@@ -12,8 +12,6 @@ from ProjectDark import *
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.constants import First
 
-from .help import add_command_help
-
 
 
 @Client.on_message(filters.command("repo", cmd) & filters.me)
@@ -33,7 +31,7 @@ async def uptime(client: Client, message: Message):
     now = datetime.now()
     current_uptime = now - START_TIME
     await edit_or_reply(
-        message, f"Uptime: {str(current_uptime).split('.')[0]}"
+        message, f"Uptime {str(current_uptime).split('.')[0]}"
     )
 
 
@@ -125,29 +123,3 @@ async def get_id(client: Client, message: Message):
     else:
         await edit_or_reply(message, f"Chat: `{message.chat.id}`")
 
-
-# Command help section
-add_command_help(
-    "start",
-    [
-        ["alive",
-        "Just for fun."
-        ],
-        
-        ["repo",
-        "Display the repo of this userbot."
-        ],
-        
-        ["creator",
-        "Show the creator of this userbot."
-        ],
-        
-        ["id",
-        "Send id of what you replied to."
-        ],
-        
-        ["uptime",
-        "Check bot's current uptime."
-        ],
-    ],
-)

@@ -31,7 +31,7 @@ async def eye_wash(client: Client, message: Message):
 
 
 add_command_help(
-    "eye_wash",
+    "milk",
     [
         ["ew",
         "Eye wash.",

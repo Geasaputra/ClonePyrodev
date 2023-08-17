@@ -1,5 +1,4 @@
 # Part of PyroMan - 2022
-# Part of PyroMan - 2022
 # Kang by DarkPyro - 2023
 
 from asyncio import sleep

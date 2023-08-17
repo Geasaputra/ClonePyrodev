@@ -52,3 +52,35 @@ def add_command_help(module_name, commands):
                 command_dict[x[0]] = x[1]
 
     CMD_HELP[module_name] = command_dict
+
+
+
+@Client.on_message(filters.command("DISCLAIMER", CMD_HANDLER) & filters.me)
+async def disclaimer(client: Client, message: Message):
+    disclaimer = """
+<b>DISCLAIMER (Indonesian)</b>
+
+<b>(A)</b> Repo sepenuhnya bukan hasil karya kami, melainkan hanya meng-copy dari beberapa repo userbot yang ada.
+<b>(B)</b> Kami tidak menyarankan Anda untuk menggunakan repo kami di akun utama.
+<b>(C)</b> Hindari untuk menggunakan command gcast terlalu sering, jika memungkinkan jangan digunakan.
+
+<b>Catatan:</b>
+1) Kami tidak menambahkan daftar hitam,
+2) Jika dikemudian hari akun Anda diban di beberapa grup dan mengalami limit oleh <b>@SpamBot</b> atau lebih fatalnya akun Anda dibanned oleh telegram (Silahkan baca kembali poin B, C).
+
+<b>Tambahan:</b>
+a) Akun anda akan otomatis join ke grup kami [<a href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74cf1dbdc5eae2ec734cc8df5/ProjectDark/__main__.py#L25'><b>READ</b></a>],
+b) Kami menambahkan beberapa ID Pengguna [<a href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74cf1dbdc5eae2ec734cc8df5/ProjectDark/helpers/adminHelpers.py#L74'><b>READ</b></a>] diberikan akses command <code>.diupdate</code> [<a href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74cf1dbdc5eae2ec734cc8df5/ProjectDark/modules/updater.py#L65'><b>READ</b></a>] & <code>devil</code> [<a href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74cf1dbdc5eae2ec734cc8df5/ProjectDark/modules/www.py#L60'><b>READ</b></a>] (yang hanya dapat dilakukan di grup support).
+
+* Jika anda merasa tidak nyaman dengan hal di atas, silahkan [<a href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/fork'><b>FORK</b></a>] dan edit sesuai kebutuhan Anda.
+"""
+    await edit_or_reply(message, disclaimer, parse_mode=enums.ParseMode.HTML, disable_web_page_preview=True)
+    
+add_command_help(
+    "DISCLAIMER",
+    [
+        ["DISCLAIMER",
+        "Read disclaimer of userbot.",
+        ],
+    ],
+)

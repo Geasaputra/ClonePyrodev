@@ -154,7 +154,7 @@ async def tracemoe_rs(client: Client, message: Message):
                 os.remove(img_file)
                 os.remove(dis_loc)
             else:
-                search = await tracemoe.search(dis_loc, encode=True)
+                search = await tracemoe.search(dis_loc)
                 os.remove(dis_loc)
             result = search["docs"][0]
             msg = (f"""

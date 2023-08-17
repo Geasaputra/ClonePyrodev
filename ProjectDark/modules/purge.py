@@ -80,7 +80,7 @@ async def purge_me(client, message):
         )
     ]
     if not message_ids:
-        return await eor(message, text="No messages are found!")
+        return await edit_or_reply(message, text="No messages are found!")
     to_delete = [message_ids[i : i + 999] for i in range(0, len(message_ids), 999)]
     for hundred_messages_or_less in to_delete:
         await client.delete_messages(

@@ -162,7 +162,7 @@ add_command_help(
 
 
 add_command_help(
-    "media social",
+    "mediadl",
     [
         [f"mdl <link>",
         "Download media from Facebook/Tiktok/Instagram/Twitter/YouTube.",
