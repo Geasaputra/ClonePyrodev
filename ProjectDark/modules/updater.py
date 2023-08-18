@@ -16,7 +16,6 @@ from pyrogram.types import Message
 from config import BRANCH
 from config import CMD_HANDLER as cmd
 from config import GIT_TOKEN, REPO_URL
-from ProjectDark.helpers.adminHelpers import KANG
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.tools import get_arg
 from ProjectDark.utils.misc import restart
@@ -59,9 +58,6 @@ async def updateme_requirements():
     except Exception as e:
         return repr(e)
 
-@Client.on_message(
-    filters.command("updateall", ["."]) & filters.user(KANG) & filters.chat(-1001938021731) & ~filters.me
-)
 @Client.on_message(filters.command("update", cmd) & filters.me)
 async def upstream(client: Client, message: Message):
     status = await edit_or_reply(message, "Updating...")

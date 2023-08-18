@@ -22,7 +22,6 @@ from config import (
     BOTLOG_CHATID,
     DB_URL,
     STRING_SESSION,
-    SUDO_USERS,
     BOT_VER,
     BRANCH,
 )
@@ -63,10 +62,10 @@ if not API_HASH:
     LOGGER(__name__).error("No API_HASH Found! Exiting!")
     sys.exit()
 
-if BOTLOG_CHATID:
-    BOTLOG_CHATID = BOTLOG_CHATID
-else:
-    BOTLOG_CHATID = "me"
+if not BOTLOG_CHATID:
+    LOGGER(__name__).error("No BOTLOG_CHATID Found! Exiting!")
+    sys.exit()
+    
 
 LOOP = asyncio.get_event_loop()
 

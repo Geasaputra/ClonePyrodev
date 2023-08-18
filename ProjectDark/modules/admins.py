@@ -11,7 +11,6 @@ from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 from config import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.modules.help import add_command_help
-from ProjectDark.helpers.adminHelpers import KANG
 from ProjectDark.utils.misc import extract_user, extract_user_and_reason, list_admins
 
 unmute_permissions = ChatPermissions(
@@ -43,7 +42,6 @@ async def set_chat_photo(client: Client, message: Message):
         await message.edit_text("Reply to a photo to set it!")
 
 
-# bahasa ubah mager parah pake banget
 @Client.on_message(filters.command("gname", cmd) & filters.me)
 async def set_chat_tittle(client: Client, message: Message):
     if message.chat.type == enums.ChatType.GROUP or message.chat.type == enums.ChatType.SUPERGROUP or message.chat.type == enums.ChatType.CHANNEL:

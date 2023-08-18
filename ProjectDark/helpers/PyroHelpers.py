@@ -38,16 +38,6 @@ def ReplyCheck(message: Message):
     return reply_id
 
 
-def SpeedConvert(size):
-    power = 2**10
-    zero = 0
-    units = {0: "", 1: "Kbit/s", 2: "Mbit/s", 3: "Gbit/s", 4: "Tbit/s"}
-    while size > power:
-        size /= power
-        zero += 1
-    return f"{round(size, 2)} {units[zero]}"
-
-
 def GetFromUserID(message: Message):
     """Get the user id of the incoming message."""
     return message.from_user.id

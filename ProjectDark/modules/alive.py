@@ -6,14 +6,12 @@ import os
 import time
 from platform import python_version
 
-from pyrogram import Client
-from pyrogram import __version__ as pyroVer
-from pyrogram import filters
+from pyrogram import (Client, 
+                      __version__ as pyroVer, 
+                      filters)
 from pyrogram.types import Message
 
-from config import BOT_VER
-from config import CMD_HANDLER as cmd
-from config import GROUP
+from config import BOT_VER, CMD_HANDLER as cmd
 from ProjectDark import CMD_HELP, StartTime
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.PyroHelpers import ReplyCheck
@@ -21,7 +19,6 @@ from ProjectDark.helpers.tools import convert_to_image
 from ProjectDark.utils import get_readable_time
 from ProjectDark.utils.misc import restart
 
-from .help import add_command_help
 
 modules = CMD_HELP
 
@@ -47,14 +44,3 @@ async def alive(client: Client, message: Message):
         )
     except BaseException:
         await msg.edit(av, disable_web_page_preview=True)
-
-
-
-add_command_help(
-    "alive",
-    [
-        ["alive",
-        "Just for fun.",
-        ],
-    ],
-)

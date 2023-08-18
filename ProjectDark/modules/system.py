@@ -34,8 +34,31 @@ async def restart_bot(client: Client, message: Message):
     execle(sys.executable, *args, environ)
 
 
+@Client.on_message(filters.command("logs", cmd) & filters.me)
+async def send_logs(client: Client, message: Message):
+    try:
+        send = await message.edit("Send logs...")
+
+        if not os.path.exists("logs.txt"):
+            await send.edit("No logs available!")
+            return
+
+        await client.send_document(
+            message.chat.id,
+            "logs.txt",
+            reply_to_message_id=message.id,
+        )
+
+        await message.delete()
+        await send.delete()
+
+    except Exception as e:
+        await send.edit(f"{e}")
+    
+
+
 @Client.on_message(filters.command("killme", cmd) & filters.me)
-async def kill(client: Client, message: Message):
+async def logout(client: Client, message: Message):
     conf = get_arg(message)
     if "True" not in conf:
         await edit_or_reply(message, f"Type `{cmd}killme True` to kill your userbot session.")
@@ -77,6 +100,10 @@ add_command_help(
         
         ["update deploy",
         "Update and re-deploy.",
+        ],
+        
+        ["logs",
+        "Get usetbot logs.",
         ],
         
         ["killme True",

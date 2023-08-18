@@ -12,7 +12,6 @@ from ProjectDark import *
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.PyroHelpers import ReplyCheck
 from ProjectDark.helpers.tools import get_arg
-from ProjectDark.utils import s_paste
 
 from .help import *
 

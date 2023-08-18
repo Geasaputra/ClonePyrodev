@@ -3,18 +3,36 @@
 
 import os
 import re
-
 import aiofiles
+import aiohttp
+import requests
+
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from config import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply
-from ProjectDark.utils.pastebin import paste
 
 from .help import add_command_help
 
-pattern = re.compile(r"^text/|json$|yaml$|xml$|toml$|x-sh$|x-shellscript$")
+
+BASE = "https://batbin.me/"
+async def post(url: str, *args, **kwargs):
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, *args, **kwargs) as resp:
+            try:
+                data = await resp.json()
+            except Exception:
+                data = await resp.text()
+        return data
+
+
+async def paste(content: str):
+    resp = await post(f"{BASE}api/v2/paste", data=content)
+    if not resp["success"]:
+        return
+    return BASE + resp["message"]
+
 
 
 @Client.on_message(filters.command("paste", cmd) & filters.me)
@@ -28,8 +46,9 @@ async def paste_func(client: Client, message: Message):
     if r.text:
         content = str(r.text)
     elif r.document:
-        if r.document.file_size > 40000:
+        if r.document.file_size > 512000:
             return await m.edit("You can only paste files smaller than 40KB.")
+        pattern = re.compile(r"^text/|json$|yaml$|xml$|toml$|x-sh$|x-shellscript$")
         if not pattern.search(r.document.mime_type):
             return await m.edit("Only text files can be pasted.")
         doc = await message.reply_to_message.download()
@@ -59,7 +78,7 @@ add_command_help(
     "paste",
     [
         ["paste <reply to text/txt>",
-        "Upload text to pastebin."
+        "Upload text to batbin."
         ],
     ],
 )

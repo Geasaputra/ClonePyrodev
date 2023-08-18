@@ -12,6 +12,7 @@ from ProjectDark import *
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.constants import First
 
+from .help import add_command_help
 
 
 @Client.on_message(filters.command("repo", cmd) & filters.me)
@@ -123,3 +124,24 @@ async def get_id(client: Client, message: Message):
     else:
         await edit_or_reply(message, f"Chat: `{message.chat.id}`")
 
+
+add_command_help(
+    "ABOUT",
+    [
+        ["alive",
+        "Just for fun.",
+        ],
+        
+        ["repo",
+        "Repository of userbot.",
+        ],
+        
+        ["creator",
+        "Creator of userbot",
+        ],
+        
+        ["uptime",
+        "Uptime total of userbot.",
+        ],
+    ],
+)

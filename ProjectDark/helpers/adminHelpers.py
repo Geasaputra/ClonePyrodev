@@ -70,10 +70,3 @@ async def RestrictFailed(message: Message):
     await asyncio.sleep(2)
     await message.delete()
 
-
-KANG = [
-    5050907047, # Ling
-    1882190578, # Aji
-    6033197115  # Sogu
-    ]
-

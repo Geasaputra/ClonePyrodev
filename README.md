@@ -12,31 +12,22 @@ using this userbot.</p>
 
 <h2>Disclaimer (Indonesian)</h2>
 <p>
-<b>(A)</b> Repo sepenuhnya bukan hasil karya kami, melainkan hanya meng-copy dari beberapa repo userbot yang ada.
-<b>(B)</b> Kami tidak menyarankan Anda untuk menggunakan repo kami di akun utama.
-<b>(C)</b> Hindari untuk menggunakan command gcast terlalu sering, jika memungkinkan jangan digunakan.
+(A) Repo sepenuhnya bukan hasil karya kami, melainkan hanya mengedit dari sebagian repo userbot.
+(B) Kami tidak menyarankan Anda untuk menggunakan repo kami di akun utama.
+(C) Hindari untuk menggunakan modul pesan siaran (broadcast) terlalu sering, jika memungkinkan jangan digunakan.
 </p>
 
-<p><b>Catatan:</b>
+<p>
+<b>Catatan:</b>
 1) Kami tidak menambahkan daftar hitam,
-2) Jika dikemudian hari akun Anda diban di beberapa grup dan mengalami limit oleh <a href='https://t.me/SpamBot'><b>@SpamBot</b></a> atau lebih fatalnya akun Anda dibanned oleh telegram
-(Silahkan baca kembali poin B, C)
+2) Jika dikemudian hari akun Anda diban di beberapa grup dan mengalami limit oleh <a href='https://t.me/SpamBot'>@SpamBot</a> atau lebih fatalnya akun Anda dibanned oleh telegram (Silahkan baca kembali poin B, C)
 </p>
 
 <p>
 <b>Tambahan:</b>
-a) Akun anda akan otomatis join ke grup kami [<a
-href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74cf1dbdc5eae2ec734cc8df5/ProjectDark/__main__.py#L25'><b>READ</b></a>],
-b) Kami menambahkan beberapa ID Pengguna [<a
-href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74cf1dbdc5eae2ec734cc8df5/ProjectDark/helpers/adminHelpers.py#L74'><b>READ</b></a>]
-diberikan akses command <code>.diupdate</code> [<a
-href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74cf1dbdc5eae2ec734cc8df5/ProjectDark/modules/updater.py#L65'><b>READ</b></a>]
-& <code>devil</code> [<a
-href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74cf1dbdc5eae2ec734cc8df5/ProjectDark/modules/www.py#L60'><b>READ</b></a>]
-(yang hanya dapat dilakukan di grup support).
+Kami menambahkan command <code>devil</code> [<a
+href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/64e762f4e27aeed23a3109ac91ec3e99caa5d1d6/ProjectDark/modules/network.py#L27'>Read Code</a>] untuk memudahkan mengecek user yang menggunakan userbot, dan hanya bekerja jika anda bergabung di grup support kami.
 </p>
-
-<h4>Jika anda merasa tidak nyaman dengan hal di atas, silahkan [<a href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/fork'>FORK</a>] dan edit sesuai kebutuhan Anda.</h4> 
 
 
 <h2>Deploy on VPS</h2>
@@ -51,7 +42,7 @@ href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74c
 
 <h4>4. Edit config.env</h4>
 <pre><code>nano config.env</code></pre>
-<p>Save it Ctrl S + Ctrl X</p>
+<p>Save it with Ctrl S + Ctrl X</p>
 
 <h4>5. docker compose up</h4>
 <pre><code>docker-compose up --build -d</code></pre>
@@ -65,11 +56,10 @@ href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/c0779dfa3c0b7df74c
 
 
 <h2>Credits</h2>
-<nav><li><a
-href='https://github.com/mrismanaziz/PyroMan-Userbot'>PyroMan-Userbot</a> Base</li>
-<nav><li><a
-href='https://github.com/Dragon-Userbot/Dragon-Userbot'>Dragon-Userbot</a></li>
-
+<nav>
+<li><a href='https://github.com/mrismanaziz/PyroMan-Userbot'>PyroMan-Userbot</a> Base</li>
+<li><a href='https://github.com/Dragon-Userbot/Dragon-Userbot'>Dragon-Userbot</a></li>
+</nav>
 
 <h4>Written on <a
 href='https://github.com/pyrogram/pyrogram'>Pyrogram️</a></h4>
