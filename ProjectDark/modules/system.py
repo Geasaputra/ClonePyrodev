@@ -1,8 +1,8 @@
 # Part of PyroMan - 2022
 # Kang by DarkPyro - 2023
 
+import os
 import sys
-from os import environ, execle, remove
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -37,7 +37,7 @@ async def restart_bot(client: Client, message: Message):
 @Client.on_message(filters.command("logs", cmd) & filters.me)
 async def send_logs(client: Client, message: Message):
     try:
-        send = await message.edit("Send logs...")
+        send = await message.edit("Sending...")
 
         if not os.path.exists("logs.txt"):
             await send.edit("No logs available!")
@@ -47,7 +47,8 @@ async def send_logs(client: Client, message: Message):
             message.chat.id,
             "logs.txt",
             reply_to_message_id=message.id,
-        )
+            )
+        os.remove("logs.txt")
 
         await message.delete()
         await send.delete()
@@ -63,7 +64,7 @@ async def logout(client: Client, message: Message):
     if "True" not in conf:
         await edit_or_reply(message, f"Type `{cmd}killme True` to kill your userbot session.")
     else:
-        await edit_or_reply(message, "Session has been logged out!")
+        await edit_or_reply(message, "Userbot's session has been logged out!")
         await client.log_out()
     
     
@@ -107,7 +108,7 @@ add_command_help(
         ],
         
         ["killme True",
-        "Kill userbot (log_out session).",
+        "Kill userbot (logged out userbot's sssion).",
         ],
     ],
 )
