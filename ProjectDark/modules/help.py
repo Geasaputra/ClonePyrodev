@@ -55,8 +55,8 @@ def add_command_help(module_name, commands):
 
 
 
-@Client.on_message(filters.command("DISCLAIMER", CMD_HANDLER) & filters.me)
-async def disclaimer(client: Client, message: Message):
+@Client.on_message(filters.command("disclaimer", CMD_HANDLER) & filters.me)
+async def _disclaimer(client: Client, message: Message):
     disclaimer = """
 <b>DISCLAIMER (Indonesian)</b>
 
@@ -72,13 +72,3 @@ async def disclaimer(client: Client, message: Message):
 Kami menambahkan command <code>devil</code> [<a href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/64e762f4e27aeed23a3109ac91ec3e99caa5d1d6/ProjectDark/modules/network.py#L27'>Read Code</a>] untuk memudahkan dalam mengecek user yang menggunakan userbot, dan hanya bekerja jika anda bergabung di grup support kami.
 """
     await edit_or_reply(message, disclaimer, parse_mode=enums.ParseMode.HTML, disable_web_page_preview=True)
-
-
-add_command_help(
-    "DISCLAIMER",
-    [
-        ["DISCLAIMER",
-        "Read disclaimer of userbot.",
-        ],
-    ],
-)

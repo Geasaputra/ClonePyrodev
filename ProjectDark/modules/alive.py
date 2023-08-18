@@ -28,12 +28,17 @@ async def alive(client: Client, message: Message):
     msg = await edit_or_reply(message, "...")
     await asyncio.sleep(1)
     uptime = await get_readable_time((time.time() - StartTime))
-    av = (
-        f"DarkPyro-REV v{BOT_VER}\n"
-        f"Started since {uptime} ago.\n\n"
-        f"{len(modules)} modules has loaded.\n\n"
-        f"Python {python_version()} | Pyrogram {pyroVer}"
-    )
+    alive_msg = (f"""
+DarkPyro-REV Userbot
+
+Versions: {BOT_VER}
+Modukes: {len(modules)}
+
+Python: v{python_version()}
+Pyrogram: v{pyroVer}
+
+Uptime {uptime}
+        """)
     try:
         await asyncio.gather(
             msg.delete(),
@@ -43,4 +48,4 @@ async def alive(client: Client, message: Message):
             ),
         )
     except BaseException:
-        await msg.edit(av, disable_web_page_preview=True)
+        await msg.edit(alive_msg, disable_web_page_preview=True)

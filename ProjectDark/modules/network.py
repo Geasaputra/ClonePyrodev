@@ -38,7 +38,7 @@ async def nearest_dc(client: Client, message: Message):
 
 
 @Client.on_message(filters.command("ping", cmd) & filters.me)
-async def pingme(client: Client, message: Message):
+async def _ping(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     msg = await edit_or_reply(message, "Checking...")
@@ -46,7 +46,7 @@ async def pingme(client: Client, message: Message):
     duration = (end - start).microseconds / 1000
     await msg.edit(
         f"Latency Result: %sms\n"
-        f"Started since {uptime} ago" % (duration)
+        f"Started since {uptime} ago." % (duration)
     )
 
 

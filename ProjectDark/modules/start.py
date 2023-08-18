@@ -126,7 +126,7 @@ async def get_id(client: Client, message: Message):
 
 
 add_command_help(
-    "ABOUT",
+    "README.md",
     [
         ["alive",
         "Just for fun.",
@@ -142,6 +142,10 @@ add_command_help(
         
         ["uptime",
         "Uptime total of userbot.",
+        ],
+        
+        ["disclaimer",
+        "Read disclaimer of userbot.",
         ],
     ],
 )
