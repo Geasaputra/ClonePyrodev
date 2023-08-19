@@ -32,7 +32,7 @@ async def alive(client: Client, message: Message):
 DarkPyro-REV Userbot
 
 Versions: {BOT_VER}
-Modukes: {len(modules)}
+Modules: {len(modules)}
 
 Python: v{python_version()}
 Pyrogram: v{pyroVer}

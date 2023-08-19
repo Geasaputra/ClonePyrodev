@@ -84,28 +84,27 @@ async def set_bio(client: Client, message: Message):
         return await Dark.edit("Give me text!")
 
 
-@Client.on_message(filters.me & filters.command(["setpp"], cmd))
+@Client.on_message(filters.me & filters.command("setpp", cmd))
 async def set_pfp(client: Client, message: Message):
     replied = message.reply_to_message
-    if (
-        replied
-        and replied.media
-        and (
-            replied.photo
-            or (replied.document and "image" in replied.document.mime_type)
-        )
-    ):
-        await client.download_media(message=replied, file_name=profile_photo)
-        await client.set_profile_photo(profile_photo)
-        if os.path.exists(profile_photo):
-            os.remove(profile_photo)
-        await message.edit("Successfully!")
+    if replied and replied.media and (
+        replied.photo or (replied.document and "image" in replied.document.mime_type)
+        ):
+            try:
+                pp = "./profile_photo.jpg"
+                await client.download_media(message=replied.photo.file_id, file_name=pp)
+                await client.set_profile_photo(photo=pp)
+                
+                if os.path.exists(pp):
+                    os.remove(pp)
+                    
+                await message.edit("Profile photo set successfully!")
+                
+            except Exception as e:
+                error_message = f"An error occurred: {e}"
+                await message.edit(error_message)
     else:
-        await message.edit(
-            "Reply to photo!"
-        )
-        await sleep(3)
-        await message.delete()
+        await message.edit("Please reply to a photo!")
 
 
 @Client.on_message(filters.me & filters.command(["vpp"], cmd))
