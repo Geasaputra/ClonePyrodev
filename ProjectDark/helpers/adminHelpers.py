@@ -21,7 +21,7 @@ async def CheckAdmin(client: Client, message: Message):
     )
 
     if SELF.status not in ranks:
-        await message.edit("__I'm not Admin!__")
+        await message.edit("No permission!")
         await asyncio.sleep(2)
         await message.delete()
 
@@ -31,7 +31,7 @@ async def CheckAdmin(client: Client, message: Message):
         elif SELF.can_restrict_members:
             return True
         else:
-            await message.edit("__No Permissions to restrict Members__")
+            await message.edit("No permission!")
             await asyncio.sleep(2)
             await message.delete()
 
@@ -39,7 +39,7 @@ async def CheckAdmin(client: Client, message: Message):
 async def CheckReplyAdmin(message: Message):
     """Check if the message is a reply to another user."""
     if not message.reply_to_message:
-        await message.edit("The command needs to be a reply")
+        await message.edit("The command needs to be a reply!")
         await asyncio.sleep(2)
         await message.delete()
     elif message.reply_to_message.from_user.is_self:

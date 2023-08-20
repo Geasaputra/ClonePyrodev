@@ -7,7 +7,6 @@ from io import BytesIO
 
 import cv2
 import requests
-from bs4 import BeautifulSoup as bs
 from PIL import Image
 from pyrogram import Client, emoji, filters
 from pyrogram.enums import ParseMode
@@ -282,26 +281,6 @@ Emojis: {' '.join(emojis)}
     await rep.edit(output)
 
 
-@Client.on_message(filters.command("ssticker", cmd) & filters.me)
-async def cb_sticker(client: Client, message: Message):
-    query = get_text(message)
-    if not query:
-        return await edit_or_reply(message, "Enter the name!")
-    xx = await edit_or_reply(message, "Searching...")
-    text = requests.get(f"https://combot.org/telegram/stickers?q={query}").text
-    soup = bs(text, "lxml")
-    results = soup.find_all("div", {"class": "sticker-pack__header"})
-    if not results:
-        return await xx.edit("Error!")
-    reply = f"Keyword: {query}\nResults:\n"
-    for pack in results:
-        if pack.button:
-            packtitle = (pack.find("div", "sticker-pack__title")).get_text()
-            packlink = (pack.a).get("href")
-            reply += f" •  [{packtitle}]({packlink})\n"
-    await xx.edit(reply)
-
-
 @Client.on_message(filters.command("tiny", cmd) & filters.me)
 async def tinying(client: Client, message: Message):
     reply = message.reply_to_message
@@ -442,11 +421,7 @@ add_command_help(
         ["stoi <reply to sticker>",
         "Converting stickers to image."
         ],
-        
-        ["ssticker <query>",
-        "Find Sticker Pack."
-        ],
-        
+
         ["packinfo <reply to sticker>",
         "Sticker pack info."
         ],

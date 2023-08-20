@@ -20,7 +20,7 @@ async def create(client: Client, message: Message):
     split = message.command[2:]
     group_name = " ".join(split)
     Dark = await edit_or_reply(message, "Processing...")
-    desc = "Welcome to my" + ("group" if group_type == "gc" else "channel")
+    desc = "Welcome to my" + (" group." if group_type == "gc" else " channel.")
     if group_type == "gc":  # for supergroup
         _id = await client.create_supergroup(group_name, desc)
         link = await client.get_chat(_id["id"])

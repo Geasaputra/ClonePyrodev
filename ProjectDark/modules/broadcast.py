@@ -1,8 +1,8 @@
 import asyncio
-import dotenv
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
+from config import BROADCAST_ENABLED
 from config import CMD_HANDLER as cmd
 from ProjectDark.helpers.tools import get_arg
 
@@ -11,6 +11,9 @@ from .help import add_command_help
 
 @Client.on_message(filters.command("gcast", cmd) & filters.me)
 async def gcast_cmd(client, message):
+    if not BROADCAST_ENABLED:
+        await message.edit("Set BROADCAST = True to use this command.")
+        return
     if message.reply_to_message or get_arg(message):
         kang = await message.reply("Broadcasting to groups...")
     else:
@@ -40,6 +43,9 @@ async def gcast_cmd(client, message):
 
 @Client.on_message(filters.command("ucast", cmd) & filters.me)
 async def gucast(client: Client, message: Message):
+    if not BROADCAST_ENABLED:
+        await message.edit("Set BROADCAST = True to use this command.")
+        return
     if message.reply_to_message or get_arg(message):
         text = await message.reply_text("Broadcasting to users...")
     else:
@@ -69,6 +75,9 @@ async def gucast(client: Client, message: Message):
 
 @Client.on_message(filters.command("fcast", cmd) & filters.me)
 async def gcast_fwd(client, message):
+    if not BROADCAST_ENABLED:
+        await message.edit("Set BROADCAST = True to use this command.")
+        return
     if not message.reply_to_message and not get_arg(message):
         return await message.edit("Reply to the message or media to be forward!")
 

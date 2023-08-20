@@ -15,7 +15,7 @@ from .help import *
 
 
 @Client.on_message(filters.me & filters.command("invite", cmd))
-async def inviteee(client: Client, message: Message):
+async def _invite(client: Client, message: Message):
     mg = await edit_or_reply(message, "Inviting user...")
     user_s_to_add = message.text.split(" ", 1)[1]
     if not user_s_to_add:

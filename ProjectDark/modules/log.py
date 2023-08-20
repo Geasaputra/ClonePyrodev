@@ -95,7 +95,7 @@ async def set_no_log_p_m(client: Client, message: Message):
             await message.edit("Group logs from current chat deactivated!")
 
 
-@Client.on_message(filters.command(["pmlog", "pmlogger"], cmd) & filters.me)
+@Client.on_message(filters.command("pmlog", cmd) & filters.me)
 async def set_pmlog(client: Client, message: Message):
     if BOTLOG_CHATID == -100:
         return await message.edit(
@@ -152,7 +152,7 @@ async def set_gruplog(client: Client, message: Message):
 
 
 add_command_help(
-    "log",
+    "logger",
     [
         ["log",
         "Activated logs from current group.",

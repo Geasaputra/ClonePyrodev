@@ -21,8 +21,7 @@ async def scrape(client, message):
         await message.delete()
         await client.send_photo("me", copy, cap)
         os.remove(copy)
-        return
-        
+
     elif rep.video:
         copy = await client.download_media(rep)
         await message.delete()

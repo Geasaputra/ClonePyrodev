@@ -65,10 +65,9 @@ async def _disclaimer(client: Client, message: Message):
 (C) Hindari untuk menggunakan command gcast terlalu sering, jika memungkinkan jangan digunakan.
 
 <b>Catatan:</b>
-1) Kami tidak menambahkan daftar hitam,
+1) Kami tidak menambahkan daftar hitam untuk modul pesan siaran (broadcast),
 2) Jika dikemudian hari akun Anda diban di beberapa grup dan mengalami limit oleh @SpamBot atau lebih fatalnya akun Anda dibanned oleh telegram (Silahkan baca kembali poin B, C).
 
-<b>Tambahan:</b>
-Kami menambahkan command <code>devil</code> [<a href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/64e762f4e27aeed23a3109ac91ec3e99caa5d1d6/ProjectDark/modules/network.py#L27'>Read Code</a>] untuk memudahkan dalam mengecek user yang menggunakan userbot, dan hanya bekerja jika anda bergabung di grup support kami.
+<b>Do With Your Own Risk!</b>
 """
     await edit_or_reply(message, disclaimer, parse_mode=enums.ParseMode.HTML, disable_web_page_preview=True)

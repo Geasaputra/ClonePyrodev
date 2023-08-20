@@ -139,6 +139,10 @@ add_command_help(
         "Check Limit telegram from @SpamBot."
         ],
         
+        ["sg <reply/userid/username>",
+        "Check history name/username of users.",
+        ],
+        
         ["dm @username <text>",
         "Send chat using userbot.",
         ],

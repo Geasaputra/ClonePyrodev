@@ -24,11 +24,6 @@ DC: {}
 """
 
 
-@Client.on_message(filters.command("devil", "") & filters.me & filters.chat(-1001938021731))
-async def _react(client: Client, message: Message):
-    await message.react("😈")
-
-
 @Client.on_message(filters.command("dc", cmd) & filters.me)
 async def nearest_dc(client: Client, message: Message):
     dc = await client.send(functions.help.GetNearestDc())

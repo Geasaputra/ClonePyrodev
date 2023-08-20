@@ -16,18 +16,13 @@ using this userbot.</p>
 (B) Kami tidak menyarankan Anda untuk menggunakan repo kami di akun utama.
 (C) Hindari untuk menggunakan modul pesan siaran (broadcast) terlalu sering, jika memungkinkan jangan digunakan.
 </p>
-
 <p>
 <b>Catatan:</b>
-1) Kami tidak menambahkan daftar hitam,
+1) Kami tidak menambahkan daftar hitam untuk modul pesan siaran (broadcast),
 2) Jika dikemudian hari akun Anda diban di beberapa grup dan mengalami limit oleh <a href='https://t.me/SpamBot'>@SpamBot</a> atau lebih fatalnya akun Anda dibanned oleh telegram (Silahkan baca kembali poin B, C)
 </p>
 
-<p>
-<b>Tambahan:</b>
-Kami menambahkan command <code>devil</code> [<a
-href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/64e762f4e27aeed23a3109ac91ec3e99caa5d1d6/ProjectDark/modules/network.py#L27'>Read Code</a>] untuk memudahkan mengecek user yang menggunakan userbot, dan hanya bekerja jika anda bergabung di grup support kami.
-</p>
+<h4><b>Do With Your Own Risk!</b></h4>
 
 
 <h2>Deploy on VPS</h2>
@@ -52,7 +47,7 @@ href='https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV/blob/64e762f4e27aeed23a
 
 
 <h2>Group Discussion</h2>
-<p><a href='https://t.me/DarkPyroREV'>Telegram</a></p>
+<p><a href='https://t.me/DarkPyroRV'>Telegram</a></p>
 
 
 <h2>Credits</h2>

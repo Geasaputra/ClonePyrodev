@@ -27,7 +27,7 @@ async def restart_bot(client: Client, message: Message):
         logs_file = "logs.txt"
         os.remove(logs_file)
     except Exception as e:
-        LOGGER(__name__).info(f"Error while deleting logs.txt: {e}")
+        LOGGER(__name__).info(f"{e}")
         
     await msg.edit_text("Restarted!")
     args = [sys.executable, "-m", "ProjectDark"]
@@ -54,7 +54,7 @@ async def send_logs(client: Client, message: Message):
         await send.delete()
 
     except Exception as e:
-        await send.edit(f"{e}")
+        await send.edit(e)
     
 
 
@@ -107,8 +107,8 @@ add_command_help(
         "Get usetbot logs.",
         ],
         
-        ["killme True",
-        "Kill userbot (logged out userbot's sssion).",
+        ["killme",
+        "Kill userbot (logged out userbot's session).",
         ],
     ],
 )
