@@ -7,7 +7,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from config import CMD_HANDLER as cmd
-from ProjectDark.helpers.basic import edit_or_reply
+from ProjectDark.helpers.basic import edit_or_reply as eor
 
 from .help import add_command_help
 
@@ -28,7 +28,7 @@ async def del_msg(client: Client, message: Message):
 
 @Client.on_message(filters.command("purge", cmd) & filters.me)
 async def purge(client: Client, message: Message):
-    Dark = await edit_or_reply(message, "Starting to purge messages!")
+    Dark = await eor(message, "Starting to purge messages!")
     msg = message.reply_to_message
     if msg:
         itermsg = list(range(msg.id, message.id))
@@ -57,7 +57,7 @@ async def purge(client: Client, message: Message):
 
 
 @Client.on_message(filters.command("purgeme", cmd) & filters.me)
-async def purge_me(client, message):
+async def _purgeme(client, message):
     if len(message.command) != 2:
         return await message.delete()
     n = (
@@ -66,10 +66,10 @@ async def purge_me(client, message):
         else message.text.split(None, 1)[1].strip()
     )
     if not n.isnumeric():
-        return await message.reply("Invalid!")
+        return await message.edit("Invalid!")
     n = int(n)
     if n < 1:
-        return await message.reply("Need count >=1-999")
+        return await message.reply("Need amounts ≥ 1!")
     chat_id = message.chat.id
     message_ids = [
         m.id
@@ -77,17 +77,17 @@ async def purge_me(client, message):
             chat_id,
             from_user=int(message.from_user.id),
             limit=n,
-        )
-    ]
+            )
+        ]
     if not message_ids:
-        return await edit_or_reply(message, text="No messages are found!")
+        return await eor(message, text="No messages are found!")
     to_delete = [message_ids[i : i + 999] for i in range(0, len(message_ids), 999)]
-    for hundred_messages_or_less in to_delete:
+    for msgdel in to_delete:
         await client.delete_messages(
             chat_id=chat_id,
-            message_ids=hundred_messages_or_less,
+            message_ids=msgdel,
             revoke=True,
-        )
+            )
         dark = await message.reply(f"{n} your messages are purged!")
         await asyncio.sleep(1)
         await dark.delete()

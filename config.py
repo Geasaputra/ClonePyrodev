@@ -24,4 +24,4 @@ REPO_URL = getenv("REPO_URL", "https://github.com/2R-Dark-Kanger-Pro/DarkPyro-RE
 BRANCH = getenv("BRANCH", "master")
 GIT_TOKEN = getenv("GIT_TOKEN", "")
 
-BOT_VER = "1.0.2"
+BOT_VER = "1.0.3"

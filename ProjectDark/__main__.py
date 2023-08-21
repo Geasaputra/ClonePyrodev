@@ -11,7 +11,7 @@ from ProjectDark import BOTLOG_CHATID, LOGGER, LOOP, aiosession, bot
 from ProjectDark.modules import ALL_MODULES
 
 MSG_ON = """
-**Darkpyro-REV Started!**
+**DarkPyro-REV Started!**
 Version: `{}`
 """
 

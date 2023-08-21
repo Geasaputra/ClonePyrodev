@@ -1,5 +1,3 @@
-import os
-
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -30,7 +28,7 @@ DB_AVAILABLE = False
 BOTINLINE_AVAILABLE = False
 
 
-def mulaisql() -> scoped_session:
+def run() -> scoped_session:
     global DB_AVAILABLE
     engine = create_engine(DB_URL, client_encoding="utf8")
     BASE.metadata.bind = engine

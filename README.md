@@ -47,7 +47,7 @@ using this userbot.</p>
 
 
 <h2>Group Discussion</h2>
-<p><a href='https://t.me/DarkPyroRV'>Telegram</a></p>
+<p><a href='https://t.me/DarkPyroUB'>Telegram</a></p>
 
 
 <h2>Credits</h2>

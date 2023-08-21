@@ -3,8 +3,7 @@
 
 import asyncio
 
-from pyrogram import *
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.errors import YouBlockedUser
 from pyrogram.types import *
 from pyrogram.raw import functions
@@ -12,7 +11,6 @@ from pyrogram.raw import functions
 from config import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.utils import extract_user
-
 
 @Client.on_message(filters.command("sg", cmd) & filters.me)
 async def sg(client: Client, message: Message):
@@ -37,4 +35,3 @@ async def sg(client: Client, message: Message):
         await client.send(
             functions.messages.DeleteHistory(peer=bots, max_id=0, revoke=True)
             )
-        

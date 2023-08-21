@@ -4,15 +4,13 @@
 import os
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, InputMediaPhoto, InputMediaVideo
-from pyrogram.errors import RPCError
+from pyrogram.types import Message
 
-from ProjectDark.helpers.tools import get_arg
 from .help import add_command_help
 
 
 @Client.on_message(filters.command(["wow", "wah"], "") & filters.me)
-async def scrape(client, message):
+async def scrape(client: Client, message: Message):
     rep = message.reply_to_message
     cap = rep.caption or None
     

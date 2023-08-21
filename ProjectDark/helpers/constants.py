@@ -7,7 +7,7 @@ class First:
     
     REPO = """
 DarkPyro-REV Userbot v{}
-[Repository](https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV) | [Discussion](https://t.me/DarkPyroRV)
+[Repository](https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV) | [Discussion](https://t.me/DarkPyroUB)
 """
 
     CREATOR = """
