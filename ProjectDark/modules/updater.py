@@ -64,10 +64,7 @@ async def upstream(client: Client, message: Message):
     conf = get_arg(message)
     off_repo = UPSTREAM_REPO_URL
     try:
-        txt = (
-            "Error!"
-            + "\nLogtrace: "
-        )
+        txt = ("Error!" + "\nLogtrace: ")
         repo = Repo()
     except NoSuchPathError as error:
         await status.edit(f"{txt}\n{error}")
@@ -99,7 +96,10 @@ async def upstream(client: Client, message: Message):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     if "deploy" not in conf:
         if changelog:
-            changelog_str = f"Found the latest commit [{ac_br}]!\n\nChangelog:\n{changelog}"
+            changelog_str = f"""
+Changelog ({ac_br}):
+{changelog}
+"""
             if len(changelog_str) > 4096:
                 await status.edit("Oversize, sending file...")
                 file = open("output.txt", "w+")
@@ -108,20 +108,20 @@ async def upstream(client: Client, message: Message):
                 await client.send_document(
                     message.chat.id,
                     "output.txt",
-                    caption=f"`{cmd}update deploy` for restart and apply update",
-                    reply_to_message_id=status.id,
-                )
+                    caption=f"`{cmd}update deploy` for apply update.",
+                    reply_to_message_id=status.id
+                    )
                 remove("output.txt")
             else:
                 return await status.edit(
-                    f"{changelog_str}\n`{cmd}update deploy` for restart and update userbot",
-                    disable_web_page_preview=True,
-                )
+                    f"{changelog_str}`{cmd}update deploy` for apply update.",
+                    disable_web_page_preview=True
+                    )
         else:
             await status.edit(
-                f"\nUp to date with branch [{ac_br}]\n",
+                f"Up to date with branch [{ac_br}]",
                 disable_web_page_preview=True,
-            )
+                )
             repo.__del__()
             return
     try:
@@ -129,9 +129,7 @@ async def upstream(client: Client, message: Message):
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
     await updateme_requirements()
-    await status.edit(
-        "Update successfully!",
-    )
+    await status.edit("Update successfully!")
     args = [sys.executable, "-m", "ProjectDark"]
     execle(sys.executable, *args, environ)
     return

@@ -31,7 +31,7 @@ async def spamban(client: Client, m: Message):
     await asyncio.sleep(1)
     spambot_msg = response.updates[1].message.id + 1
     status = await client.get_messages(chat_id="SpamBot", message_ids=spambot_msg)
-    await wait_msg.edit_text(f"~ {status.text}")
+    await wait_msg.edit_text(f"{status.text}")
 
 
 @Client.on_message(filters.command("webshot", cmd) & filters.me)

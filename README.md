@@ -1,7 +1,7 @@
 <h2>DarkPyro-REV</h2>
 <p>Just Kanger Userbot<p>
 
-<h2>About</h2>
+<h3>About</h3>
 <p>DarkPyro-REV is a Telegram userbot (in case you didn't know, selfbot/userbot are used to automate user accounts). So how does it work? It works in a very simple way, using the pyrogram library, a python script connects to your account (creating a new session) and catches your commands.
 
 Using selfbot/userbot is against Telegram's Terms of Service, and you may get banned for using it if you're not careful.
@@ -10,7 +10,7 @@ We are not responsible for any consequences you may encounter when using DarkPyr
 using this userbot.</p>
 
 
-<h2>Disclaimer (Indonesian)</h2>
+<h3>Disclaimer (Indonesian)</h3>
 <p>
 (A) Repo sepenuhnya bukan hasil karya kami, melainkan hanya mengedit dari sebagian repo userbot.
 (B) Kami tidak menyarankan Anda untuk menggunakan repo kami di akun utama.
@@ -22,35 +22,30 @@ using this userbot.</p>
 2) Jika dikemudian hari akun Anda diban di beberapa grup dan mengalami limit oleh <a href='https://t.me/SpamBot'>@SpamBot</a> atau lebih fatalnya akun Anda dibanned oleh telegram (Silahkan baca kembali poin B, C)
 </p>
 
-<h4><b>Do With Your Own Risk!</b></h4>
+<p><b>Do With Your Own Risk!</b></p>
 
 
-<h2>Deploy on VPS</h2>
-<h4>1. Install docker-compose & git</h4>
+<h2>Installation</h2>
+<h3>Deploy to Heroku</h3>
+<a href="https://heroku.com/deploy?template=https://github.com/tracemoepy/darkpyro-heroku">
+<img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+</a>
+
+<h3>Deploy on VPS</h3>
 <pre><code>sudo su && apt -y install git docker-compose</code></pre>
-
-<h4>2. Clone Repository</h4>
 <pre><code>git clone https://github.com/2R-Dark-Kanger-Pro/deploy</code></pre>
-
-<h4>3. cd dir & cp sample config</h4>
 <pre><code>cd deploy && cp config.env_sample config.env</code></pre>
-
-<h4>4. Edit config.env</h4>
 <pre><code>nano config.env</code></pre>
-<p>Save it with Ctrl S + Ctrl X</p>
-
-<h4>5. docker compose up</h4>
 <pre><code>docker-compose up --build -d</code></pre>
-
-<h4>6. Get logs compose</h4>
 <pre><code>docker-compose logs -f</code></pre>
 
 
-<h2>Group Discussion</h2>
-<p><a href='https://t.me/DarkPyroUB'>Telegram</a></p>
+<h2>Other</h2>
+<h3>Group Discussion</h3>
+<p><a href='https://t.me/DarkPyroRV'>Telegram</a></p>
 
 
-<h2>Credits</h2>
+<h3>Credits</h3>
 <nav>
 <li><a href='https://github.com/mrismanaziz/PyroMan-Userbot'>PyroMan-Userbot</a> Base</li>
 <li><a href='https://github.com/Dragon-Userbot/Dragon-Userbot'>Dragon-Userbot</a></li>
