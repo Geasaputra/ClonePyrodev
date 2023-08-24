@@ -26,18 +26,9 @@ using this userbot.</p>
 
 
 <h2>Installation</h2>
-<h3>Deploy to Heroku</h3>
 <a href="https://heroku.com/deploy?template=https://github.com/tracemoepy/darkpyro-heroku">
 <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
-
-<h3>Deploy on VPS</h3>
-<pre><code>sudo su && apt -y install git docker-compose</code></pre>
-<pre><code>git clone https://github.com/2R-Dark-Kanger-Pro/deploy</code></pre>
-<pre><code>cd deploy && cp config.env_sample config.env</code></pre>
-<pre><code>nano config.env</code></pre>
-<pre><code>docker-compose up --build -d</code></pre>
-<pre><code>docker-compose logs -f</code></pre>
 
 
 <h2>Other</h2>
