@@ -5,11 +5,14 @@ aiofiles
 asyncio
 bs4
 emoji==1.6.0
+git+https://github.com/kkroening/ffmpeg-python@master
+git+https://github.com/Zulko/moviepy@master
 gitpython
 google
 gpytranslate
 gtts
 lottie
+moviepy
 psycopg2-binary
 pymediainfo
 pyrogram

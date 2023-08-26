@@ -24,7 +24,7 @@ async def sg(client: Client, message: Message):
     
         try:
             send = await client.send_message(bot, target.id)
-            await asyncio.sleep(5)
+            await asyncio.sleep(3)
             await send.delete()
         except YouBlockedUser:
             await msg.edit(f"Unblock @{bot}, to use this command.")

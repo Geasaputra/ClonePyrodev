@@ -11,12 +11,10 @@ from pyrogram.types import Message
 from config import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply
 
-from .help import add_command_help
-
 lang = "id"  # Default Language for voice
 
 
-@Client.on_message(filters.me & filters.command("tts", cmd))
+@Client.on_message(filters.me & filters.command("tta", cmd))
 async def voice(client: Client, message):
     global lang
     cmd = message.command
@@ -49,7 +47,7 @@ async def voice(client: Client, message):
         os.remove("voice.ogg")
 
 
-@Client.on_message(filters.me & filters.command(["voicelang"], cmd))
+@Client.on_message(filters.me & filters.command("alang", cmd))
 async def voicelang(client: Client, message: Message):
     global lang
     temp = lang
@@ -64,48 +62,3 @@ async def voicelang(client: Client, message: Message):
         message, "Language for Google Voice changed to {}".format(lang)
     )
 
-
-
-add_command_help(
-    "voice",
-    [
-        ["tts <text/reply>",
-        "Convert text to voice by Google."
-        ],
-        
-        [f"voicelang (lang_id)",
-        "Set your voice language\n"
-        "Languages Available:\n"
-        "[id: Language]\n"
-        "af: Afrikaans\n"
-        "ar: Arabic\n"
-        "cs: Czech\n"
-        "de: German\n"
-        "el: Greek\n"
-        "en: English\n"
-        "es: Spanish\n"
-        "fr: French\n"
-        "hi: Hindi\n"
-        "id: Indonesian\n"
-        "is: Icelandic\n"
-        "it: Italian\n"
-        "ja: Japanese\n"
-        "jw: Javanese\n"
-        "ko: Korean\n"
-        "la: Latin\n"
-        "my: Myanmar\n"
-        "ne: Nepali\n"
-        "nl: Dutch\n"
-        "pt: Portuguese\n"
-        "ru: Russian\n"
-        "su: Sundanese\n"
-        "sv: Swedish\n"
-        "th: Thai\n"
-        "tl: Filipino\n"
-        "tr: Turkish\n"
-        "vi: Vietname\n"
-        "zh-cn: Chinese (Mandarin/China)\n"
-        "zh-tw: Chinese (Mandarin/Taiwan)",
-        ],
-    ],
-)
