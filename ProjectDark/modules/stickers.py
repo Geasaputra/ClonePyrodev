@@ -1,12 +1,14 @@
 # Part of PyroMan - 2022
 # Kang by DarkPyro - 2023
-
 import asyncio
 import os
-from io import BytesIO
+import time
+import httpx
+
 
 import cv2
 import requests
+from io import BytesIO
 from PIL import Image
 from pyrogram import Client, emoji, filters
 from pyrogram.enums import ParseMode
@@ -384,7 +386,7 @@ async def memify(client: Client, message: Message):
     os.remove(meme)
 
 
-@Client.on_message(filters.command("stoi", cmd) & filters.me)
+@Client.on_message(filters.command("sti", cmd) & filters.me)
 async def stick2png(client: Client, message: Message):
     try:
         await message.edit("Converting...")
@@ -410,16 +412,103 @@ async def stick2png(client: Client, message: Message):
             message.chat.id, f"{e}", reply_to_message_id=ReplyCheck(message)
         )
 
+versions = [
+    "20201001",
+    "20210218",
+    "20210521",
+    "20210831",
+    "20211115",
+    "20220110",
+]
+
+emoji = lambda x: "-".join(f"u{ord(i):x}" for i in x)
+http = httpx.AsyncClient(http2=True)
+
+async def resize_photo(photo, ctime):
+    """Resize the given photo to 512x512"""
+    image = Image.open(photo)
+    maxsize = (512, 512)
+    if (image.width and image.height) < 512:
+        size1 = image.width
+        size2 = image.height
+        if image.width > image.height:
+            scale = 512 / size1
+            size1new = 512
+            size2new = size2 * scale
+        else:
+            scale = 512 / size2
+            size1new = size1 * scale
+            size2new = 512
+        size1new = math.floor(size1new)
+        size2new = math.floor(size2new)
+        sizenew = (size1new, size2new)
+        image = image.resize(sizenew)
+    else:
+        image.thumbnail(maxsize)
+
+    os.remove(photo)
+
+    image.convert("RGB")
+    image.save(f"./{ctime}.webp", "webp")
+
+    return f"./{ctime}.webp"
+
+
+@Client.on_message(filters.command("emix", cmd) & filters.me)
+async def _emix(c: Client, m: Message):
+    msgs = await m.edit("Mixing...")
+    try:
+        text = m.text.split(" ", 1)[1].split("+")
+        emoji1, emoji2 = emoji(text[0]), emoji(text[1])
+    except IndexError:
+        await msgs.edit(f"Arguments needed!\nExample: <code>{cmd}emojimix 😀+😭</code>")
+        return
+    ctime = time.time()
+
+    tasks = []
+    # get all versions with async gather
+    for version in versions:
+        tasks.append(
+            http.get(
+                f"https://www.gstatic.com/android/keyboard/emojikitchen/{version}/{emoji1}/{emoji1}_{emoji2}.png"
+            )
+        )
+        tasks.append(
+            http.get(
+                f"https://www.gstatic.com/android/keyboard/emojikitchen/{version}/{emoji2}/{emoji2}_{emoji1}.png"
+            )
+        )
+    # Reverse the order of the tasks, so that the first successful response is from the newest version
+    tasks.reverse()
+    responses = await asyncio.gather(*tasks)
+    image = None
+    for response in responses:
+        if response.status_code == 200:
+            image = response.url
+            break
+    if not image:
+        await msgs.edit("These emojis cannot be combined.")
+        return
+    r = await http.get(image)
+    with open(f"{ctime}.png", "wb") as f:
+        f.write(r.read())
+    photo = await resize_photo(f"{ctime}.png", ctime)
+    await c.send_document(
+        m.chat.id,
+        photo,
+        reply_to_message_id=None
+        if not m.reply_to_message
+        else m.reply_to_message.message_id,
+    )
+    await msgs.delete()
+    os.remove(photo)
+
 
 add_command_help(
     "sticker",
     [
         [f"kang <reply to sticker>",
         "Add sticker to your pack.",
-        ],
-        
-        ["stoi <reply to sticker>",
-        "Converting stickers to image."
         ],
 
         ["packinfo <reply to sticker>",
@@ -430,8 +519,12 @@ add_command_help(
         "Add text and convert to sticker.",
         ],
         
-        ["tiny <reply to photo/sticker>",
+        ["tiny <reply_to_photo/sticker>",
         "Minimize a photo/sticker.",
+        ],
+        
+        ["emix emoji+emoji",
+        "Mix emoji and convert to sticker.",
         ],
     ],
 )

@@ -20,7 +20,7 @@ CMD_HANDLER = getenv("PREFIX", ".")
 
 DB_URL = getenv("DATABASE_URL", "")
 
-REPO_URL = getenv("REPO_URL", "https://github.com/2R-Dark-Kanger-Pro/DarkPyro-REV")
+REPO_URL = getenv("REPO_URL", "https://github.com/tracemoepy/DarkPyro-REV")
 BRANCH = getenv("BRANCH", "master")
 GIT_TOKEN = getenv("GIT_TOKEN", "")
 

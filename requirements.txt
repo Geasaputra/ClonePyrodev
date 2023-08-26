@@ -11,6 +11,8 @@ gitpython
 google
 gpytranslate
 gtts
+httpx
+httpx[http2]
 lottie
 moviepy
 psycopg2-binary
@@ -22,7 +24,6 @@ requests
 sqlalchemy==1.3.23
 telegraph
 tgcrypto
-tracemoepy
 opencv-python-headless
 urllib3
 uvloop

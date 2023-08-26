@@ -15,9 +15,9 @@ async def _notes(client, message):
     notes = get_notes(str(user_id))
     if not notes:
         return await message.reply("No notes are found!")
-    msg = "Saved Notes:\n"
     for note in notes:
-        msg += f"  `{note.keyword}`\n"
+        msg = f"`{note.keyword}`\n"
+    await message.edit("List Saved Notes:")
     await message.reply(msg)
 
 
@@ -47,7 +47,7 @@ async def addnote(client, message):
     )
     await sleep(2)
     add_note(str(user_id), keyword, msg_id)
-    await message.reply(f"Successfully save note: `{keyword}`")
+    await message.edit(f"Successfully save note: `{keyword}`")
 
 
 @Client.on_message(filters.command("get", cmd) & filters.me)
@@ -58,6 +58,7 @@ async def _note(client, message):
     if not note:
         return await message.reply("No notes are found!")
     msg_o = await client.get_messages(BOTLOG_CHATID, int(note.f_mesg_id))
+    await message.delete()
     await msg_o.copy(message.chat.id, reply_to_message_id=message.id)
 
 

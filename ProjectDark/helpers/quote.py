@@ -1,17 +1,12 @@
-import asyncio
 import os
 import sys
+import asyncio
 import requests
 import base64
-from io import BytesIO
 
-from PIL import Image
-import importlib
-import subprocess
-from emoji import get_emoji_regexp
-from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
+from PIL import Image, ImageFont
 from pyrogram import Client, errors, types
-import traceback
     
 
 files_cache = {}

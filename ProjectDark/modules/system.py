@@ -3,6 +3,7 @@
 
 import os
 import sys
+import subprocess
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -31,7 +32,7 @@ async def restart_bot(client: Client, message: Message):
         
     await msg.edit_text("Restarted!")
     args = [sys.executable, "-m", "ProjectDark"]
-    execle(sys.executable, *args, environ)
+    subprocess.Popen(args, env=os.environ)
 
 
 @Client.on_message(filters.command("logs", cmd) & filters.me)
