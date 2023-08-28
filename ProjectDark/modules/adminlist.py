@@ -6,7 +6,7 @@ import html
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.parser import mention_html, mention_markdown
 from ProjectDark.modules.help import *

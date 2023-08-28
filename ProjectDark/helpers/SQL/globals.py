@@ -49,3 +49,5 @@ def delgvar(variable):
     )
     if rem:
         SESSION.commit()
+        
+CMD_HANDLER = gvarstatus("CMD_HANDLER") or "."

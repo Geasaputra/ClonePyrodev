@@ -6,7 +6,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from telegraph import Telegraph, exceptions, upload_file
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply, get_text
 from ProjectDark.helpers.tools import *
 

@@ -4,7 +4,7 @@ import requests
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import get_text
 
 from .help import *

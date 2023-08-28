@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 # Assuming you have defined your bot and its CMD_HANDLER in config.py
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark.modules.help import add_command_help
 
 API_URL = "https://api.nekosapi.com/v2/images/random"

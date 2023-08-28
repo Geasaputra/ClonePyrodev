@@ -2,7 +2,7 @@ from asyncio import sleep
 
 from pyrogram import Client, filters
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from config import BOTLOG_CHATID
 from ProjectDark.helpers.SQL.notes_sql import add_note, get_note, get_notes, rm_note
 from ProjectDark.helpers.tools import get_arg

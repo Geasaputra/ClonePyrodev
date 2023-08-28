@@ -6,13 +6,15 @@ import importlib
 from pyrogram import idle
 from uvloop import install
 
-from config import BOT_VER, CMD_HANDLER
+from config import BOT_VER
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER
 from ProjectDark import BOTLOG_CHATID, LOGGER, LOOP, aiosession, bot
 from ProjectDark.modules import ALL_MODULES
 
 MSG_ON = """
 **DarkPyro-REV Started!**
 Version: `{}`
+Handler: `{}`
 """
 
 

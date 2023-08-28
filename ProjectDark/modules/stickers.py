@@ -17,7 +17,7 @@ from pyrogram.raw.functions.messages import GetStickerSet
 from pyrogram.raw.types import InputStickerSetShortName
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.PyroHelpers import ReplyCheck
 from ProjectDark.helpers.tools import get_arg, get_text, resize_media

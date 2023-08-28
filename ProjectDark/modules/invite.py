@@ -7,7 +7,7 @@ from pyrogram import Client, filters
 from pyrogram.enums import ChatType #, UserStatus
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark import BOTLOG_CHATID
 from ProjectDark.helpers.basic import edit_or_reply
 

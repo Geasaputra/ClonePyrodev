@@ -7,7 +7,7 @@ import os
 from pyrogram import Client, enums, filters, raw
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark import *
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.PyroHelpers import ReplyCheck

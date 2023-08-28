@@ -7,7 +7,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.modules.help import add_command_help
 from ProjectDark.utils.misc import extract_user, extract_user_and_reason, list_admins

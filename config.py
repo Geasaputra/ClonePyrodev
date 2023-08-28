@@ -16,7 +16,7 @@ STRING_SESSION = getenv("SESSION", "")
 
 BROADCAST_ENABLED = getenv("BROADCAST", "False") == "True"
 
-CMD_HANDLER = getenv("PREFIX", ".")
+#CMD_HANDLER = getenv("PREFIX", ".")
 
 DB_URL = getenv("DATABASE_URL", "")
 

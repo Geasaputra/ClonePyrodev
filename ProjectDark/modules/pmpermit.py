@@ -7,7 +7,7 @@ from pyrogram.raw import functions
 from pyrogram.types import Message
 from sqlalchemy.exc import IntegrityError
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark import TEMP_SETTINGS
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.SQL.globals import addgvar, gvarstatus

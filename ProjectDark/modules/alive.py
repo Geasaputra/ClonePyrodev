@@ -11,7 +11,8 @@ from pyrogram import (Client,
                       filters)
 from pyrogram.types import Message
 
-from config import BOT_VER, CMD_HANDLER as cmd
+from config import BOT_VER
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark import CMD_HELP, StartTime
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.PyroHelpers import ReplyCheck
@@ -29,16 +30,16 @@ async def alive(client: Client, message: Message):
     await asyncio.sleep(1)
     uptime = await get_readable_time((time.time() - StartTime))
     alive_msg = (f"""
-DarkPyro-REV Userbot
+DarkPyro-REV v{BOT_VER}
 
-Versions: {BOT_VER}
-Modules: {len(modules)}
+{len(modules)} Modules Loaded
+with Handler (`{cmd}`)
 
-Python: v{python_version()}
-Pyrogram: v{pyroVer}
+Pyrogram v{pyroVer}
+Python v{python_version()}
 
-Uptime {uptime}
-        """)
+Started since {uptime} ago.
+""")
     try:
         await asyncio.gather(
             msg.delete(),

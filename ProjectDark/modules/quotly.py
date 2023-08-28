@@ -9,7 +9,7 @@ from base64 import b64decode
 from pyrogram import Client, filters, errors
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark.helpers.tools import get_arg
 from ProjectDark.helpers.quote import render_message, resize_image
 

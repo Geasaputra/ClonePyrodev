@@ -9,7 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.raw import functions
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark import StartTime
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.utils.tools import get_readable_time

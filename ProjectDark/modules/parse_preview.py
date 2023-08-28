@@ -6,7 +6,7 @@ from asyncio import sleep
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.utils.sections import section
 

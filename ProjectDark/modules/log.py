@@ -6,7 +6,7 @@ import asyncio
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
-from config import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from ProjectDark import BOTLOG_CHATID
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.SQL import no_log_pms_sql
