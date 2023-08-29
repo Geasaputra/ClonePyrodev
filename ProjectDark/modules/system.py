@@ -11,7 +11,6 @@ from pyrogram.types import Message
 from ProjectDark import LOGGER
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.tools import get_arg
-from ProjectDark.utils import restart
 from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID, BROADCAST_ENABLED, addgvar
 from .help import add_command_help
 
@@ -44,8 +43,8 @@ async def set_handler(client: Client, message: Message):
         return await edit_or_reply(message, f"Set with `{cmd}handler x` or etc.")
     else:
         addgvar("CMD_HANDLER", handler)
-        await message.edit(f"Changed to `{handler}`\nRestarting...")
-        restart()
+        await message.edit(f"Changed to `{handler}`")
+        
 
 
 @Client.on_message(filters.command("setlogs", cmd) & filters.me)
@@ -57,8 +56,8 @@ async def set_logs(client: Client, message: Message):
         return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("BOTLOG_CHATID", logger)
-        await message.edit(f"Changed to `{logger}`\nRestarting...")
-        restart()
+        await message.edit(f"Changed to `{logger}`")
+        
 
 
 @Client.on_message(filters.command("broadcast", cmd) & filters.me)
@@ -70,8 +69,8 @@ async def set_broadcast(client: Client, message: Message):
         return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("BROADCAST_ENABLED", broadcast)
-        await message.edit(f"Changed to `{broadcast}`\nRestarting...")
-        restart()
+        await message.edit(f"Changed to `{broadcast}`")
+        
 
 
 @Client.on_message(filters.command("logs", cmd) & filters.me)

@@ -1,19 +1,13 @@
 # Part of PyroMan - 2022
 # Kang by DarkPyro - 2023
 
-import os
-import sys
+
 from re import sub
 from time import time
 
 from pyrogram import Client, enums
 
 admins_in_chat = {}
-
-
-def restart():
-    os.execvp(sys.executable, [sys.executable, "-m", "ProjectDark"])
-
 
 async def list_admins(client: Client, chat_id: int):
     global admins_in_chat

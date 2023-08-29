@@ -18,7 +18,6 @@ from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from config import GIT_TOKEN, REPO_URL
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.tools import get_arg
-from ProjectDark.utils.misc import restart
 from ProjectDark.utils.tools import bash
 
 
