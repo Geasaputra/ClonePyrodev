@@ -19,7 +19,6 @@ from pytgcalls import GroupCallFactory
 from config import (
     API_HASH,
     API_ID,
-    BOTLOG_CHATID,
     DB_URL,
     STRING_SESSION,
     BOT_VER,
@@ -37,9 +36,6 @@ logging.basicConfig(
     ],
 )
 logging.getLogger("asyncio").setLevel(logging.CRITICAL)
-#logging.getLogger("pytgcalls").setLevel(logging.WARNING)
-#logging.getLogger("pyrogram").setLevel(logging.WARNING)
-#logging.getLogger("pyrogram.client").setLevel(logging.WARNING)
 logging.getLogger("pyrogram.session.auth").setLevel(logging.CRITICAL)
 logging.getLogger("pyrogram.session.session").setLevel(logging.CRITICAL)
 
@@ -62,10 +58,6 @@ if not API_HASH:
     LOGGER(__name__).error("No API_HASH Found! Exiting!")
     sys.exit()
 
-if not BOTLOG_CHATID:
-    LOGGER(__name__).error("No BOTLOG_CHATID Found! Exiting!")
-    sys.exit()
-    
 
 LOOP = asyncio.get_event_loop()
 

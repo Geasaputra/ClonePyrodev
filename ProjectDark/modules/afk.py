@@ -6,8 +6,7 @@ import time
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
-from ProjectDark import BOTLOG_CHATID
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID
 from ProjectDark.helpers.msg_types import Types, get_message_type
 from ProjectDark.helpers.parser import escape_markdown, mention_markdown
 from ProjectDark.helpers.SQL.afk_db import get_afk, set_afk

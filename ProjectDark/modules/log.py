@@ -6,8 +6,7 @@ import asyncio
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
-from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
-from ProjectDark import BOTLOG_CHATID
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.SQL import no_log_pms_sql
 from ProjectDark.helpers.SQL.globals import addgvar, gvarstatus
@@ -30,8 +29,6 @@ LOG_CHATS_ = LOG_CHATS()
     filters.private & filters.incoming & ~filters.service & ~filters.me & ~filters.bot
 )
 async def monito_p_m_s(client: Client, message: Message):
-    if BOTLOG_CHATID == -100:
-        return
     if gvarstatus("PMLOG") and gvarstatus("PMLOG") == "false":
         return
     if not no_log_pms_sql.is_approved(message.chat.id) and message.chat.id != 777000:
@@ -60,8 +57,6 @@ async def monito_p_m_s(client: Client, message: Message):
 
 @Client.on_message(filters.group & filters.mentioned & filters.incoming)
 async def log_tagged_messages(client: Client, message: Message):
-    if BOTLOG_CHATID == -100:
-        return
     if gvarstatus("GRUPLOG") and gvarstatus("GRUPLOG") == "false":
         return
     if (no_log_pms_sql.is_approved(message.chat.id)) or (BOTLOG_CHATID == -100):
@@ -81,26 +76,20 @@ async def log_tagged_messages(client: Client, message: Message):
 
 @Client.on_message(filters.command("log", cmd) & filters.me)
 async def set_log_p_m(client: Client, message: Message):
-    if BOTLOG_CHATID != -100:
-        if no_log_pms_sql.is_approved(message.chat.id):
-            no_log_pms_sql.disapprove(message.chat.id)
-            await message.edit("Group logs from current chat activated!")
+    if no_log_pms_sql.is_approved(message.chat.id):
+        no_log_pms_sql.disapprove(message.chat.id)
+        await message.edit("Group logs from current chat activated!")
 
 
 @Client.on_message(filters.command("nolog", cmd) & filters.me)
 async def set_no_log_p_m(client: Client, message: Message):
-    if BOTLOG_CHATID != -100:
-        if not no_log_pms_sql.is_approved(message.chat.id):
-            no_log_pms_sql.approve(message.chat.id)
-            await message.edit("Group logs from current chat deactivated!")
+    if not no_log_pms_sql.is_approved(message.chat.id):
+        no_log_pms_sql.approve(message.chat.id)
+        await message.edit("Group logs from current chat deactivated!")
 
 
 @Client.on_message(filters.command("pmlog", cmd) & filters.me)
 async def set_pmlog(client: Client, message: Message):
-    if BOTLOG_CHATID == -100:
-        return await message.edit(
-            "Set BOTLOG_CHATID!"
-        )
     input_str = get_arg(message)
     if input_str == "off":
         h_type = False
@@ -125,10 +114,6 @@ async def set_pmlog(client: Client, message: Message):
 
 @Client.on_message(filters.command(["gruplog", "grouplog", "gclog"], cmd) & filters.me)
 async def set_gruplog(client: Client, message: Message):
-    if BOTLOG_CHATID == -100:
-        return await message.edit(
-            "Set BOTLOG_CHATID!"
-        )
     input_str = get_arg(message)
     if input_str == "off":
         h_type = False

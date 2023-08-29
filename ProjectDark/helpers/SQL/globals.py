@@ -51,3 +51,4 @@ def delgvar(variable):
         SESSION.commit()
         
 CMD_HANDLER = gvarstatus("CMD_HANDLER") or "."
+BOTLOG_CHATID = gvarstatus("BOTLOG_CHATID") or "me"

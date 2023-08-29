@@ -11,7 +11,6 @@ load_dotenv("config.env")
 API_HASH = getenv("API_HASH", "b18441a1ff607e10a989891a5462e627")
 API_ID = int(getenv("API_ID", "2040"))
 
-BOTLOG_CHATID = int(getenv("LOGS_ID", ""))
 STRING_SESSION = getenv("SESSION", "")
 
 BROADCAST_ENABLED = getenv("BROADCAST", "False") == "True"

@@ -3,7 +3,7 @@ import os
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from config import BOTLOG_CHATID as log
+from ProjectDark.helpers.SQL.globals import BOTLOG_CHATID as log
 from .help import add_command_help
 
 

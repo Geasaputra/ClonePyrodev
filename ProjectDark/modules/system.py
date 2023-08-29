@@ -8,11 +8,11 @@ import subprocess
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from ProjectDark import BOTLOG_CHATID, LOGGER
+from ProjectDark import LOGGER
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.tools import get_arg
 from ProjectDark.utils import restart
-from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, addgvar
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID, addgvar
 from .help import add_command_help
 
 
@@ -48,6 +48,19 @@ async def set_handler(client: Client, message: Message):
         restart()
 
 
+@Client.on_message(filters.command("setlogs", cmd) & filters.me)
+async def set_logs(client: Client, message: Message):
+    logger = get_arg(message)
+    if not logger:
+        return await edit_or_reply(message, f"Set your logs chat_id using the command `{cmd}setlogs -100xxx` or `{cmd}setlogs me`")
+    if not (logger.startswith("-100") or logger.startswith("me")):
+        return await edit_or_reply(message, "Must start with -100 or me")
+    else:
+        addgvar("BOTLOG_CHATID", logger)
+        await message.edit(f"Logs chat_id changed to `{logger}`\nUserbot restarting now, wait until you get log userbot has active on your new logs chat_id.")
+        restart()
+
+
 @Client.on_message(filters.command("logs", cmd) & filters.me)
 async def send_logs(client: Client, message: Message):
     try:
@@ -58,14 +71,13 @@ async def send_logs(client: Client, message: Message):
             return
 
         await client.send_document(
-            message.chat.id,
+            BOTLOG_CHATID,
             "logs.txt",
             reply_to_message_id=message.id,
             )
         os.remove("logs.txt")
 
-        await message.delete()
-        await send.delete()
+        await send.edit("Your logs has been sent to logs logs chat_id.")
 
     except Exception as e:
         await send.edit(e)
@@ -121,6 +133,10 @@ add_command_help(
         "Update and re-deploy.",
         ],
         
+        ["setlogs",
+        "Set your userbot logs chat_id.",
+        ],
+
         ["logs",
         "Get usetbot logs.",
         ],

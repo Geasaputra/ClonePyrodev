@@ -7,8 +7,8 @@ from pyrogram import idle
 from uvloop import install
 
 from config import BOT_VER
-from ProjectDark.helpers.SQL.globals import CMD_HANDLER
-from ProjectDark import BOTLOG_CHATID, LOGGER, LOOP, aiosession, bot
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER, BOTLOG_CHATID
+from ProjectDark import LOGGER, LOOP, aiosession, bot
 from ProjectDark.modules import ALL_MODULES
 
 MSG_ON = """
