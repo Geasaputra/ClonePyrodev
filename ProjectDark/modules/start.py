@@ -1,7 +1,6 @@
 # Part of PyroMan - 2022
 # Kang by DarkPyro - 2023
 
-from datetime import datetime
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -25,15 +24,6 @@ async def repo(client: Client, message: Message):
 @Client.on_message(filters.command("creator", cmd) & filters.me)
 async def creator(client: Client, message: Message):
     await edit_or_reply(message, First.CREATOR)
-
-
-@Client.on_message(filters.command("uptime", cmd) & filters.me)
-async def uptime(client: Client, message: Message):
-    now = datetime.now()
-    current_uptime = now - START_TIME
-    await edit_or_reply(
-        message, f"Uptime {str(current_uptime).split('.')[0]}"
-    )
 
 
 @Client.on_message(filters.command("id", cmd) & filters.me)
@@ -139,11 +129,7 @@ add_command_help(
         ["creator",
         "Creator of userbot",
         ],
-        
-        ["uptime",
-        "Uptime total of userbot.",
-        ],
-        
+
         ["disclaimer",
         "Read disclaimer of userbot.",
         ],

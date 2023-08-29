@@ -41,10 +41,10 @@ async def restart_bot(client: Client, message: Message):
 async def set_handler(client: Client, message: Message):
     handler = get_arg(message)
     if not handler:
-        return await edit_or_reply(message, f"Set your handler using `{cmd}handler x` or etc.")
+        return await edit_or_reply(message, f"Set with `{cmd}handler x` or etc.")
     else:
         addgvar("CMD_HANDLER", handler)
-        await message.edit(f"Handler changed to `{handler}`\nUserbot restarting now, wait until you get log userbot has active on your group logs.")
+        await message.edit(f"Changed to `{handler}`\nRestarting...")
         restart()
 
 
@@ -52,12 +52,12 @@ async def set_handler(client: Client, message: Message):
 async def set_logs(client: Client, message: Message):
     logger = get_arg(message)
     if not logger:
-        return await edit_or_reply(message, f"Set your logs chat_id using the command `{cmd}setlogs -100xxx` or `{cmd}setlogs me`")
+        return await edit_or_reply(message, f"Set with `{cmd}setlogs -100xxx` or `{cmd}setlogs me`")
     if not (logger.startswith("-100") or logger.startswith("me")):
-        return await edit_or_reply(message, "Must start with -100 or me")
+        return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("BOTLOG_CHATID", logger)
-        await message.edit(f"Logs chat_id changed to `{logger}`\nUserbot restarting now, wait until you get log userbot has active on your new logs chat_id.")
+        await message.edit(f"Changed to `{logger}`\nRestarting...")
         restart()
 
 
@@ -65,12 +65,12 @@ async def set_logs(client: Client, message: Message):
 async def set_broadcast(client: Client, message: Message):
     broadcast = get_arg(message)
     if not broadcast:
-        return await edit_or_reply(message, f"Use `{cmd}broadcast True` or `{cmd}Broadcast False`")
+        return await edit_or_reply(message, f"Set with `{cmd}broadcast True` or `{cmd}broadcast False`")
     if broadcast not in ["True", "False"]:
-        return await edit_or_reply(message, "Must True/False!")
+        return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("BROADCAST_ENABLED", broadcast)
-        await message.edit(f"Broadcast changed to `{broadcast}`, wait until bot started after restart.")
+        await message.edit(f"Changed to `{broadcast}`\nRestarting...")
         restart()
 
 
@@ -90,7 +90,7 @@ async def send_logs(client: Client, message: Message):
             )
         os.remove("logs.txt")
 
-        await send.edit("Your logs has been sent to logs logs chat_id.")
+        await send.edit("Your logs has been sent to logs chat_id.")
 
     except Exception as e:
         await send.edit(e)
@@ -101,7 +101,7 @@ async def send_logs(client: Client, message: Message):
 async def logout(client: Client, message: Message):
     conf = get_arg(message)
     if "True" not in conf:
-        await edit_or_reply(message, f"Type `{cmd}killme True` to kill your userbot session.")
+        await edit_or_reply(message, f"Use `{cmd}killme True` to kill your userbot session.")
     else:
         await edit_or_reply(message, "Userbot's session has been logged out!")
         await client.log_out()
@@ -110,30 +110,10 @@ async def logout(client: Client, message: Message):
 add_command_help(
     "system",
     [
-        ["alive",
-        "Just for fun.",
-        ],
-        
-        ["repo",
-        "Display the repo of this userbot.",
-        ],
-        
-        ["creator",
-        "Show the creator of this userbot.",
-        ],
-        
         ["handler",
         "Set your prefix/cmd/handler.",
         ],
-        
-        ["id",
-        "Send id of what you replied to.",
-        ],
-        
-        ["uptime",
-        "Check bot's current uptime.",
-        ],
-        
+
         ["restart",
         "Restart userbot.",
         ],
@@ -141,13 +121,13 @@ add_command_help(
         ["update",
         "Check update.",
         ],
-        
-        ["update deploy",
-        "Update and re-deploy.",
-        ],
-        
+
         ["setlogs",
         "Set your userbot logs chat_id.",
+        ],
+        
+        ["broadcast",
+        "Active/deactive broadcast module.",
         ],
 
         ["logs",
