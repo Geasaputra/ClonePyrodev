@@ -16,9 +16,7 @@ async def module_help(client: Client, message: Message):
     help_arg = ""
     if len(cmd) > 1:
         help_arg = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) == 1:
-        help_arg = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    if len(cmd) == 1:
         help_message = "Available Modules:\n"
         for module in sorted(CMD_HELP.keys()):
             help_message += f"| `{module}` "
