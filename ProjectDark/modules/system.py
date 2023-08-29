@@ -12,7 +12,7 @@ from ProjectDark import LOGGER
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.tools import get_arg
 from ProjectDark.utils import restart
-from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID, addgvar
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID, BROADCAST_ENABLED, addgvar
 from .help import add_command_help
 
 
@@ -58,6 +58,19 @@ async def set_logs(client: Client, message: Message):
     else:
         addgvar("BOTLOG_CHATID", logger)
         await message.edit(f"Logs chat_id changed to `{logger}`\nUserbot restarting now, wait until you get log userbot has active on your new logs chat_id.")
+        restart()
+
+
+@Client.on_message(filters.command("broadcast", cmd) & filters.me)
+async def set_broadcast(client: Client, message: Message):
+    broadcast = get_arg(message)
+    if not broadcast:
+        return await edit_or_reply(message, f"Use `{cmd}broadcast True` or `{cmd}Broadcast False`")
+    if broadcast not in ["True", "False"]:
+        return await edit_or_reply(message, "Must True/False!")
+    else:
+        addgvar("BROADCAST_ENABLED", broadcast)
+        await message.edit(f"Broadcast changed to `{broadcast}`, wait until bot started after restart.")
         restart()
 
 

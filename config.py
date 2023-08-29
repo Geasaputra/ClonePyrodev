@@ -13,8 +13,6 @@ API_ID = int(getenv("API_ID", "2040"))
 
 STRING_SESSION = getenv("SESSION", "")
 
-BROADCAST_ENABLED = getenv("BROADCAST", "False") == "True"
-
 #CMD_HANDLER = getenv("PREFIX", ".")
 
 DB_URL = getenv("DATABASE_URL", "")
