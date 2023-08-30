@@ -42,7 +42,7 @@ async def set_handler(client: Client, message: Message):
         return await edit_or_reply(message, f"Set with `{cmd}handler x` or etc.")
     else:
         addgvar("CMD_HANDLER", handler)
-        await message.edit(f"Handler hanged to `{handler}`\nRestart userbot to take effect.")
+        await message.edit(f"Handler changed to {handler}\nRestart userbot to take effect.")
         
 
 
@@ -50,13 +50,14 @@ async def set_handler(client: Client, message: Message):
 async def set_logs(client: Client, message: Message):
     logger = get_arg(message)
     logger_status = gvarstatus("BOTLOG_CHATID")
+    logger_status = "Default" if logger_status == "me" else "Group"
     if not logger:
         return await edit_or_reply(message, f"Currently logs chat_id is {logger_status}")
     if not (logger.startswith("-100") or logger.startswith("me")):
         return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("BOTLOG_CHATID", logger)
-        await message.edit(f"Logs chat_id changed to `{logger}`\nRestart userbot to take effect.")
+        await message.edit(f"Logs chat_id changed to {logger}\nRestart userbot to take effect.")
         
 
 
@@ -70,7 +71,7 @@ async def set_broadcast(client: Client, message: Message):
         return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("BROADCAST_ENABLED", broadcast)
-        await message.edit(f"Broadcast changed to `{broadcast}`\nRestart userbot to take effect.")
+        await message.edit(f"Broadcast changed to {broadcast}\nRestart userbot to take effect.")
         
 
 

@@ -23,12 +23,12 @@ async def set_nopm(client: Client, message: Message):
     nopm = get_arg(message)
     status_nopm = gvarstatus("ANTIPM")
     if not nopm:
-        return await edit_or_reply(message, f"Currently nopm is `{status_nopm}`")
+        return await edit_or_reply(message, f"Currently nopm is {status_nopm}")
     if nopm not in ["on", "off"]:
         return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("ANTIPM", nopm)
-        await message.edit(f"NoPM changed to `{nopm}`\nRestart userbot to take effect.")
+        await message.edit(f"NoPM changed to {nopm}\nRestart userbot to take effect.")
         
 @Client.on_message(
     filters.private
