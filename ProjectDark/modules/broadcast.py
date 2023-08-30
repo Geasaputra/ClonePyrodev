@@ -11,7 +11,7 @@ from .help import add_command_help
 @Client.on_message(filters.command("gcast", cmd) & filters.me)
 async def gcast_cmd(client, message):
     if not BROADCAST_ENABLED:
-        await message.edit(f"Set `{cmd}broadcast True` to use this command.")
+        await message.edit(f"Set `{cmd}broadcast on` to use this command.")
         return
     if message.reply_to_message or get_arg(message):
         kang = await message.reply("Broadcasting to groups...")

@@ -9,9 +9,19 @@ from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
 from config import *
 from ProjectDark import *
 from ProjectDark.helpers.basic import edit_or_reply
-from ProjectDark.helpers.constants import First
 
 from .help import add_command_help
+
+
+class First:
+    REPO = """
+DarkPyro-REV Userbot v{}
+[Repository](https://github.com/tracemoepy/DarkPyro-REV) | [Discussion](https://t.me/DarkPyroRV)
+"""
+
+    CREATOR = """
+No Creator, Just Kanger!
+"""
 
 
 @Client.on_message(filters.command("repo", cmd) & filters.me)

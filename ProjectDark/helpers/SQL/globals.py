@@ -53,8 +53,13 @@ def delgvar(variable):
 CMD_HANDLER = gvarstatus("CMD_HANDLER") or "."
 BOTLOG_CHATID = gvarstatus("BOTLOG_CHATID") or "me"
 BROADCAST_ENABLED = gvarstatus("BROADCAST_ENABLED")
-if BROADCAST_ENABLED == "True":
+if BROADCAST_ENABLED == "on":
     BROADCAST_ENABLED = True
 else:
-    BROADCAST_ENABLED = False if BROADCAST_ENABLED == "False" else False
+    BROADCAST_ENABLED = False if BROADCAST_ENABLED == "off" else False
+ANTIPM = gvarstatus("ANTIPM")
+if ANTIPM == "on":
+    ANTIPM = True
+else:
+    ANTIPM = False if ANTIPM == "off" else False
 

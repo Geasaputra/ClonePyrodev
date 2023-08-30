@@ -21,4 +21,4 @@ REPO_URL = getenv("REPO_URL", "https://github.com/tracemoepy/DarkPyro-REV")
 BRANCH = getenv("BRANCH", "master")
 GIT_TOKEN = getenv("GIT_TOKEN", "")
 
-BOT_VER = "2.0.0"
+BOT_VER = "2.0.1"

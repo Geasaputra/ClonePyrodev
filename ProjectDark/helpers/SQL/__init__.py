@@ -11,7 +11,7 @@ def start() -> scoped_session:
     engine = create_engine(DB_URL)
     BASE.metadata.bind = engine
     BASE.metadata.create_all(engine)
-    return scoped_session(sessionmaker(bind=engine, autoflush=False))
+    return scoped_session(sessionmaker(bind=engine, autoflush=True))
 
 
 try:
@@ -19,7 +19,7 @@ try:
     SESSION = start()
 except AttributeError as e:
     LOGGER(__name__).warning(
-        "DB_URI is not configured. Features depending on the database might have issues."
+        "DB_URL is not configured. Features depending on the database might have issues."
     )
     LOGGER(__name__).info(str(e))
 
@@ -38,4 +38,4 @@ def run() -> scoped_session:
         DB_AVAILABLE = False
         return False
     DB_AVAILABLE = True
-    return scoped_session(sessionmaker(bind=engine, autoflush=False))
+    return scoped_session(sessionmaker(bind=engine, autoflush=True))

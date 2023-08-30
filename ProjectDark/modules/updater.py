@@ -127,8 +127,8 @@ Changelog ({ac_br}):
         ups_rem.pull(ac_br)
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
-    await updateme_requirements()
     await status.edit("Update successfully!")
+    await updateme_requirements()
     args = [sys.executable, "-m", "ProjectDark"]
     execle(sys.executable, *args, environ)
     return

@@ -11,7 +11,7 @@ from pyrogram.types import Message
 from ProjectDark import LOGGER
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.helpers.tools import get_arg
-from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID, BROADCAST_ENABLED, addgvar
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID, BROADCAST_ENABLED, addgvar, gvarstatus
 from .help import add_command_help
 
 
@@ -20,7 +20,7 @@ from .help import add_command_help
 async def restart_bot(client: Client, message: Message):
     try:
         msg = await edit_or_reply(message, "Restarting...")
-        LOGGER(__name__).info("Restarted!")
+        LOGGER(__name__).info("Restarting...")
     except BaseException as err:
         LOGGER(__name__).info(f"{err}")
         return
@@ -30,7 +30,6 @@ async def restart_bot(client: Client, message: Message):
         os.remove(logs_file)
     except Exception as e:
         LOGGER(__name__).info(f"{e}")
-        
     await msg.edit_text("Restarted!")
     args = [sys.executable, "-m", "ProjectDark"]
     subprocess.Popen(args, env=os.environ)
@@ -43,33 +42,35 @@ async def set_handler(client: Client, message: Message):
         return await edit_or_reply(message, f"Set with `{cmd}handler x` or etc.")
     else:
         addgvar("CMD_HANDLER", handler)
-        await message.edit(f"Changed to `{handler}`")
+        await message.edit(f"Handler hanged to `{handler}`\nRestart userbot to take effect.")
         
 
 
 @Client.on_message(filters.command("setlogs", cmd) & filters.me)
 async def set_logs(client: Client, message: Message):
     logger = get_arg(message)
+    logger_status = gvarstatus("BOTLOG_CHATID")
     if not logger:
-        return await edit_or_reply(message, f"Set with `{cmd}setlogs -100xxx` or `{cmd}setlogs me`")
+        return await edit_or_reply(message, f"Currently logs chat_id is {logger_status}")
     if not (logger.startswith("-100") or logger.startswith("me")):
         return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("BOTLOG_CHATID", logger)
-        await message.edit(f"Changed to `{logger}`")
+        await message.edit(f"Logs chat_id changed to `{logger}`\nRestart userbot to take effect.")
         
 
 
 @Client.on_message(filters.command("broadcast", cmd) & filters.me)
 async def set_broadcast(client: Client, message: Message):
     broadcast = get_arg(message)
+    broadcast_status = gvarstatus("BROADCAST_ENABLED")
     if not broadcast:
-        return await edit_or_reply(message, f"Set with `{cmd}broadcast True` or `{cmd}broadcast False`")
-    if broadcast not in ["True", "False"]:
+        return await edit_or_reply(message, f"Currently broadcast is {broadcast_status}")
+    if broadcast not in ["on", "off"]:
         return await edit_or_reply(message, "Invalid!")
     else:
         addgvar("BROADCAST_ENABLED", broadcast)
-        await message.edit(f"Changed to `{broadcast}`")
+        await message.edit(f"Broadcast changed to `{broadcast}`\nRestart userbot to take effect.")
         
 
 

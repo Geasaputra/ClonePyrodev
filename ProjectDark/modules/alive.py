@@ -11,7 +11,7 @@ from pyrogram import (Client,
 from pyrogram.types import Message
 
 from config import BOT_VER
-from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, ANTIPM, BROADCAST_ENABLED, BOTLOG_CHATID
 from ProjectDark import CMD_HELP as modules, StartTime
 from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.utils import get_readable_time
@@ -26,11 +26,15 @@ async def alive(client: Client, message: Message):
     alive_msg = (f"""
 DarkPyro-REV v{BOT_VER}
 
+Pyrogram v{pyroVer}
+Python v{python_version()}
+
 {len(modules)} Modules Loaded
 with Handler (`{cmd}`)
 
-Pyrogram v{pyroVer}
-Python v{python_version()}
+Broadcast = `{BROADCAST_ENABLED}`
+Anti-PM = `{ANTIPM}`
+Logs ID = `{BOTLOG_CHATID}`
 
 Started since {uptime} ago.
 """)
