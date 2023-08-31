@@ -26,10 +26,10 @@ using this userbot.</p>
 
 
 <h2>Installation</h2>
-<a href="https://heroku.com/deploy?template=https://github.com/tracemoepy/darkpyro-heroku">
-<img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-</a>
+<h3><a href="https://heroku.com/deploy?template=https://github.com/tracemoepy/darkpyro-heroku">Deploy
+on Heroku</a></h3>
 
+<h3><a href="https://telegra.ph/Deploy-DarkPyro-on-VPS-08-31">Docker Compose</a></h3>
 
 <h2>Other</h2>
 <h3>Group Discussion</h3>
