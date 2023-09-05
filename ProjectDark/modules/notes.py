@@ -2,7 +2,7 @@ from asyncio import sleep
 
 from pyrogram import Client, filters
 
-from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd
+from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, BOTLOG_CHATID as log
 from ProjectDark.helpers.SQL.notes_sql import add_note, get_note, get_notes, rm_note
 from ProjectDark.helpers.tools import get_arg
 from ProjectDark.modules.help import add_command_help
@@ -13,11 +13,12 @@ async def _notes(client, message):
     user_id = message.from_user.id
     notes = get_notes(str(user_id))
     if not notes:
-        return await message.reply("No notes are found!")
+    return await message.reply("No notes are found!")
+    msg = "List Saved Notes:\n"
+    
     for note in notes:
-        msg = f"`{note.keyword}`\n"
-    await message.edit("List Saved Notes:")
-    await message.reply(msg)
+        msg += f"`{note.keyword}`\n"
+    await message.edit(content=msg)
 
 
 @Client.on_message(filters.command("clear", cmd) & filters.me)
@@ -28,7 +29,9 @@ async def rmnote(client, message):
         return await message.reply(
             "No found notes for `{}`.".format(notename)
         )
-    return await message.reply("Successfully remove note: `{}`".format(notename))
+    return await message.reply(
+        "Successfully remove note: `{}`".format(notename)
+    )
 
 
 @Client.on_message(filters.command("save", cmd) & filters.me)
@@ -38,10 +41,10 @@ async def addnote(client, message):
     msg = message.reply_to_message
     if not msg:
         return await message.reply("Reply to message!")
-    fwd = await msg.forward("me")
+    fwd = await msg.forward(log)
     msg_id = fwd.id
     await client.send_message(
-        "me",
+        log,
         f"#NOTE\nKeyword: `{keyword}`"
     )
     await sleep(2)
@@ -56,7 +59,7 @@ async def _note(client, message):
     note = get_note(str(user_id), notename)
     if not note:
         return await message.reply("No notes are found!")
-    msg_o = await client.get_messages("me", int(note.f_mesg_id))
+    msg_o = await client.get_messages(log, int(note.f_mesg_id))
     await message.delete()
     await msg_o.copy(message.chat.id, reply_to_message_id=message.id)
 
