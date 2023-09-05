@@ -13,12 +13,12 @@ async def _notes(client, message):
     user_id = message.from_user.id
     notes = get_notes(str(user_id))
     if not notes:
-    return await message.reply("No notes are found!")
-    msg = "List Saved Notes:\n"
+        return await message.reply("No notes are found!")
     
+    msg = "List Saved Notes:\n"
     for note in notes:
         msg += f"`{note.keyword}`\n"
-    await message.edit(content=msg)
+    await message.edit(msg)
 
 
 @Client.on_message(filters.command("clear", cmd) & filters.me)
