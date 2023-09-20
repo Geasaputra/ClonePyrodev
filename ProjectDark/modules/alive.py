@@ -43,6 +43,6 @@ Started since {uptime} ago.
 """)
     await asyncio.gather(
                 message.delete(),
-                client.send_photo(photo=photo, text=alive_msg
+                client.send_photo(photo=photo, caption=alive_msg
                                  ),
     )
