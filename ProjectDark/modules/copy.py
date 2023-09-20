@@ -27,7 +27,7 @@ async def _copy(client: Client, message: Message):
                     msgid,
                 )
             except Exception as e:
-                await message.edit(format_exc(e))
+                await message.edit({str(e)})
         else:
             username = datas[-2]
             msg  = await client.get_messages(
