@@ -41,7 +41,7 @@ async def _copy(client: Client, message: Message):
                     msgid,
                 )
             except Exception as e:
-                await message.edit(format_exc(e))
+                await message.edit({str(e)})
     else:
         return await message.edit("Link invalid!")
 
