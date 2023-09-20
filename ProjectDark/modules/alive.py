@@ -17,6 +17,7 @@ from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.utils import get_readable_time
 
 
+photo = "https://telegra.ph/file/36b93f50c3abe51d4f9f2.jpg"
 
 @Client.on_message(filters.command("alive", cmd) & filters.me)
 async def alive(client: Client, message: Message):
@@ -40,4 +41,8 @@ Logs ID = {logs}
 
 Started since {uptime} ago.
 """)
-    await msg.edit(alive_msg)
+    await asyncio.gather(
+                message.delete(),
+                client.send_photo(photo=photo, text=alive_msg
+                                 ),
+    )
