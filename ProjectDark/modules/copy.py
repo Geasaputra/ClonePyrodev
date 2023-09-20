@@ -69,7 +69,7 @@ async def download(
     await message.delete()
 
 
-@Client.on_message(filters.command(["copy", "curi"], "") & filters.me)
+@Client.on_message(filters.command("copy", cmd) & filters.me)
 async def _copy(client: Client, message: Message):
     if len(message.command) == 1:
         return await message.edit(
