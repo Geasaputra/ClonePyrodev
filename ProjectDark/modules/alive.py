@@ -21,7 +21,7 @@ photo = "https://telegra.ph/file/36b93f50c3abe51d4f9f2.jpg"
 
 @Client.on_message(filters.command("alive", cmd) & filters.me)
 async def alive(client: Client, message: Message):
-    msg = await edit_or_reply(message, "...")
+    #msg = await edit_or_reply(message, "...")
     await asyncio.sleep(1)
     uptime = await get_readable_time((time.time() - StartTime))
     logs = gvarstatus("BOTLOG_CHATID")
