@@ -17,7 +17,7 @@ from ProjectDark.helpers.basic import edit_or_reply
 from ProjectDark.utils import get_readable_time
 
 
-photo = "https://telegra.ph/file/36b93f50c3abe51d4f9f2.jpg"
+photo = "https://telegra.ph//file/c0b5e27763fa5a9f70bd1.jpg"
 
 @Client.on_message(filters.command("alive", cmd) & filters.me)
 async def alive(client: Client, message: Message):
