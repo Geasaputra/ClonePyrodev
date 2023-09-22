@@ -2,8 +2,8 @@
 # Kang by DarkPyro - 2023
 
 import os
+import sys
 import asyncio
-import subprocess
 import time
 from platform import python_version
 from telegraph import upload_file
@@ -23,7 +23,7 @@ from ProjectDark.utils import get_readable_time
 
 def restart():
     args = [sys.executable, "-m", "ProjectsDark"]
-    subprocess.Popen(args, env=os.environ)
+    execle(sys.executable, *args, environ)
     return
 
 alv_logo = (
