@@ -57,7 +57,7 @@ Started since {uptime} ago.
     )
 
 
-@Client.on_message(filters.command("setalvlogo", cmd) filters.me)
+@Client.on_message(filters.command("setalvlogo", cmd) & filters.me)
 async def setalvlogo(client: Client, message: Message):
     try:
         import ProjectDark.helpers.SQL.globals as sql
