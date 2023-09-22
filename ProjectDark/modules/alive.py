@@ -44,6 +44,9 @@ Started since {uptime} ago.
 """)
     await asyncio.gather(
                 msg.delete(),
-                send_mdia(chat_id=message.chat.id, alv_logo, caption=alive_msg
+                send_mdia(
+                message.chat.id,
+                alv_logo,
+                caption=alive_msg,
                 ),
     )
