@@ -70,7 +70,7 @@ async def setalvlogo(client: Client, message: Message):
     except AttributeError:
         await message.edit("**Running on Non-SQL mode!**")
         return
-    msg = await eor(message, "`Processing...`")
+    msg = await eor(message, "...")
     link = (
         message.text.split(None, 1)[1]
         if len(
