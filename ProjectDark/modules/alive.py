@@ -15,7 +15,7 @@ from pyrogram.types import Message
 from config import BOT_VER
 from ProjectDark.helpers.SQL.globals import CMD_HANDLER as cmd, ANTIPM, BROADCAST_ENABLED, BOTLOG_CHATID, gvarstatus
 from ProjectDark import CMD_HELP as modules, StartTime
-from ProjectDark.helpers.basic import edit_or_reply
+from ProjectDark.helpers.basic import eor
 from ProjectDark.helpers.tools import convert_to_image
 from ProjectDark.utils import get_readable_time
 
@@ -26,7 +26,7 @@ alv_logo = (
 
 @Client.on_message(filters.command("alive", cmd) & filters.me)
 async def alive(client: Client, message: Message):
-    msg = await edit_or_reply(message, "...")
+    msg = await eor(message, "...")
     await asyncio.sleep(1)
     send_mdia = client.send_video if alv_logo.endswith(".mp4") else client.send_photo
     uptime = await get_readable_time((time.time() - StartTime))
