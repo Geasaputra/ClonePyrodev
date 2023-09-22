@@ -1,6 +1,7 @@
 # Part of PyroMan - 2022
 # Kang by DarkPyro - 2023
 
+import os
 import asyncio
 import time
 from platform import python_version
