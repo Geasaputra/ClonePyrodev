@@ -22,7 +22,7 @@ from ProjectDark.helpers.tools import convert_to_image
 from ProjectDark.utils import get_readable_time
 
 def restart():
-    args = [sys.executable, "-m", "ProjectsDark"]
+    args = [sys.executable, "-m", "ProjectDark"]
     os.execle(sys.executable, *args, os.environ)
     return
 
