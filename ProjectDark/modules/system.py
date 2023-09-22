@@ -126,6 +126,10 @@ add_command_help(
         ["setlogs",
         "Set your userbot logs chat_id.",
         ],
+
+        ["setalvlogo",
+        "set your userbot alive logo.",
+        ],
         
         ["broadcast",
         "Active/deactive broadcast module.",
