@@ -71,6 +71,8 @@ async def setalvlogo(client: Client, message: Message):
         await message.edit("**Running on Non-SQL mode!**")
         return
     msg = await eor(message, "...")
+    await asyncio.sleep(0.2)
+    await msg.edit("sek...")
     link = (
         message.text.split(None, 1)[1]
         if len(
@@ -94,5 +96,5 @@ async def setalvlogo(client: Client, message: Message):
         os.remove(m_d)
     sql.addgvar("ALIVE_LOGO", link)
     xx = f"**Successfully Customized ALIVE LOGO Become:**\n`{link}`\n\n"
-    await msg.edit(xx + "**Restarting.....................................................................**", disable_web_page_preview=True)
+    await msg.edit(xx + "**Restarting...**", disable_web_page_preview=True)
     restart()
