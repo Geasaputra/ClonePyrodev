@@ -93,9 +93,7 @@ async def setalvlogo(client: Client, message: Message):
         link = f"https://telegra.ph/{media_url[0]}"
         os.remove(m_d)
     sql.addgvar("ALIVE_LOGO", link)
-    xx = await msg.edit(f"**Successfully Customized ALIVE LOGO Become:**\n`{link}`\n\n",
-          disable_web_page_preview=True,
-    )
+    xx = f"**Successfully Customized ALIVE LOGO Become:**\n`{link}`\n\n"
     await asyncio.sleep(0.3)
-    await msg.edit(xx + "**Restarted Now...**")
+    await msg.edit(xx + "**Restarted Now...**", disable_web_page_preview=True)
     restart()
