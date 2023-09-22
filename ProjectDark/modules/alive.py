@@ -23,7 +23,7 @@ from ProjectDark.utils import get_readable_time
 
 def restart():
     args = [sys.executable, "-m", "ProjectsDark"]
-    execle(sys.executable, *args, environ)
+    os.execle(sys.executable, *args, os.environ)
     return
 
 alv_logo = (
