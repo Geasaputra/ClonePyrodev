@@ -3,6 +3,7 @@
 
 import os
 import asyncio
+import subprocess
 import time
 from platform import python_version
 from telegraph import upload_file
@@ -20,6 +21,10 @@ from ProjectDark.helpers.basic import eor
 from ProjectDark.helpers.tools import convert_to_image
 from ProjectDark.utils import get_readable_time
 
+def restart():
+    args = [sys.executable, "-m", "ProjectsDark"]
+    subprocess.Popen(args, env=os.environ)
+    return
 
 alv_logo = (
   gvarstatus("ALIVE_LOGO") or "https://telegra.ph//file/7310307cc29b4983c45d8.mp4"
